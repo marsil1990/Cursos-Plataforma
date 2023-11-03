@@ -1,0 +1,2 @@
+class MultiOpcion:
+    pass

@@ -1,0 +1,2 @@
+class DTInscripcion:
+    pass

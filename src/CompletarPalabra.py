@@ -1,0 +1,2 @@
+class CompletarPalabra:
+    pass

@@ -1,0 +1,2 @@
+class DTCurso :
+    pass

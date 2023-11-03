@@ -1,0 +1,2 @@
+class Leccion:
+    pass
