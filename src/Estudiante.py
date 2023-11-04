@@ -20,7 +20,7 @@ class Estudiante(Usuario):
     def notificar(DTnuevocurso):pass
     def  MAPgetInscripciones():pass
     def inscribirseCurso( nombreCurso, curso,aprobarCurso = False, f= None):pass
-    def SETObtenerNomIdiomaSuscrito():pass 
+    def SETObtenerNomAsignaturaSuscrito():pass 
     def SETDevolverNotificaciones():pass
     def MAPobtenerCursos():pass
     def getInscripcion( cursoNombre):pass

@@ -19,10 +19,10 @@ class IUsuario(ABC):
     def  IngresarInstituto(nombrePais):
         pass
     @abstractmethod
-    def  ObtenerIdiomasDisponibles():
+    def  ObtenerAsignaturasDisponibles():
         pass
     @abstractmethod
-    def  AgregarEspecializacion(nombreIdioma):
+    def  AgregarEspecializacion(nombreAsignatura):
         pass
     @abstractmethod
     def  ConfirmarAltaProfesor():
@@ -56,13 +56,13 @@ class IUsuario(ABC):
         pass
      #SUSCRIBIRSE A NOTIFIACIONES
     @abstractmethod
-    def ObtenerIdiomaNoSuscripto(nickname):
+    def ObtenerAsignaturaNoSuscripto(nickname):
         pass
     @abstractmethod
-    def  AgreagarSuscripcion(nomIdioma):
+    def  AgreagarSuscripcion(nomAsignatura):
         pass
     @abstractmethod
-    def  existeIdioma(idiom):
+    def  existeAsignatura(Asignatura):
         pass
      #ElIMIAR SUSCRIPCIÓN
     @abstractmethod

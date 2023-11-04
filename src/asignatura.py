@@ -1,4 +1,4 @@
-class Idioma:
+class Asignatura:
     def __init__ (self, nombre):
         self.__Nombre = nombre
         __SETobservers = None
@@ -11,6 +11,6 @@ class Idioma:
     def agregar(observer): pass
     def eliminar(observer): pass
     def EnviarNotificacion(curso): pass
-    def asociarCursoIdioma(curso): pass
+    def asociarCursoAsignatura(curso): pass
     def removerCurso(Nombre): pass
    

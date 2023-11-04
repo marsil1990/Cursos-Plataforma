@@ -10,9 +10,9 @@ class ICurso(ABC):
     @abstractmethod
     def ingresarDatosCurso (nombre, descripcion, dificultad): pass
     @abstractmethod
-    def obtenerIdiomasEspecializacion(): pass
+    def obtenerAsignaturasEspecializacion(): pass
     @abstractmethod
-    def seleccionarIdioma(nombreIdioma): pass
+    def seleccionarAsignatura(nombreAsignatura): pass
     @abstractmethod
     def necesitaPrevia(confirmacion): pass
     @abstractmethod
@@ -50,13 +50,13 @@ class ICurso(ABC):
     @abstractmethod
     def agregarEjercicio(lec, descripcion, frase, solucion): pass
 
-    #AlTA IDIOMA
+    #AlTA Asignatura
     @abstractmethod
-    def IngresarIdioma(nombreIdioma): pass
+    def IngresarAsignatura(nombreAsignatura): pass
     @abstractmethod
-    def ConfirmarIdioma(): pass
+    def ConfirmarAsignatura(): pass
     @abstractmethod
-    def ConsultarIdioma(): pass
+    def ConsultarAsignatura(): pass
     #Consultar Estadisticas
     @abstractmethod
     def ObtenerEstudiantes(): pass

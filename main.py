@@ -11,27 +11,27 @@ def main():
     seguir = True
     while seguir == True:
         print("Elija los siguientes casos de usos: ")
-        print(" 1- ALTA DE IDIOMA")
-        print(" 2- CONSULTAR IDIOMA")
+        print(" 1- ALTA DE Asignatura")
+        print(" 2- CONSULTAR Asignatura")
         print(" 3- ALTA USUARIO")
         print(" 4- CONSULTAR USUARIOS")
         print(" 5- ALTA DE CURSO")
         print(" 0- SALIR")
         eleccion = input("elección: ").strip()
         
-    #ALTA IDIOMA
+    #ALTA Asignatura
         if eleccion == "1":
-            ingresar_idioma = input("Ingrese idioma: ")
-            ctrCurso.IngresarIdioma(ingresar_idioma)
-            conf = ctrCurso.ConfirmarIdioma()
+            ingresar_Asignatura = input("Ingrese Asignatura: ")
+            ctrCurso.IngresarAsignatura(ingresar_Asignatura)
+            conf = ctrCurso.ConfirmarAsignatura()
             if conf:
-                print("El idioma se ingreso correctamente")
-            else: print("El idioma ya existe")
+                print("El Asignatura se ingreso correctamente")
+            else: print("El Asignatura ya existe")
 
-    #CONSULTAR IDIOMA
+    #CONSULTAR Asignatura
         elif eleccion == "2":
-            setIdiomas = ctrCurso.ConsultarIdioma()
-            for i in setIdiomas:
+            setAsignaturas = ctrCurso.ConsultarAsignatura()
+            for i in setAsignaturas:
                 print(i[0].upper()+i[1:])
 
     #ALTA DE USUARIO:
@@ -59,18 +59,18 @@ def main():
             elif (tipoUsuario.lower().strip() == "p"):
                 instituto = input("Ingrese instituto donde trabaja: ")
                 ctrUsuario.IngresarInstituto(instituto)
-                setIdiomasDisponibles = ctrUsuario.ObtenerIdiomasDisponibles()
-                #mostrar los idiomas
-                for i in setIdiomasDisponibles:
+                setAsignaturasDisponibles = ctrUsuario.ObtenerAsignaturasDisponibles()
+                #mostrar los Asignaturas
+                for i in setAsignaturasDisponibles:
                     print(i)
                 continuar = True
                 while continuar:
-                    especializacion = input("Elige idioma diponible: ")
-                    if ctrUsuario.existeIdioma(especializacion):
+                    especializacion = input("Elige Asignatura diponible: ")
+                    if ctrUsuario.existeAsignatura(especializacion):
                        ctrUsuario.AgregarEspecializacion(especializacion)
                     else:
-                        print("El idioma ingresado no es correcto, intene otra vez: ")
-                    cont = input("Deseas agregar otro idioma S/N")
+                        print("El Asignatura ingresado no es correcto, intene otra vez: ")
+                    cont = input("Deseas agregar otro Asignatura S/N")
                     if cont.strip().lower() ==  "n":
                         continuar = False
                     
@@ -98,6 +98,24 @@ def main():
             nicknameProfesores = ctrCurso.obtenerNickname()
             for p in nicknameProfesores:
                 print(p)
+            nickname = input("Ingrese el nickname del profesor: ")
+            ctrCurso.seleccionarProfesor()
+            nombreCurso = input("Nombre del Curso: ")
+            descripcionCuros = input("Descripción del curso: ")
+            nivelCurso = input("Nivel del curso (Principiante(p)/Intermedio(i)/Avanzado(a)")
+            ctrCurso.ingresarDatosCurso(nombreCurso, descripcionCuros, nivelCurso)
+            setIAsignaturas =  ctrCurso.obtenerAsignaturasEspecializacion()
+            for i in setAsignaturas:
+                print(i)
+            Asignatura = input("Ingrese Asignatura: ")
+            ctrCurso.seleccionarAsignatura(Asignatura)
+            previa = input("Necesita cursos previos aprobados S/N: ")
+            if previa == "s":
+                confirmacion = True
+            else: confirmacion = False
+            ctrCurso.necesitaPrevia(confirmacion)
+            colCursosHabilitados = ctrCurso.SETobtenerCursosHabilitados()
+
         
         elif eleccion == "0":
             seguir = False

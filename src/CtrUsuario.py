@@ -5,7 +5,7 @@ from src.Estudiante import Estudiante
 from src.DTEstudiante import DTEstudiante
 from src.Profesor import Profesor
 from src.DTProfesor import DTProfesor
-from src.ManejadorIdioma import ManejadorIdioma
+from src.ManejadorAsignatura import ManejadorAsignatura
 class CtrUsuario(IUsuario):
     __instancia = None
     __nickNameRec = None
@@ -19,7 +19,7 @@ class CtrUsuario(IUsuario):
     __nuevoUsuarioFechaNacimientoRec= None
     __nuevoUsuarioInstitutoRec= None
     __SETnuevoUsuarioEspecializacion = None 
-    __SETidiomasRecordados = set()
+    __SETAsignaturasRecordados = set()
     __usuarioRecordado = None
     __ejercicioRecordado = None
     __ejercicioDeTraducir = None
@@ -72,19 +72,19 @@ class CtrUsuario(IUsuario):
     def  IngresarInstituto(self, nombreInstituto):
         self.__nuevoUsuarioInstitutoRec= nombreInstituto
     
-    def  ObtenerIdiomasDisponibles(self):
-        mi = ManejadorIdioma()
-        idiomas = mi.SETIdiomasDisponibles()
-        return idiomas
+    def  ObtenerAsignaturasDisponibles(self):
+        mi = ManejadorAsignatura()
+        Asignaturas = mi.SETAsignaturasDisponibles()
+        return Asignaturas
     
-    def  AgregarEspecializacion(self, nombreIdioma):
-        self.__SETidiomasRecordados.add(nombreIdioma)
+    def  AgregarEspecializacion(self, nombreAsignatura):
+        self.__SETAsignaturasRecordados.add(nombreAsignatura)
     
     def  ConfirmarAltaProfesor(self):
         mu = ManejadorUsuario()
         prof = Profesor(self.__nuevoUsuarioNicknameRec, self.__nuevoUsuarioContrasenia, self.__nuevoUsuarioNombreRec,
                         self.__nuevoUsuarioDescripcion, self.__nuevoUsuarioInstitutoRec)
-        for i in self.__SETidiomasRecordados:
+        for i in self.__SETAsignaturasRecordados:
            prof.AgregarEspecializacion(i)
         mu.agregarUsuario(prof)
     
@@ -106,8 +106,8 @@ class CtrUsuario(IUsuario):
             print(f"Nombre: {prof.getNombre()}")
             print(f"Descripción: {prof.getDescripcion()}")
             print(f"Pais: {prof.getInstituto()}")
-            idiomas = usuario.SETobtenerEspecializaciones()
-            for i in idiomas:
+            Asignaturas = usuario.SETobtenerEspecializaciones()
+            for i in Asignaturas:
                 print(i)
         elif type(usuario)== Estudiante: 
             es = self.seleccionarEstudiante(nickname)
@@ -147,15 +147,15 @@ class CtrUsuario(IUsuario):
         pass
      #SUSCRIBIRSE A NOTIFIACIONES
     
-    def ObtenerIdiomaNoSuscripto(nickname):
+    def ObtenerAsignaturaNoSuscripto(nickname):
         pass
     
-    def  AgreagarSuscripcion(nomIdioma):
+    def  AgreagarSuscripcion(nomAsignatura):
         pass
     
-    def  existeIdioma(self, idiom):
-        mi = ManejadorIdioma()
-        return mi.existeIdioma(idiom)
+    def  existeAsignatura(self, asign):
+        mi = ManejadorAsignatura()
+        return mi.existeAsignatura(asign)
      #ElIMIAR SUSCRIPCIÓN
     
     def obtenerSuscripciones(nickname):

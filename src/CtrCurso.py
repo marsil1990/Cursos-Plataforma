@@ -1,29 +1,30 @@
 from src.ICurso import ICurso
-from src.ManejadorIdioma import ManejadorIdioma
+from src.ManejadorAsignatura import ManejadorAsignatura
 from src.ManejadorUsuario import ManejadorUsuario
-from src.Idioma import Idioma
+from src.asignatura import Asignatura
 class CtrCurso(ICurso) :
-    profRec = None
-    nombreCursoRec = None
-    descripcionRec = None
-    dificultadRec= None
-    idiomaRec= None
-    necesitaPreviaRec= None
-    SETpreviasRec= None
-    MAPleccionesRec= None
-    ultimaLeccion= None
-    cursoRecAgregar= None
-    temaRec= None
-    objetivoRec= None
-    tipoejercicioRec= None
-    descripcionEjRec= None
-    fraseEjRec= None
-    MAPsolucionFCRec= None
-    solucionTRec= None
-    MAPejerciciosNuevos= None
-    leccionSeleccionada= None
-    nombreRecordado= None
-    MAPcursosRecordados= None
+    def __init__(self):
+       self.__profRec = None
+       self.__nombreCursoRec = None
+       self.__descripcionRec = None
+       self.__dificultadRec= None
+       self.__AsignaturaRec= None
+       self.__necesitaPreviaRec= None
+       self.SETpreviasRec= None
+       self.MAPleccionesRec= None
+       self.ultimaLeccion= None
+       self.cursoRecAgregar= None
+       self.temaRec= None
+       self.objetivoRec= None
+       self.tipoejercicioRec= None
+       self.descripcionEjRec= None
+       self.fraseEjRec= None
+       self.MAPsolucionFCRec= None
+       self.solucionTRec= None
+       self.MAPejerciciosNuevos= None
+       self.leccionSeleccionada= None
+       self.nombreRecordado= None
+       self.MAPcursosRecordados= None
      
     #Alta Curso
     def obtenerNickname(self):
@@ -34,17 +35,31 @@ class CtrCurso(ICurso) :
     
     def ExisteCurso(nombreCurso): pass
     
-    def seleccionarProfesor(nickname): pass
+    def seleccionarProfesor(self, nickname): 
+        mu = ManejadorUsuario()
+        self.__profRec  = mu.obtenerUsuario(nickname)
+        
     
-    def ingresarDatosCurso (nombre, descripcion, dificultad): pass
+    def ingresarDatosCurso (self, nombre, descripcion, dificultad):
+        self.__nombreCursoRec = nombre
+        self.__descripcionRec = descripcion
+        self.__dificultadRec = dificultad
     
-    def obtenerIdiomasEspecializacion(): pass
+    def obtenerAsignaturasEspecializacion(self):
+        AsignaturasEspecializado = self.__profRec.SETobtenerEspecializaciones()
+        return AsignaturasEspecializado
+        
+
     
-    def seleccionarIdioma(nombreIdioma): pass
+    def seleccionarAsignatura(self, nombreAsignatura):
+        mi = ManejadorAsignatura()
+        self.__AsignaturaRec = mi.obtenerAsignatura(nombreAsignatura)
     
-    def necesitaPrevia(confirmacion): pass
+    def necesitaPrevia(self, confirmacion):
+        self.__necesitaPreviaRec = confirmacion
     
-    def SETobtenerCursosHabilitados(): pass
+    def SETobtenerCursosHabilitados(self):
+        self.__AsignaturaRec.SETgetDataCursosHab()
     
     def seleccionarPrevias(SET): pass
     
@@ -78,23 +93,23 @@ class CtrCurso(ICurso) :
     
     def agregarEjercicio(lec, descripcion, frase, solucion): pass
 
-    #AlTA IDIOMA
+    #AlTA Asignatura
     
-    def IngresarIdioma(self,nombreIdioma):
-        self.idiomaRec = nombreIdioma
+    def IngresarAsignatura(self,nombreAsignatura):
+        self.AsignaturaRec = nombreAsignatura
     
-    def ConfirmarIdioma(self):
-        mi = ManejadorIdioma()
-        if mi.existeIdioma(self.idiomaRec):
+    def ConfirmarAsignatura(self):
+        mi = ManejadorAsignatura()
+        if mi.existeAsignatura(self.AsignaturaRec):
             return False
         else:
-            i = Idioma(self.idiomaRec)
-            mi.agregarIdioma(i)
+            i = Asignatura(self.AsignaturaRec)
+            mi.agregarAsignatura(i)
             return True
     
-    def ConsultarIdioma(self):
-        mi = ManejadorIdioma()
-        return mi.SETIdiomasDisponibles()
+    def ConsultarAsignatura(self):
+        mi = ManejadorAsignatura()
+        return mi.SETAsignaturasDisponibles()
     #Consultar Estadisticas
     
     def ObtenerEstudiantes(): pass

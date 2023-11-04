@@ -10,8 +10,8 @@ class Profesor(Usuario):
     def getInstituto(self):
         return self.__Instituto
     
-    def AgregarEspecializacion(self, idioma):
-        self.__MAPEspecializacion[idioma] = idioma
+    def AgregarEspecializacion(self, Asignatura):
+        self.__MAPEspecializacion[Asignatura] = Asignatura
 
     def SETobtenerEspecializaciones(self):
         especializaciones = set()

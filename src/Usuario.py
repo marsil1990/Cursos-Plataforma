@@ -15,9 +15,9 @@ class Usuario:
         return self.__Descripcion
     def getNombre(self):
         return self.__Nombre
-    def removerIdioma( nomIdioma):pass
-    def ObtenerNomIdiomaSuscrito():pass
-    def AgregarIdiomaSuscrito(i):pass
+    def removerAsignatura( nomAsignatura):pass
+    def ObtenerNomAsignaturaSuscrito():pass
+    def AgregarAsignaturaSuscrito(i):pass
     def SETDevolverNotificaciones():pass
     def notificar(dtnuevocurso):pass
   
