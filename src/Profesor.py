@@ -1,4 +1,5 @@
 from src.Usuario import Usuario
+from src.DTCurso import DTCurso
 class Profesor(Usuario):
 
     def __init__(self, nickname, contraseña, nombre, descripcion, instituto):
@@ -21,7 +22,17 @@ class Profesor(Usuario):
 
     def asociarCursoProfesor(curso): 
         pass
-    def MAPobtenerCursos():
+
+    def SETgetDataCursosHab(self, asignatura):
+        cursosHabilitados = set()
+        for c in self.__MAPCursos.values():
+            if c.getHabilitado()==True and c.getAsignatura() == asignatura:
+                cursosData = DTCurso(c)
+                cursosHabilitados.add(cursosData)
+        return cursosHabilitados
+
+
+    def SETobtenerCursosNoHabilitados():
         pass
 
     def eliminarCurso(nombreCurso):

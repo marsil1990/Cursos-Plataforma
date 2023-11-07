@@ -110,11 +110,20 @@ def main():
             Asignatura = input("Ingrese Asignatura: ")
             ctrCurso.seleccionarAsignatura(Asignatura)
             previa = input("Necesita cursos previos aprobados S/N: ")
+            conf = False
             if previa == "s":
-                confirmacion = True
-            else: confirmacion = False
-            ctrCurso.necesitaPrevia(confirmacion)
-            colCursosHabilitados = ctrCurso.SETobtenerCursosHabilitados()
+                conf = True
+                #ctrCurso.necesitaPrevia(confirmacion) inecesaría
+                colCursosHabilitados = ctrCurso.SETobtenerCursosHabilitados()
+                print("Acontinuación se muestran los cursos previos, cursos creados por el mismo profesor")
+                for c in colCursosHabilitados:
+                    print(c)
+                previas = input("Ingresa separados por coma los cursos que serán previos")
+                ctrCurso.seleccionarPrevias(previas)
+                ctrCurso.ConfirmarAltaCurso()
+            
+            
+
 
         
         elif eleccion == "0":

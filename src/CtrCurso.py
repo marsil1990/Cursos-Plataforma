@@ -2,6 +2,8 @@ from src.ICurso import ICurso
 from src.ManejadorAsignatura import ManejadorAsignatura
 from src.ManejadorUsuario import ManejadorUsuario
 from src.asignatura import Asignatura
+from src.ManejadorCurso import ManejadorCurso
+from src.Curso import Curso
 class CtrCurso(ICurso) :
     def __init__(self):
        self.__profRec = None
@@ -59,9 +61,18 @@ class CtrCurso(ICurso) :
         self.__necesitaPreviaRec = confirmacion
     
     def SETobtenerCursosHabilitados(self):
-        self.__AsignaturaRec.SETgetDataCursosHab()
+        return self.__profRec.SETgetDataCursosHab(self.__AsignaturaRec)
     
-    def seleccionarPrevias(SET): pass
+    def seleccionarPrevias(self, cadena):
+        c = cadena.replace(" ","")
+        previas = c.split(',')
+        mc = ManejadorCurso()
+        cursosPrevios = mc.SETobtenerCursos(previas)
+        self.SETpreviasRec = cursosPrevios
+        
+
+
+
     
     def crearLeccion(tema, objetivo): pass
     
@@ -69,7 +80,16 @@ class CtrCurso(ICurso) :
     
     def crearEjercicioTraducir(descripcion,frase, traduccion): pass
     
-    def ConfirmarAltaCurso(): pass
+    def ConfirmarAltaCurso(self):
+        nuevoCurso = Curso(self.__nombreCursoRec, self.__descripcionRec, self.__dificultadRec,
+                           self.__profRec, self.__AsignaturaRec)
+        self.__profRec.asociarCursoProfesor(nuevoCurso)
+        for p in self.SETpreviasRec:
+            nuevoCurso.añadirPrevia(p)
+        self.__AsignaturaRec.asociarCursoAsignatura(nuevoCurso)
+        mc = ManejadorCurso()
+        mc.agregarCurso(nuevoCurso)
+        nuevoCurso.setProfesor(self.__profRec)
 
     #Agregar leccion
     
