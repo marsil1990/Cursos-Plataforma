@@ -130,10 +130,6 @@ def main():
                 previas = input("Ingresa separados por coma los cursos que serán previos")
                 ctrCurso.seleccionarPrevias(previas)
             ctrCurso.ConfirmarAltaCurso()
-            
-            
-
-
         
         elif eleccion == "0":
             seguir = False
