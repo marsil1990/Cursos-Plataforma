@@ -20,15 +20,15 @@ class Profesor(Usuario):
             especializaciones.add(e)
         return especializaciones
 
-    def asociarCursoProfesor(curso): 
-        pass
+    def asociarCursoProfesor(self, curso): 
+        self.__MAPCursos[curso.getNombre()] = curso
 
     def SETgetDataCursosHab(self, asignatura):
         cursosHabilitados = set()
         for c in self.__MAPCursos.values():
-            if c.getHabilitado()==True and c.getAsignatura() == asignatura:
-                cursosData = DTCurso(c)
-                cursosHabilitados.add(cursosData)
+            if c.getHabilitado():
+                #cursosData = DTCurso(c)
+                cursosHabilitados.add(c.getNombre())
         return cursosHabilitados
 
 

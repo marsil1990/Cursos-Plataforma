@@ -1,8 +1,8 @@
 class Asignatura:
     def __init__ (self, nombre):
         self.__Nombre = nombre
-        __SETobservers = None
-        __MAPCursos = None
+        self.__SETobservers = None
+        self.__MAPCursos = dict()
     def getNombre(self):
         return self.__Nombre
     def AgregarSuscriptor(u): pass
@@ -11,6 +11,7 @@ class Asignatura:
     def agregar(observer): pass
     def eliminar(observer): pass
     def EnviarNotificacion(curso): pass
-    def asociarCursoAsignatura(curso): pass
+    def asociarCursoAsignatura(self, curso):
+        self.__MAPCursos[curso.getNombre()] = curso
     def removerCurso(Nombre): pass
    

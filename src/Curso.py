@@ -1,3 +1,4 @@
+from src.ManejadorCurso import ManejadorCurso
 class Curso:
     def __init__(self, nombre, descripcion, nivel, profesor=None, asignatura = None):
        self.__Nombre = nombre
@@ -5,8 +6,8 @@ class Curso:
        self.__Dificultad=nivel
        self.__ProfesorCurso = profesor
        self.__AsignaturaCurso = asignatura
-       self.__Previas=None
-       self.__Habilitado = False
+       self.__Previas= dict()
+       self.__Habilitado = True
        self.__MAPalumnosInscriptos=None
        self.__MAPLecciones=None
 
@@ -28,12 +29,15 @@ class Curso:
         else: return False
     def inscribirEstudiante(estudiante):pass
     def getCantLecciones():pass
-    def setProfesor(profesor):pass
+    def setProfesor(self, profesor):
+        self.__ProfesorCurso = profesor
     def setHabilitado(habilitado):pass
     def removerPrevia(nombreCurso):pass
     def getDataCurso():pass
     def añadirLeccion(lec):pass
-    def añadirPrevia(previa):pass
+    def añadirPrevia(self, previa):
+        self.__Previas[previa.getNombre()]=previa
+
     def obtenerAvanceCurso(nickEstudiante):pass
     def obtenerPromedioCurso(): pass
     def obtenerSiguienteLeccion(orden):pass

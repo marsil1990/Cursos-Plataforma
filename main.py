@@ -99,28 +99,37 @@ def main():
             for p in nicknameProfesores:
                 print(p)
             nickname = input("Ingrese el nickname del profesor: ")
-            ctrCurso.seleccionarProfesor()
+            while(not (nickname in nicknameProfesores)):
+                nickname = input("Nickname incorrecto, ingrese nickname del profesor: ")
+            ctrCurso.seleccionarProfesor(nickname)
             nombreCurso = input("Nombre del Curso: ")
-            descripcionCuros = input("Descripción del curso: ")
-            nivelCurso = input("Nivel del curso (Principiante(p)/Intermedio(i)/Avanzado(a)")
-            ctrCurso.ingresarDatosCurso(nombreCurso, descripcionCuros, nivelCurso)
-            setIAsignaturas =  ctrCurso.obtenerAsignaturasEspecializacion()
+            while (ctrCurso.ExisteCurso(nombreCurso)):
+                nombreCurso = input("Nombre del Curso ya existe, ingrese otro: ")
+            descripcionCurso = input("Descripción del curso: ")
+            nivelCurso = input("Nivel del curso (Principiante(p)/Intermedio(i)/Avanzado(a): ")
+            while (nivelCurso.strip().lower() != "p" and nivelCurso.strip().lower() != "i" and 
+                   nivelCurso.strip().lower() != "a"):
+                nivelCurso = input("Ingrese solo p o i o a: ")
+            ctrCurso.ingresarDatosCurso(nombreCurso, descripcionCurso, nivelCurso)
+            setAsignaturas =  ctrCurso.obtenerAsignaturasEspecializacion()
             for i in setAsignaturas:
                 print(i)
             Asignatura = input("Ingrese Asignatura: ")
+            while (not(Asignatura in setAsignaturas)):
+                Asignatura = input("Incorrecto, Ingrese Asignatura nuevamente: ")
             ctrCurso.seleccionarAsignatura(Asignatura)
             previa = input("Necesita cursos previos aprobados S/N: ")
             conf = False
-            if previa == "s":
+            if previa.strip().lower() == "s":
                 conf = True
-                #ctrCurso.necesitaPrevia(confirmacion) inecesaría
+                ctrCurso.necesitaPrevia(conf) 
                 colCursosHabilitados = ctrCurso.SETobtenerCursosHabilitados()
-                print("Acontinuación se muestran los cursos previos, cursos creados por el mismo profesor")
+                print("Cursos creados por el mismo profesor")
                 for c in colCursosHabilitados:
                     print(c)
                 previas = input("Ingresa separados por coma los cursos que serán previos")
                 ctrCurso.seleccionarPrevias(previas)
-                ctrCurso.ConfirmarAltaCurso()
+            ctrCurso.ConfirmarAltaCurso()
             
             
 

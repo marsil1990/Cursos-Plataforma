@@ -11,7 +11,7 @@ class CtrCurso(ICurso) :
        self.__descripcionRec = None
        self.__dificultadRec= None
        self.__AsignaturaRec= None
-       self.__necesitaPreviaRec= None
+       self.__necesitaPreviaRec= False
        self.SETpreviasRec= None
        self.MAPleccionesRec= None
        self.ultimaLeccion= None
@@ -35,8 +35,9 @@ class CtrCurso(ICurso) :
         return nickNamesProfesores
 
     
-    def ExisteCurso(nombreCurso): pass
-    
+    def ExisteCurso(self, nombreCurso):
+        mc = ManejadorCurso()
+        return mc.ExisteCurso(nombreCurso)
     def seleccionarProfesor(self, nickname): 
         mu = ManejadorUsuario()
         self.__profRec  = mu.obtenerUsuario(nickname)
@@ -84,8 +85,9 @@ class CtrCurso(ICurso) :
         nuevoCurso = Curso(self.__nombreCursoRec, self.__descripcionRec, self.__dificultadRec,
                            self.__profRec, self.__AsignaturaRec)
         self.__profRec.asociarCursoProfesor(nuevoCurso)
-        for p in self.SETpreviasRec:
-            nuevoCurso.añadirPrevia(p)
+        if self.__necesitaPreviaRec:
+            for p in self.SETpreviasRec:
+                nuevoCurso.añadirPrevia(p)
         self.__AsignaturaRec.asociarCursoAsignatura(nuevoCurso)
         mc = ManejadorCurso()
         mc.agregarCurso(nuevoCurso)
