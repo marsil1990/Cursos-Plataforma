@@ -1,6 +1,7 @@
-from src.Ejercicio import Ejercicio
+from src.CompletarPalabra import CompletarPalabra
+from src.MultiOpcion import MultiOpcion
 class Leccion:
-    def __init__(self, orden, tema, objetivo, ejercicios = None):
+    def __init__(self, orden, tema, objetivo, ejercicios = dict()):
         self.__orden = orden
         self.__tema = tema
         self.__objetivo = objetivo
@@ -12,12 +13,19 @@ class Leccion:
         return self.__tema
     def getObjetivo(self):
         return self.__objetivo
-    def añadirEjercicio(descripcion, frase,  MAPrespuesta): pass
-    def añadirEjercicio(descripcion, frase, traduccion): pass
+    def añadirEjercicioCompletar(self, descripcion, frase,  MAPrespuesta):
+        n = len(self.__MAPEjercicio)+1
+        ej = CompletarPalabra(n , descripcion, frase, MAPrespuesta)
+        self.__MAPEjercicio[ej.getId()] = ej
+    def añadirEjercicioMultiple(self, descripcion, pregunta, opciones, opcionCorrecta):
+        n = len(self.__MAPEjercicio)+1
+        ej = MultiOpcion(n , descripcion,pregunta, opciones, opcionCorrecta)
+        self.__MAPEjercicio[ej.getId()] = ej
     def contarEjercicios(tot, ap, nickestudiante): pass
     def SETobtenerNoAprobados(): pass
     def obtenerEjercicio(nombreEjercicio): pass
-    def getCantEjercicios(): pass
+    def getCantEjercicios(self):
+        return len(self.__MAPEjercicio)
     def setOrden(orden): pass
     def MAPgetColEjercicios(): pass
     def eliminarEjercicios(): pass

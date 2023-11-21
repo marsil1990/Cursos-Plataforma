@@ -26,14 +26,19 @@ class Profesor(Usuario):
     def SETgetDataCursosHab(self, asignatura):
         cursosHabilitados = set()
         for c in self.__MAPCursos.values():
-            if c.getHabilitado():
+            if c.getHabilitado() and c.getAsignatura().getNombre == asignatura.getNombre():
                 #cursosData = DTCurso(c)
                 cursosHabilitados.add(c.getNombre())
         return cursosHabilitados
 
 
-    def SETobtenerCursosNoHabilitados():
-        pass
+    def SETobtenerCursosNoHabilitados(self):
+        cursosNoHabilitados = set()
+        for c in self.__MAPCursos.values():
+            if not c.getHabilitado():
+                #cursosData = DTCurso(c)
+                cursosNoHabilitados.add(c.getNombre())
+        return cursosNoHabilitados
 
     def eliminarCurso(nombreCurso):
         pass

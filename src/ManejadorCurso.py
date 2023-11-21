@@ -8,7 +8,8 @@ class ManejadorCurso(object):
         return ManejadorCurso.__instancia
     
     
-    def obtenerCurso(nombreCurso): pass
+    def obtenerCurso(self, nombreCurso):
+        return self.__MAPCursos[nombreCurso]
     def  SETobtenerCursosDisponibles(): pass
     def ExisteCurso(self, nombreCurso):
         return nombreCurso in self.__MAPCursos
@@ -27,6 +28,7 @@ class ManejadorCurso(object):
 
     def eliminarPrevia(NomCursos): pass
     def agregarCurso(self, curso):
-        self.__MAPCursos[curso.getNombre()]=curso
+        self.__MAPCursos[curso.getNombre()] = curso
+        print(curso)
     def SETobtenerTodosCursos(): pass
     def eliminarCurso(nombreCurso): pass

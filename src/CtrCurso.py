@@ -1,9 +1,11 @@
+from copy import copy
 from src.ICurso import ICurso
 from src.ManejadorAsignatura import ManejadorAsignatura
 from src.ManejadorUsuario import ManejadorUsuario
 from src.asignatura import Asignatura
 from src.ManejadorCurso import ManejadorCurso
 from src.Curso import Curso
+from src.Leccion import Leccion
 class CtrCurso(ICurso) :
     def __init__(self):
        self.__profRec = None
@@ -12,21 +14,22 @@ class CtrCurso(ICurso) :
        self.__dificultadRec= None
        self.__AsignaturaRec= None
        self.__necesitaPreviaRec= False
-       self.SETpreviasRec= None
-       self.MAPleccionesRec= None
-       self.ultimaLeccion= None
-       self.cursoRecAgregar= None
-       self.temaRec= None
-       self.objetivoRec= None
-       self.tipoejercicioRec= None
-       self.descripcionEjRec= None
-       self.fraseEjRec= None
-       self.MAPsolucionFCRec= None
-       self.solucionTRec= None
-       self.MAPejerciciosNuevos= None
-       self.leccionSeleccionada= None
-       self.nombreRecordado= None
-       self.MAPcursosRecordados= None
+       self.__SETpreviasRec= None
+       self.__MAPleccionesRec= dict()
+       self.__canLecciones = None
+       self.__ultimaLeccion= None
+       self.__cursoRecAgregar = None
+       self.__temaRec= None
+       self.__objetivoRec= None
+       self.__tipoejercicioRec= None
+       self.__descripcionEjRec= None
+       self.__fraseEjRec= None
+       self.__MAPsolucionFCRec= None
+       self.__solucionTRec= None
+       self.__MAPejerciciosNuevos= None
+       self.__leccionSeleccionada= None
+       self.__nombreRecordado= None
+       self.__MAPcursosRecordados= None
      
     #Alta Curso
     def obtenerNickname(self):
@@ -75,12 +78,19 @@ class CtrCurso(ICurso) :
 
 
     
-    def crearLeccion(tema, objetivo): pass
-    
-    def crearEjercicioCompletarPalabra(descripcion,frase, MAPrespuesta): pass
-    
-    def crearEjercicioTraducir(descripcion,frase, traduccion): pass
-    
+    def crearLeccion(self, tema, objetivo, cursoNombre):
+        mc = ManejadorCurso()
+        curso = mc.obtenerCurso(cursoNombre)
+        n = curso.getCantLecciones() + 1
+        self.__ultimaLeccion =  Leccion(n, tema, objetivo)
+        self.__MAPleccionesRec[n]= self.__ultimaLeccion
+
+    def crearEjercicioCompletarPalabra(self, descripcion,frase, MAPrespuesta):
+        self.__ultimaLeccion.añadirEjercicioCompletar(descripcion, frase, MAPrespuesta)
+
+    def crearEjercicioMultipleOpcion(self, descripcion,pregunta, opciones, opcionCorrecta):
+        self.__ultimaLeccion.añadirEjercicioMultiple(descripcion,pregunta, opciones, opcionCorrecta)
+
     def ConfirmarAltaCurso(self):
         nuevoCurso = Curso(self.__nombreCursoRec, self.__descripcionRec, self.__dificultadRec,
                            self.__profRec, self.__AsignaturaRec)
@@ -94,22 +104,37 @@ class CtrCurso(ICurso) :
         nuevoCurso.setProfesor(self.__profRec)
 
     #Agregar leccion
+    #Curso no habilitados de un profesor de nickname "nickname"
+    def SETObtenerCursosNoHabilitados(self, nickname):
+        mu = ManejadorUsuario()
+        prof = mu.obtenerUsuario(nickname)
+        return prof.SETobtenerCursosNoHabilitados()
     
-    def SETObtenerCursosNoHabilitados(): pass
+    def seleccionarCurso(self, nombreCurso):
+        mc = ManejadorCurso()
+        self.__cursoRecAgregar = mc.obtenerCurso(nombreCurso)
+        
     
-    def seleccionarCurso(nombreCurso): pass
-    
-    def crearDatosLeccion(tema, objetivo): pass
+    def crearDatosLeccion(self, tema, objetivo):
+        self.__temaRec = tema
+        self.__objetivoRec = objetivo
     
     def ingresarFraseCompletar(frase, MAPsolucion): pass
     
-    def DarDeAltaEjercicio(): pass
+    def DarDeAltaEjercicio():
+        pass
     
-    def DarDeAltaLeccion(): pass
+    def DarDeAltaLeccion(self):
+        lec = self.__ultimaLeccion
+        self.__cursoRecAgregar.añadirLeccion( Leccion(lec.getOrden(), lec.getTema(), lec.getObjetivo()))
+        self.__MAPleccionesRec.clear()
+        self.__ultimaLeccion = None
 
     #Agregar ejercicio
     
-    def MAPobtenerLecciones(): pass
+    def MAPobtenerLecciones(self):
+        lecciones = self.__cursoRecAgregar.MAPgetLecciones()
+        return lecciones
     
     def agregarEjercicio(lec, descripcion ,frase, MAPsolucion): pass
     
@@ -148,7 +173,26 @@ class CtrCurso(ICurso) :
     
     def obtenerPromedio(): pass
     
-    def habilitarCurso(): pass
+    def habilitarCurso(self):
+        correcto = False
+        if self.__cursoRecAgregar.getCantLecciones()!= 0:
+            lecciones = self.__cursoRecAgregar.MAPgetColLecciones()
+            cantidadLecciones = 0
+            for l in lecciones.values():
+                if l.getCantEjercicios()==0:
+                    break
+                else:
+                    cantidadLecciones +=1
+            if cantidadLecciones == self.__cursoRecAgregar.getCantLecciones():
+                correcto = True
+                self.__cursoRecAgregar.setHabilitar()
+                
+        return correcto
+
+
+                
+
+
     #Consultar curso
     
     def obtenerCurso(nombreCurso): pass

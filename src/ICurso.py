@@ -24,7 +24,7 @@ class ICurso(ABC):
     @abstractmethod
     def crearEjercicioCompletarPalabra(descripcion,frase, MAPrespuesta): pass
     @abstractmethod
-    def crearEjercicioTraducir(descripcion,frase, traduccion): pass
+    def crearEjercicioMultipleOpcion(descripcion,pregunta, opciones, opcionCorrecta): pass
     @abstractmethod
     def ConfirmarAltaCurso(): pass
 

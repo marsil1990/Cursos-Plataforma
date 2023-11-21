@@ -1,5 +1,5 @@
 class Ejercicio:
-    def __ini__(self, identificacion, descripcion): 
+    def __init__(self, identificacion, descripcion): 
        self.__Id = identificacion
        self.__Descripcion = descripcion
        self.__MAPEstudiantesAprobaron = dict()

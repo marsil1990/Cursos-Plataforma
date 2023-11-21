@@ -1,4 +1,5 @@
 from src.ManejadorCurso import ManejadorCurso
+from src.Leccion import Leccion
 class Curso:
     def __init__(self, nombre, descripcion, nivel, profesor=None, asignatura = None):
        self.__Nombre = nombre
@@ -7,9 +8,9 @@ class Curso:
        self.__ProfesorCurso = profesor
        self.__AsignaturaCurso = asignatura
        self.__Previas= dict()
-       self.__Habilitado = True
+       self.__Habilitado = False
        self.__MAPalumnosInscriptos=None
-       self.__MAPLecciones=None
+       self.__MAPLecciones= dict()
 
     def getNombre(self):
         return self.__Nombre
@@ -23,30 +24,38 @@ class Curso:
         return self.__AsignaturaCurso
     def getHabilitado(self):
         return self.__Habilitado
-    def setHabilitado(self):
+    
+    def setHabilitar(self):
         if self.__Habilitado == False:
-            return True
-        else: return False
+            self.__Habilitado = True
+
     def inscribirEstudiante(estudiante):pass
-    def getCantLecciones():pass
+    def getCantLecciones(self):
+        return len(self.__MAPLecciones)
     def setProfesor(self, profesor):
         self.__ProfesorCurso = profesor
     def setHabilitado(habilitado):pass
     def removerPrevia(nombreCurso):pass
     def getDataCurso():pass
-    def añadirLeccion(lec):pass
+    def añadirLeccion(self, lec):
+        self.__MAPLecciones[lec.getOrden()] =lec
     def añadirPrevia(self, previa):
         self.__Previas[previa.getNombre()]=previa
 
     def obtenerAvanceCurso(nickEstudiante):pass
     def obtenerPromedioCurso(): pass
     def obtenerSiguienteLeccion(orden):pass
-    def SETgetLecciones(): pass
+    def MAPgetLecciones(self): 
+        lecciones = dict()
+        for lk, lv in self.__MAPLecciones.items():
+            lecciones[lk] = lv.getTema()
+        return lecciones
     def nuevoEjercicio(lec, descripcion, frase, MAPsolucion):pass
     def nuevoEjercicio(lec, descripcion, frase, solucion):pass
     def habilitarCurso(): pass
     def getCantEjercicios(): pass
-    def MAPgetColLecciones(): pass
+    def MAPgetColLecciones(self):
+        return self.__MAPLecciones
     def eliminarLecciones(): pass
     def eliminarPrevias(nomCurso): pass
     def getProfesor(self):
