@@ -45,6 +45,10 @@ class Curso:
     def obtenerAvanceCurso(nickEstudiante):pass
     def obtenerPromedioCurso(): pass
     def obtenerSiguienteLeccion(orden):pass
+    def obtenerLeccion(self, orden):
+        return self.__MAPLecciones[orden]
+    
+    
     def MAPgetLecciones(self): 
         lecciones = dict()
         for lk, lv in self.__MAPLecciones.items():

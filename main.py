@@ -13,8 +13,6 @@ def altaAsignatura():
         print("El Asignatura se ingreso correctamente")
     else: print("El Asignatura ya existe")
 
-
-
 def consultarAsignatura():
     a = Fabrica()
     ctrCurso = a.getICurso()
@@ -262,6 +260,52 @@ def agregarEjercicio():
     lecciones = ctrCurso.MAPobtenerLecciones()
     for lk, lv in lecciones.items():
         print(f"{lk}:{lv}")
+    orden = int(input("Ingresar lección (número): "))
+    while not orden in lecciones.keys():
+        orden = int(input("incorrecto, Ingresar lección número): "))
+    ctrCurso.seleccionarLeccion(orden, curso)
+    tipoEjercicio = input("Ingresa tipo de ejercicio(solo el número): 1 - Completar, 2 - MultileOpción: ")
+    seguirAgregando = True
+    while seguirAgregando == True:
+        if tipoEjercicio.strip() == "1":
+            descripcion = input("Agrega descripción: ")
+            frase = input("Ingresa la frase, en los lugares donde irían las palabras a completar escribe ---: ")
+            soluciones = dict()
+            continuarAgregandoPalabras = True
+            espacio = 1
+            while continuarAgregandoPalabras:
+                palabra = input(f"Ingrese la palabra para el espacio número {espacio}")
+                soluciones[espacio] = palabra
+                espacio += 1
+                continueAgregando = input("Desea continuar agregando palabras Si/No: ")
+                if continueAgregando.strip().lower() == "no":
+                    continuarAgregandoPalabras = False
+                    espacio = 1
+            ctrCurso.crearEjercicioCompletarPalabra(descripcion, frase, soluciones)
+        elif tipoEjercicio.strip() == "2":
+            descripcion = input("Agrega descripción: ")
+            pregunta = input("Ingresa pregunta o problema: ")
+            opcionCorrecta = input("Ingrese la opción correcta (número de la misa): ")
+            opciones = dict()
+            continuarAgregando = True
+            op = 1
+            while continuarAgregando:
+                opc = input("Ingrese una opción: ")
+                opciones[op] = opc
+                op +=1
+                continuar_agregando = input("Desea continuar agregando opciones Si/No: ")
+                if continuar_agregando.strip().lower() == "no":
+                    continuarAgregando = False
+                    op = 1
+            ctrCurso.crearEjercicioMultipleOpcion(descripcion, pregunta, opciones, opcionCorrecta)
+        else: 
+            tipoEjercicio = input("opción incorrecta. Ingresa tipo de ejercicio(solo el número): 1 - Completar, 2 - MultileOpción: ")
+        s = input("Quiere seguir agregando ejercicios S/N: ")
+        if s.strip().lower() == "n":
+            seguirAgregando = False
+
+
+def realizarEjercicio(): pass
 
 
 
@@ -304,6 +348,9 @@ def main():
             
         elif eleccion == "8":
             agregarEjercicio()
+
+        elif eleccion == "9":
+            realizarEjercicio()
             
         elif eleccion == "0":
             seguir = False

@@ -61,6 +61,10 @@ class CtrCurso(ICurso) :
         mi = ManejadorAsignatura()
         self.__AsignaturaRec = mi.obtenerAsignatura(nombreAsignatura)
     
+    def seleccionarLeccion(self, orden, nombreCurso):
+        mc = ManejadorCurso()
+        self.__ultimaLeccion = mc.obtenerLeccion(nombreCurso, orden)
+
     def necesitaPrevia(self, confirmacion):
         self.__necesitaPreviaRec = confirmacion
     

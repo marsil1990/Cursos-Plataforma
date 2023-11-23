@@ -13,6 +13,9 @@ class ManejadorCurso(object):
     def  SETobtenerCursosDisponibles(): pass
     def ExisteCurso(self, nombreCurso):
         return nombreCurso in self.__MAPCursos
+    
+    def obtenerLeccion(self, nombreCurso, orden):
+        return self.__MAPCursos[nombreCurso].obtenerLeccion(orden)
 
     def SETobtenerCursosNoHab(): pass
     def SETCursosInscriptoNoAprobado(): pass

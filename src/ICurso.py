@@ -49,6 +49,8 @@ class ICurso(ABC):
     def agregarEjercicio(lec, descripcion ,frase, MAPsolucion): pass
     @abstractmethod
     def agregarEjercicio(lec, descripcion, frase, solucion): pass
+    @abstractmethod
+    def seleccionarLeccion(self, orden):pass
 
     #AlTA Asignatura
     @abstractmethod
