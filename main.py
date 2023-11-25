@@ -1,5 +1,6 @@
 from src.Fabrica import Fabrica
 from src.DTFecha import DTFecha
+from datetime import datetime
 
 def altaAsignatura():
     a = Fabrica()
@@ -304,6 +305,39 @@ def agregarEjercicio():
         if s.strip().lower() == "n":
             seguirAgregando = False
 
+def inscripcionCurso():
+    a = Fabrica()
+    ctrUsuario = a.getIUsuario()
+    nickname = input("Ingresar nickname: ")
+    if ctrUsuario.NicknameDisponible(nickname):
+        ctrUsuario.IngresarNickname(nickname)
+        cursosHabilitados = ctrUsuario.ObtenerCursosHabilitadosParaInscripcion(nickname)
+        if not cursosHabilitados:
+            print("El estudiante no tien cursos habilitados disponibles")
+        else:
+            i = 1
+            print("---Cursos disponibles---")
+            for c in cursosHabilitados:
+                print(f"{1}) curso: {c.getNombre()}")
+                print(f"- Descripcion: {c.getDesc()}")
+                print(f"- Cantidad de lecciones: {c.getcantLecciones()}")
+                print(f"- Cantidad de ejercicios: {c.getcantEjercicios()}")
+
+            nombreDelCurso = input("Escriba el nombre del curso: ")
+            
+            ctrUsuario.IngresarCursoSeleccionado(nombreDelCurso)
+            fecha_actual = datetime.now()
+            f = DTFecha(fecha_actual.year, fecha_actual.month, fecha_actual.day)
+            inscripcionCorrecta = ctrUsuario.FinalizarInscripcionACurso(nickname, f)
+            if inscripcionCorrecta:
+                print( "Se realizo correctamente la inscripcion.")
+            
+            else:
+               print("Surgio un problema durante la inscripcion pruebe nuevamente.");
+            
+    else: print("No existe usuario con ese nickname")
+
+
 
 def realizarEjercicio(): pass
 
@@ -321,6 +355,7 @@ def main():
         print(" 6- HABILITAR CURSO")
         print(" 7- AGREGAR LECCIÓN")
         print(" 8- AGREGAR EJERCICIO")
+        print(" 9- INSCRIBIRSE A UN CURSO")
         print(" 0- SALIR")
         eleccion = input("elección: ").strip()
         
@@ -350,7 +385,7 @@ def main():
             agregarEjercicio()
 
         elif eleccion == "9":
-            realizarEjercicio()
+            inscripcionCurso()
             
         elif eleccion == "0":
             seguir = False

@@ -1,11 +1,13 @@
 from src.IUsuario import IUsuario
 from src.DTFecha import DTFecha
+from src.DTCurso import DTCurso
 from src.ManejadorUsuario import ManejadorUsuario
 from src.Estudiante import Estudiante
 from src.DTEstudiante import DTEstudiante
 from src.Profesor import Profesor
 from src.DTProfesor import DTProfesor
 from src.ManejadorAsignatura import ManejadorAsignatura
+from src.ManejadorCurso import ManejadorCurso
 class CtrUsuario(IUsuario):
     __instancia = None
     __nickNameRec = None
@@ -137,8 +139,8 @@ class CtrUsuario(IUsuario):
         return prof
      #CONSULTAR NOTIFICACIONES
     
-    def  IngresarNickname(nickname):
-        pass
+    def  IngresarNickname(self, nickname):
+        self.__nickNameRec = nickname
     
     def  obtenerNotificaciones():
         pass
@@ -168,14 +170,65 @@ class CtrUsuario(IUsuario):
         pass
      #INSCRIBIRSE A CURSO
     
-    def  ObtenerCursosHabilitadosParaInscripcion(nickName):
-        pass
+    def  ObtenerCursosHabilitadosParaInscripcion(self, nickname):
+        mc = ManejadorCurso()
+        mu = ManejadorUsuario()
+        estudiante = mu.obtenerUsuario(nickname)
+        cursosInscriptos = estudiante.MAPObtenerCursosInscriptos()
+        nombreCursos = mc.SETobtenerCursosDisponibles()
+        listNombreCursos = []
+        for curDis in nombreCursos:
+            listNombreCursos.append(curDis)
+        cursos = mc.SETobtenerCursos(listNombreCursos)
+        cursosHabilitados = set()
+        cursosDisponibles = set()
+        for c in cursos:
+            if c.getHabilitado():
+                cursosHabilitados.add(c)
+        #//Si no existe cursos Habilitado con el null indicamos que no existe cursos para inscribirse.
+        if len(cursosHabilitados)==0:
+            return cursosHabilitados
+        
+        #itero en todos los cursos habilitados
+        for c in cursosHabilitados:
+            #si tengo cursos inscriptos
+            if len(cursosInscriptos) != 0 and not (cursosHabilitados.getNombre() in cursosInscriptos):
+                MAPprevias = c.getPrevias()
+                tieneLasPrevias = True
+                if len(MAPprevias) != 0:
+                    for p in MAPprevias:
+                        if not p in cursosInscriptos:
+                            tieneLasPrevias = False
+                        else:
+                            if not estudiante.getInscripcion(p).getAprobada():
+                                tieneLasPrevias = False
+                if tieneLasPrevias:
+                    cursoDisponible = DTCurso(c)
+                    cursosDisponibles.add(cursoDisponible)
+            else:
+                if len(cursosInscriptos)==0: 
+                    previas = c.getPrevias()
+                    if len(previas) == 0:
+                        cursoDisponible = DTCurso.DTCurso(c)
+                        cursosDisponibles.add(cursoDisponible)
+     
+        return cursosDisponibles
     
-    def  IngresarCursoSeleccionado(nombreCurso):
-        pass
+    def  IngresarCursoSeleccionado(self, nombreCurso):
+        self.__nombreCursoRec = nombreCurso
     
-    def  FinalizarInscripcionACurso(nickname, fecha = None, aprobado = False):
-        pass
+    def  FinalizarInscripcionACurso(self, nickname, fecha = None, aprobado = False):
+        mu = ManejadorUsuario()
+        mc = ManejadorCurso()
+        try:
+           estudiante = mu.obtenerUsuario(nickname)
+           curso = mc.obtenerCurso(self.__nombreCursoRec);
+           estudiante.inscribirseCurso(curso.getNombre(),curso, aprobado, fecha)
+           return True
+        except:
+           return False
+
+
     #REALIZAR EJERCICIO
     
     def  existeUsuario(nickname):
@@ -183,7 +236,7 @@ class CtrUsuario(IUsuario):
     
     def  recordarUsuario(nickname):
         pass
-    def  obtenerCursosInscriptoNoAprobado():
+    def  obtenerCursosInscriptoNoAprobado(self, nickname):
         pass
     
     def  obtenerEjerciciosNoAprobados():

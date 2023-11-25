@@ -10,7 +10,12 @@ class ManejadorCurso(object):
     
     def obtenerCurso(self, nombreCurso):
         return self.__MAPCursos[nombreCurso]
-    def  SETobtenerCursosDisponibles(): pass
+    def  SETobtenerCursosDisponibles(self):
+        cursosDisponibles = set()
+        for c in self.__MAPCursos.values():
+            cursosDisponibles.add(c.getNombre())
+        return cursosDisponibles
+
     def ExisteCurso(self, nombreCurso):
         return nombreCurso in self.__MAPCursos
     

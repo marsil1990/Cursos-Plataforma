@@ -13,17 +13,21 @@ class DTCurso :
        self.__cantInscriptos = cantInscriptos
 
     def DTCurso(curso):
-        cursoData = DTCurso(curso.getNombre(), curso.getDesc(), curso.getDificultad(), curso.getNombreProfesor(),
-                        curso.getAsignatura(), curso.getHabilitado(), curso.getcantLecciones(),
-                         curso.getcantEjercicios(), curso.getCantInscriptos() )
+        cursoData = DTCurso(curso.getNombre(), curso.getDescripcion(), curso.getDificultad(), curso.getNombreProfesor(),
+                        curso.getAsignatura(), curso.getHabilitado(), curso.getCantLecciones(),
+                         curso.getCantEjercicios(), curso.getCantInscriptos())
         return cursoData
-    def getNombre(): pass
-    def getDesc(): pass
+    def getNombre(self): 
+        return self.__Nombre
+    def getDesc(self):
+        return self.__Descripcion
     def getDificultad(): pass
     def getNombreProfesor(): pass
     def getNombreIdiomaCurso(): pass
     def getHabilitado(): pass
-    def getcantLecciones(): pass
-    def getcantEjercicios(): pass
+    def getcantLecciones(self):
+        return self.__cantLecciones
+    def getcantEjercicios(self):
+        return self.__cantEjercicios
     def getCantInscriptos(): pass
     def MAPgetEstudiantesInscriptos(): pass

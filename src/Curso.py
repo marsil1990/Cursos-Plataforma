@@ -1,5 +1,6 @@
 from src.ManejadorCurso import ManejadorCurso
 from src.Leccion import Leccion
+from src.Estudiante import Estudiante
 class Curso:
     def __init__(self, nombre, descripcion, nivel, profesor=None, asignatura = None):
        self.__Nombre = nombre
@@ -9,7 +10,7 @@ class Curso:
        self.__AsignaturaCurso = asignatura
        self.__Previas= dict()
        self.__Habilitado = False
-       self.__MAPalumnosInscriptos=None
+       self.__MAPalumnosInscriptos=dict()
        self.__MAPLecciones= dict()
 
     def getNombre(self):
@@ -29,7 +30,8 @@ class Curso:
         if self.__Habilitado == False:
             self.__Habilitado = True
 
-    def inscribirEstudiante(estudiante):pass
+    def inscribirEstudiante(self, estudiante):
+        self.__MAPalumnosInscriptos[estudiante.getNickname()]=estudiante
     def getCantLecciones(self):
         return len(self.__MAPLecciones)
     def setProfesor(self, profesor):
@@ -57,14 +59,21 @@ class Curso:
     def nuevoEjercicio(lec, descripcion, frase, MAPsolucion):pass
     def nuevoEjercicio(lec, descripcion, frase, solucion):pass
     def habilitarCurso(): pass
-    def getCantEjercicios(): pass
+    def getCantEjercicios(self): 
+        cant = 0
+        for l in self.__MAPLecciones.values():
+            cant += l.getCantEjercicios()
+        return cant
     def MAPgetColLecciones(self):
         return self.__MAPLecciones
     def eliminarLecciones(): pass
     def eliminarPrevias(nomCurso): pass
     def getProfesor(self):
         return self.__ProfesorCurso
+    def getNombreProfesor(self):
+        return self.__ProfesorCurso.getNombre()
     def MAPgetEstudiantes(): pass
     def getNicknameProfesor(): pass
-    def getCantInscriptos(): pass
+    def getCantInscriptos(self):
+        return len(self.__MAPalumnosInscriptos)
     def borrarPrevias(): pass
