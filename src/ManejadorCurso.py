@@ -1,3 +1,4 @@
+from src.DTCurso import DTCurso
 class ManejadorCurso(object):
     __instancia = None
     __MAPCursos = None
@@ -37,6 +38,12 @@ class ManejadorCurso(object):
     def eliminarPrevia(NomCursos): pass
     def agregarCurso(self, curso):
         self.__MAPCursos[curso.getNombre()] = curso
-        print(curso)
-    def SETobtenerTodosCursos(): pass
+        
+        
+    def SETobtenerTodosCursos(self):
+        cursos = set()
+        for c in self.__MAPCursos.values():
+            cursos.add(DTCurso(curso=c))
+        return cursos
+
     def eliminarCurso(nombreCurso): pass

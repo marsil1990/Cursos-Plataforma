@@ -27,5 +27,6 @@ class Leccion:
     def getCantEjercicios(self):
         return len(self.__MAPEjercicio)
     def setOrden(orden): pass
-    def MAPgetColEjercicios(): pass
+    def MAPgetColEjercicios(self):
+        return self.__MAPEjercicio
     def eliminarEjercicios(): pass

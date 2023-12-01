@@ -6,7 +6,7 @@ class DTUsuario :
         self.__Descripcion = Descripcion
     def getNickname(self):
         return self.__Nickname
-    def getContraseña(self):
+    def getContrasena(self):
         return self.__Contrasena
     def getDescripcion(self):
         return self.__Descripcion

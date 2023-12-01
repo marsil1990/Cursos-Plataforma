@@ -5,7 +5,6 @@ class Estudiante(Usuario):
         super().__init__(Nickname, Contrasena, Nombre, Descripcion)
         self.__pais = Pais
         self.__FechaNac = FechaNac
-        self.__FechaNac = None
         self.__SETNotificaciones = set()
         self.__MAPCursosInscriptos = dict()
         self.__MAPInscripciones = dict()
@@ -19,7 +18,8 @@ class Estudiante(Usuario):
         return self.__MAPCursosInscriptos
     
     def notificar(DTnuevocurso):pass
-    def  MAPgetInscripciones():pass
+    def  MAPgetInscripciones(self):
+        return self.__MAPInscripciones
     def inscribirseCurso(self, nombreCurso, curso, aprobarCurso = False, f= None):
         from src.Inscripcion import Inscripcion
         nuevaInscripcion = Inscripcion(f, curso, self)

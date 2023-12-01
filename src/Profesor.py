@@ -11,8 +11,8 @@ class Profesor(Usuario):
     def getInstituto(self):
         return self.__Instituto
     
-    def AgregarEspecializacion(self, Asignatura):
-        self.__MAPEspecializacion[Asignatura] = Asignatura
+    def AgregarEspecializacion(self, asignatura):
+        self.__MAPEspecializacion[asignatura] = asignatura
 
     def SETobtenerEspecializaciones(self):
         especializaciones = set()
@@ -26,7 +26,7 @@ class Profesor(Usuario):
     def SETgetDataCursosHab(self, asignatura):
         cursosHabilitados = set()
         for c in self.__MAPCursos.values():
-            if c.getHabilitado() and c.getAsignatura().getNombre == asignatura.getNombre():
+            if c.getHabilitado() and c.getAsignatura().getNombre() == asignatura:
                 #cursosData = DTCurso(c)
                 cursosHabilitados.add(c.getNombre())
         return cursosHabilitados

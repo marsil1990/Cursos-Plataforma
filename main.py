@@ -33,8 +33,8 @@ def altaUsusario():
         contrasena = input("La contraseña debe tener minimo 6 caracteres, intente nuevamente: ")
     nombre = input("Ingresar nombre: ")
     descripcion = input("Ingresar descripción: ")
-    tipoUsuario = input("Eres profesor o estudiante (p/e)")
-    ctrUsuario.IngresarDatosUsuario(nickname,contrasena,nombre,descripcion)
+    tipoUsuario = input("Eres profesor o estudiante (p/e): ")
+    ctrUsuario.IngresarDatosUsuario(nickname,contrasena,descripcion, nombre)
     if (tipoUsuario.lower().strip()== "e" ):
         nombrePais = input("Ingrese País donde vive: ")
         print("Ingrese fecha de nacimiento: ")
@@ -58,8 +58,8 @@ def altaUsusario():
                 ctrUsuario.AgregarEspecializacion(especializacion)
             else:
                 print("El Asignatura ingresado no es correcto, intene otra vez: ")
-            cont = input("Deseas agregar otro Asignatura S/N")
-            if cont.strip().lower() ==  "n":
+            cont = input("Deseas agregar otro Asignatura Si/No: ")
+            if cont.strip().lower() ==  "no":
                 continuar = False
                     
         ctrUsuario.ConfirmarAltaProfesor()
@@ -105,24 +105,26 @@ def altaCurso():
     setAsignaturas =  ctrCurso.obtenerAsignaturasEspecializacion()
     for i in setAsignaturas:
         print(i)
-    Asignatura = input("Ingrese Asignatura: ")
-    while (not(Asignatura in setAsignaturas)):
-        Asignatura = input("Incorrecto, Ingrese Asignatura nuevamente: ")
-    ctrCurso.seleccionarAsignatura(Asignatura)
-    previa = input("Necesita cursos previos aprobados S/N: ")
+    asignatura = input("Ingrese Asignatura: ")
+    while (not(asignatura in setAsignaturas)):
+        asignatura = input("Incorrecto, Ingrese Asignatura nuevamente: ")
+    ctrCurso.seleccionarAsignatura(asignatura)
+    previa = input("Necesita cursos previos aprobados Si/No: ")
     conf = False
-    if previa.strip().lower() == "s":
+    if previa.strip().lower() == "si":
         conf = True
         ctrCurso.necesitaPrevia(conf) 
         colCursosHabilitados = ctrCurso.SETobtenerCursosHabilitados()
         print("Cursos creados por el mismo profesor")
-        for c in colCursosHabilitados:
-            print(c)
-        previas = input("Ingresa separados por coma los cursos que serán previos")
-        ctrCurso.seleccionarPrevias(previas)
+        if len(colCursosHabilitados) != 0:
+            for c in colCursosHabilitados:
+                 print(c)
+            previas = input("Ingresa separados por coma los cursos que serán previos")
+            ctrCurso.seleccionarPrevias(previas)
+        else: print("No tiene curso habilitados")
     ctrCurso.ConfirmarAltaCurso()
-    agregarLecciones = input("Quieres agregar lecciones S/N: ")
-    while agregarLecciones.strip().lower() =="s":
+    agregarLecciones = input("Quieres agregar lecciones Si/No: ")
+    while agregarLecciones.strip().lower() =="si":
         ctrCurso.seleccionarCurso(nombreCurso)
         tema = input("Ingresar tema de la lección: ")
         objetivo = input("Ingresar objetivo de la lección: ")
@@ -134,17 +136,13 @@ def altaCurso():
             if tipoEjercicio.strip() == "1":
                 descripcion = input("Agrega descripción: ")
                 frase = input("Ingresa la frase, en los lugares donde irían las palabras a completar escribe ---: ")
+                cantCaractere = frase.count("---")
                 soluciones = dict()
-                continuarAgregandoPalabras = True
-                espacio = 1
-                while continuarAgregandoPalabras:
-                    palabra = input(f"Ingrese la palabra para el espacio número {espacio}")
+                espacio = cantCaractere
+                while espacio > 0:
+                    palabra = input(f"Ingrese la palabra para el espacio número {espacio}: ")
                     soluciones[espacio] = palabra
-                    espacio += 1
-                    continueAgregando = input("Desea continuar agregando palabras Si/No: ")
-                    if continueAgregando.strip().lower() == "no":
-                        continuarAgregandoPalabras = False
-                        espacio = 1
+                    espacio -= 1
                 ctrCurso.crearEjercicioCompletarPalabra(descripcion, frase, soluciones)
             elif tipoEjercicio.strip() == "2":
                 descripcion = input("Agrega descripción: ")
@@ -212,17 +210,13 @@ def agregarLeccion():
         if tipoEjercicio.strip() == "1":
             descripcion = input("Agrega descripción: ")
             frase = input("Ingresa la frase, en los lugares donde irían las palabras a completar escribe ---: ")
+            cantCaractere = frase.count("---")
             soluciones = dict()
-            continuarAgregandoPalabras = True
-            espacio = 1
-            while continuarAgregandoPalabras:
-                palabra = input(f"Ingrese la palabra para el espacio número {espacio}")
+            espacio = cantCaractere
+            while espacio > 0:
+                palabra = input(f"Ingrese la palabra para el espacio número {espacio}: ")
                 soluciones[espacio] = palabra
-                espacio += 1
-                continueAgregando = input("Desea continuar agregando palabras Si/No: ")
-                if continueAgregando.strip().lower() == "no":
-                    continuarAgregandoPalabras = False
-                    espacio = 1
+                espacio -= 1
             ctrCurso.crearEjercicioCompletarPalabra(descripcion, frase, soluciones)
         elif tipoEjercicio.strip() == "2":
             descripcion = input("Agrega descripción: ")
@@ -271,17 +265,13 @@ def agregarEjercicio():
         if tipoEjercicio.strip() == "1":
             descripcion = input("Agrega descripción: ")
             frase = input("Ingresa la frase, en los lugares donde irían las palabras a completar escribe ---: ")
+            cantCaractere = frase.count("---")
             soluciones = dict()
-            continuarAgregandoPalabras = True
-            espacio = 1
-            while continuarAgregandoPalabras:
+            espacio = cantCaractere
+            while espacio > 0:
                 palabra = input(f"Ingrese la palabra para el espacio número {espacio}")
                 soluciones[espacio] = palabra
-                espacio += 1
-                continueAgregando = input("Desea continuar agregando palabras Si/No: ")
-                if continueAgregando.strip().lower() == "no":
-                    continuarAgregandoPalabras = False
-                    espacio = 1
+                espacio -= 1
             ctrCurso.crearEjercicioCompletarPalabra(descripcion, frase, soluciones)
         elif tipoEjercicio.strip() == "2":
             descripcion = input("Agrega descripción: ")
@@ -337,6 +327,67 @@ def inscripcionCurso():
             
     else: print("No existe usuario con ese nickname")
 
+def consultarCurso():
+    a = Fabrica()
+    ctrCurso = a.getICurso()
+    cursos = ctrCurso.SETobtenerCursos()
+    for c in cursos:
+        print(c.getNombre())
+    curso  =  input("Ingrese nombre del curso: ")
+    while (not ctrCurso.ExisteCurso(curso)):
+        curso = input("Nombre del Curso incorrecto, ingrese nuevamente: ")
+    cursoDt = ctrCurso.obtenerCurso(curso)
+    print(f"Nombre del curso: {cursoDt.getNombre()}")
+    print(f"Dificultad del curso: {cursoDt.getDificultad()}")
+    print(f"Asignatura: {cursoDt.getNombreAsignatura()}")
+    print(f"Habilitado: {cursoDt.getHabilitado()}")
+    if cursoDt.getcantLecciones()!= 0:
+        lecciones = cursoDt.getLecciones()
+        for lv in lecciones.values():
+            print(f"lección número {lv.getOrden()} \n Tema: {lv.getTema()} \n Objetivo: {lv.getObjetivo()}")
+            ejercicios =  lv.getEjercicios()
+            if len(ejercicios) != 0:
+                for ej in ejercicios.values():
+                    print(f"Descripción del ejercicio: {ej.getDescripcion()}")
+            else: print("No tiene ejercicios.")
+    else: print("No tiene lecciones.")
+    estudiantesInscriptos = cursoDt.MAPgetEstudiantesInscriptos()
+    if len(estudiantesInscriptos) !=0:
+        for e in estudiantesInscriptos.values():
+            ins = e.getInscripcion(curso)
+            fechIns = ins.getFechaDeInscripcion()
+            print(f"Nombre estudiante: {e.getNombre()} \n Fecha de inscripción: {fechIns.getDia()}/{fechIns.getMes()}/{fechIns.getAno()}")
+    else: 
+        print("No tiene estudiantes inscriptos")
+
+def cargarDatos():
+    f = Fabrica()
+    ctrCurso = f.getICurso()
+    ctrUsuario = f.getIUsuario()
+    #ASIGNATURA DAR ALTA
+    ctrCurso.IngresarAsignatura("Matematica")
+    ctrCurso.ConfirmarAsignatura()
+    #USUARIO DAR ALTA (profesor)
+    ctrUsuario.IngresarDatosUsuario("prof","123456","Profesor de Matemática","Prof")
+    ctrUsuario.IngresarInstituto("IFD")
+    ctrUsuario.AgregarEspecializacion("Matematica")
+    ctrUsuario.ConfirmarAltaProfesor()
+    #USUARIO DAR ALTA ESTUDIANTE
+    ctrUsuario.IngresarDatosUsuario("Marcos","123456","Soy estudiante","Marcos")
+    dia = 15
+    mes = 12
+    ano = 1990
+    fechaNacimiento = DTFecha(ano, mes, dia)
+    ctrUsuario.IngresarDatoEstudiante("Uruguay",fechaNacimiento)
+    ctrUsuario.ConfirmarAltaEstudiante()
+    #ALTA CURSO
+    ctrCurso.seleccionarProfesor("prof")
+    ctrCurso.ingresarDatosCurso("matematica1", "Ecuaciones", "p")
+    ctrCurso.seleccionarAsignatura("Matematica")
+    ctrCurso.necesitaPrevia(False)
+    ctrCurso.ConfirmarAltaCurso()
+
+
 
 
 def realizarEjercicio(): pass
@@ -356,6 +407,8 @@ def main():
         print(" 7- AGREGAR LECCIÓN")
         print(" 8- AGREGAR EJERCICIO")
         print(" 9- INSCRIBIRSE A UN CURSO")
+        print(" 10- CONSULTAR CURSO")
+        print(" 11- CARGAR DATOS")
         print(" 0- SALIR")
         eleccion = input("elección: ").strip()
         
@@ -386,7 +439,13 @@ def main():
 
         elif eleccion == "9":
             inscripcionCurso()
-            
+
+        elif eleccion == "10":
+            consultarCurso()
+
+        elif eleccion == "11":
+            cargarDatos()
+
         elif eleccion == "0":
             seguir = False
 

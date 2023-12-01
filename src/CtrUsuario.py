@@ -35,8 +35,7 @@ class CtrUsuario(IUsuario):
            CtrUsuario.__instancia = object.__new__(cls)
         return CtrUsuario.__instancia
     
-    def hola(self):
-        return "hola"
+    
     
     
     #public
@@ -107,16 +106,16 @@ class CtrUsuario(IUsuario):
             prof = self.seleccionarProfesor(nickname)
             print(f"Nombre: {prof.getNombre()}")
             print(f"Descripción: {prof.getDescripcion()}")
-            print(f"Pais: {prof.getInstituto()}")
+            print(f"Instituto: {prof.getInstituto()}")
             Asignaturas = usuario.SETobtenerEspecializaciones()
             for i in Asignaturas:
-                print(i)
+                print(f"Asignatura: {i}")
         elif type(usuario)== Estudiante: 
             es = self.seleccionarEstudiante(nickname)
             print(f"Nombre: {es.getNombre()}")
             print(f"Descripción: {es.getDescripcion()}")
             print(f"Pais: {es.getPais()}")
-            print(f"Fecha de inscripción: {es.getFecha().getDia()} /{es.getFecha().getMes()}/{es.getFecha().getAno()} ")
+            print(f"Fecha de Nacimiento: {es.getFecha().getDia()} /{es.getFecha().getMes()}/{es.getFecha().getAno()} ")
 
 
 
@@ -203,13 +202,13 @@ class CtrUsuario(IUsuario):
                             if not estudiante.getInscripcion(p).getAprobada():
                                 tieneLasPrevias = False
                 if tieneLasPrevias:
-                    cursoDisponible = DTCurso(c)
+                    cursoDisponible = DTCurso(curso=c)
                     cursosDisponibles.add(cursoDisponible)
             else:
                 if len(cursosInscriptos)==0: 
                     previas = c.getPrevias()
                     if len(previas) == 0:
-                        cursoDisponible = DTCurso.DTCurso(c)
+                        cursoDisponible = DTCurso(curso=c)
                         cursosDisponibles.add(cursoDisponible)
      
         return cursosDisponibles

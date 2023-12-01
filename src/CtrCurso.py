@@ -2,10 +2,11 @@ from copy import copy
 from src.ICurso import ICurso
 from src.ManejadorAsignatura import ManejadorAsignatura
 from src.ManejadorUsuario import ManejadorUsuario
-from src.asignatura import Asignatura
+from src.Asignatura import Asignatura
 from src.ManejadorCurso import ManejadorCurso
 from src.Curso import Curso
 from src.Leccion import Leccion
+from src.DTCurso import DTCurso
 class CtrCurso(ICurso) :
     def __init__(self):
        self.__profRec = None
@@ -69,14 +70,14 @@ class CtrCurso(ICurso) :
         self.__necesitaPreviaRec = confirmacion
     
     def SETobtenerCursosHabilitados(self):
-        return self.__profRec.SETgetDataCursosHab(self.__AsignaturaRec)
+        return self.__profRec.SETgetDataCursosHab(self.__AsignaturaRec.getNombre())
     
     def seleccionarPrevias(self, cadena):
         c = cadena.replace(" ","")
         previas = c.split(',')
         mc = ManejadorCurso()
         cursosPrevios = mc.SETobtenerCursos(previas)
-        self.SETpreviasRec = cursosPrevios
+        self.__SETpreviasRec = cursosPrevios
         
 
 
@@ -100,7 +101,7 @@ class CtrCurso(ICurso) :
                            self.__profRec, self.__AsignaturaRec)
         self.__profRec.asociarCursoProfesor(nuevoCurso)
         if self.__necesitaPreviaRec:
-            for p in self.SETpreviasRec:
+            for p in self.__SETpreviasRec:
                 nuevoCurso.añadirPrevia(p)
         self.__AsignaturaRec.asociarCursoAsignatura(nuevoCurso)
         mc = ManejadorCurso()
@@ -147,14 +148,14 @@ class CtrCurso(ICurso) :
     #AlTA Asignatura
     
     def IngresarAsignatura(self,nombreAsignatura):
-        self.AsignaturaRec = nombreAsignatura
+        self.__AsignaturaRec = nombreAsignatura
     
     def ConfirmarAsignatura(self):
         mi = ManejadorAsignatura()
-        if mi.existeAsignatura(self.AsignaturaRec):
+        if mi.existeAsignatura(self.__AsignaturaRec):
             return False
         else:
-            i = Asignatura(self.AsignaturaRec)
+            i = Asignatura(self.__AsignaturaRec)
             mi.agregarAsignatura(i)
             return True
     
@@ -173,7 +174,10 @@ class CtrCurso(ICurso) :
     
     def MAPobtenerPromedioCursos(): pass
     
-    def SETobtenerCursos(): pass
+    def SETobtenerCursos(self):
+        mc = ManejadorCurso()
+        cursos =  mc.SETobtenerTodosCursos()
+        return cursos
     
     def obtenerPromedio(): pass
     
@@ -199,7 +203,12 @@ class CtrCurso(ICurso) :
 
     #Consultar curso
     
-    def obtenerCurso(nombreCurso): pass
+    def obtenerCurso(self,nombreCurso):
+        mc = ManejadorCurso()
+        c = mc.obtenerCurso(nombreCurso)
+        cursoDt = DTCurso(curso=c)
+        return cursoDt
+
     
     def  MAPobtenerLeccionesDeCurso(): pass
     

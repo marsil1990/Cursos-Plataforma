@@ -23,6 +23,8 @@ class Curso:
         return self.__Dificultad
     def getAsignatura(self):
         return self.__AsignaturaCurso
+    def getNombreAsignatura(self):
+        return self.__AsignaturaCurso.getNombre()
     def getHabilitado(self):
         return self.__Habilitado
     
@@ -72,7 +74,8 @@ class Curso:
         return self.__ProfesorCurso
     def getNombreProfesor(self):
         return self.__ProfesorCurso.getNombre()
-    def MAPgetEstudiantes(): pass
+    def MAPgetEstudiantes(self):
+        return self.__MAPalumnosInscriptos
     def getNicknameProfesor(): pass
     def getCantInscriptos(self):
         return len(self.__MAPalumnosInscriptos)
