@@ -23,7 +23,8 @@ class Leccion:
         self.__MAPEjercicio[ej.getId()] = ej
     def contarEjercicios(tot, ap, nickestudiante): pass
     def SETobtenerNoAprobados(): pass
-    def obtenerEjercicio(nombreEjercicio): pass
+    def obtenerEjercicio(self, Id):
+        return self.__MAPEjercicio[Id]
     def getCantEjercicios(self):
         return len(self.__MAPEjercicio)
     def setOrden(orden): pass

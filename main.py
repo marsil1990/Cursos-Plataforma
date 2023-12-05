@@ -388,9 +388,49 @@ def cargarDatos():
     ctrCurso.ConfirmarAltaCurso()
 
 
+def realizarEjercicio():
+    a = Fabrica()
+    ctrUsuario = a.getIUsuario()
+    ctrCurso = a.getICurso()
+    nickname = input("Ingresar nickname: ")
+    if ctrUsuario.NicknameDisponible(nickname):
+        ctrUsuario.IngresarNickname(nickname)
+        cursosInscriptosNoAprobados = ctrUsuario.obtenerCursosInscriptoNoAprobado(nickname)
+        print("Cursos que aún no ha aprobado: ")
+        for i in cursosInscriptosNoAprobados:
+            print(f"- {i.getCursoInscripto()} ")
+        curso  =  input("Ingrese nombre del curso: ")
+        while (not ctrCurso.ExisteCurso(curso)):
+            curso = input("Nombre del Curso incorrecto, ingrese nuevamente: ")
+        ctrUsuario.IngresarCursoSeleccionado(curso)
+        ejerciciosNoAprobados = ctrUsuario.obtenerEjerciciosNoAprobados()
+        print("Ejercicios no aprobados:")
+        for e in ejerciciosNoAprobados:
+            print(f"Ejercicio id: {e.getId()}, Descripción: {e.getDescripcion()}")
+        
+        ejercicioSeleccionar = int(input("Ingrese el identificador del ejercicio que desea realizar: "))
+        ctrUsuario.recordarEjercicio(ejercicioSeleccionar)
+        ej = ctrUsuario.mostrarEjercicio()
+        if ej:
+            r = (input("Ingresa lo faltante separado por coma: ")).replace(" ", "").split(",")
+            cant = ctrUsuario.cantidadPalabrasACompletar()
+            resolucion = dict()
+            count = 1
+            while cant >= count:
+                resolucion[count] = r[count-1]
+                count+=1
+            if ctrUsuario.resolverCompletarPalabra(resolucion):
+                print("Felicitaciones, las palabras ingresadas son correctas")
+            else: print("Las palabras ingresadas NO son correctas")
+        else:
+            opcion = input("Ingrese una de las opciones (número): ")
+            if ctrUsuario.resolverMultipleOpcion(opcion):
+                print("Felicitaciones la opción igresada es la correcta")
+                
+            else: print("Ingresaste la opción incorrecta: ")
+        
+    else: print("Nickname incorrecto")
 
-
-def realizarEjercicio(): pass
 
 
 
@@ -409,6 +449,7 @@ def main():
         print(" 9- INSCRIBIRSE A UN CURSO")
         print(" 10- CONSULTAR CURSO")
         print(" 11- CARGAR DATOS")
+        print(" 12- REALIZAR EJERCICIO")
         print(" 0- SALIR")
         eleccion = input("elección: ").strip()
         
@@ -445,6 +486,9 @@ def main():
 
         elif eleccion == "11":
             cargarDatos()
+
+        elif eleccion == "12":
+            realizarEjercicio()
 
         elif eleccion == "0":
             seguir = False

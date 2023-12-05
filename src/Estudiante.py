@@ -34,7 +34,7 @@ class Estudiante(Usuario):
     def SETDevolverNotificaciones():pass
     def MAPobtenerCursos():pass
     def getInscripcion(self,cursoNombre):
-        return self.__MAPCursosInscriptos[cursoNombre]
+        return self.__MAPInscripciones[cursoNombre]
     def removerCurso( nombreCurso):pass
     
     

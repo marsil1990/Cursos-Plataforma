@@ -3,7 +3,7 @@ class Inscripcion:
     def __init__(self, fecha, curso, estudiante):
         self.__UltimaLeccionAprobada = None
         self.__FechaDeInscripcion = fecha 
-        self.__CursoInscripto = estudiante
+        self.__CursoInscripto = curso
         self.__aprobada = False
         self.__estudianteInscripto = estudiante
 

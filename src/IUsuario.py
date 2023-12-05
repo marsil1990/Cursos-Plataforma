@@ -109,7 +109,7 @@ class IUsuario(ABC):
     def  resolverCompletarPalabra(map, Conjunto_solucion, imprimir=False):
         pass
     @abstractmethod
-    def  resolverTraducir(solucion, imprimir=False):
+    def  resolverMultipleOpcion(solucion, imprimir=False):
         pass
     @abstractmethod
     def cantidadPalabrasACompletar():

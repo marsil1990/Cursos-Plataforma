@@ -7,7 +7,7 @@ class DTInscripcion:
             self.__EstudianteInscripto = estudiante
         else:
             self.__FechaDeInscripcion = inscripcion.getFechaDeInscripcion()
-            self.__CursoInscripto = inscripcion.getCursoInscripto()
+            self.__CursoInscripto = inscripcion.getCursoInscripto().getNombre()
             self.__EstudianteInscripto = inscripcion.getEstudianteInscripto()
 
     def getFechaDeInscripcion(self):

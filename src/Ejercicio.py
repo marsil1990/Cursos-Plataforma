@@ -8,6 +8,10 @@ class Ejercicio:
         return self.__Id
     def getDescripcion(self):
         return self.__Descripcion
-    def esAprovado(nicknameEstudiante):
-        pass
-    def addEstudianteAprobado(inscripcion): pass
+    def esAprovado(self, nicknameEstudiante):
+        if nicknameEstudiante in self.__MAPEstudiantesAprobaron:
+            return True
+        else: 
+            return False
+    def addEstudianteAprobado(self,nicknameEstudiante, inscripcion):
+        self.__MAPEstudiantesAprobaron[nicknameEstudiante] = inscripcion

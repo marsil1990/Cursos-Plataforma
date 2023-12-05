@@ -9,5 +9,7 @@ class DTEjercicio:
        
     def getDescripcion(self):
         return self.__Descripcion
+    def getId(self):
+        return self.__Id
     
     

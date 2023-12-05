@@ -10,6 +10,14 @@ class CompletarPalabra(Ejercicio):
         return self.__Frase
     def getPalabrasFaltantes(self):
         return self.__MAPPalabrasFaltantes
-    def ingresarSolucion(MAPsolucion):
-        pass
+    def getCantidadPalabras(self):
+        return len(self.__MAPPalabrasFaltantes)
+    def ingresarSolucion(self, MAPsolucion):
+        count = 0
+        for i in self.__MAPPalabrasFaltantes:
+            if self.__MAPPalabrasFaltantes[i] == MAPsolucion[i]:
+                count += 1
+        return count == self.getCantidadPalabras()
+        
+
     

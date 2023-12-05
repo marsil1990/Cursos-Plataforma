@@ -8,11 +8,15 @@ from src.Profesor import Profesor
 from src.DTProfesor import DTProfesor
 from src.ManejadorAsignatura import ManejadorAsignatura
 from src.ManejadorCurso import ManejadorCurso
+from src.DTInscripcion import DTInscripcion
+from src.DTEjercicio import DTEjercicio
+from src.CompletarPalabra import CompletarPalabra
+from src.MultiOpcion import MultiOpcion
 class CtrUsuario(IUsuario):
     __instancia = None
     __nickNameRec = None
     __nombreCursoRec = None
-
+    __cursoRecordado =  None
     __nuevoUsuarioNicknameRec = None
     __nuevoUsuarioContrasenia = None
     __nuevoUsuarioDescripcion= None
@@ -24,9 +28,10 @@ class CtrUsuario(IUsuario):
     __SETAsignaturasRecordados = set()
     __usuarioRecordado = None
     __ejercicioRecordado = None
-    __ejercicioDeTraducir = None
+    __ejercicioMultipleOpcion= None
     __ejercicioDeCompletarPalabra = None
     __leccionRecordada = None
+    __estudianteRecordar = None
 
     
     
@@ -236,27 +241,114 @@ class CtrUsuario(IUsuario):
     def  recordarUsuario(nickname):
         pass
     def  obtenerCursosInscriptoNoAprobado(self, nickname):
-        pass
+        mu = ManejadorUsuario()
+        estudiante = mu.obtenerUsuario(nickname)
+        self.__estudianteRecordar = estudiante
+        cursosInscriptos= estudiante.MAPgetInscripciones()
+        cursosInscriptosNoAprobados = set()
+        for i in cursosInscriptos.values():
+            if i.getAprobada() == False :
+                cursosInscriptosNoAprobados.add(DTInscripcion(inscripcion=i))
+        return cursosInscriptosNoAprobados
+
+
     
-    def  obtenerEjerciciosNoAprobados():
-        pass
+    def  obtenerEjerciciosNoAprobados(self):
+        mc = ManejadorCurso()
+        mu = ManejadorUsuario()
+        est = mu.obtenerUsuario(self.__nickNameRec)
+        inscripcion = est.getInscripcion(self.__nombreCursoRec)
+        ultimaLeccionAprobada = inscripcion.getUltimaLeccionAprobada()
+        cur = mc.obtenerCurso(self.__nombreCursoRec)
+        self.__cursoRecordado = cur
+        ejerciciosNoAprobados = set()
+        if ultimaLeccionAprobada is not None:
+            orden = ultimaLeccionAprobada.getOrden()
+            nextLeccion = cur.obtenerLeccion(orden + 1)
+            self.__leccionRecordada = nextLeccion
+            ejercicios = nextLeccion.MAPgetColEjercicios()
+            for e in ejercicios.values():
+                if not e.esAprovado(self.__nickNameRec):
+                    ejerciciosNoAprobados.add(DTEjercicio(ejercicio=e))
+            return ejerciciosNoAprobados
+        else:
+            nextLeccion = cur.obtenerLeccion(1)
+            self.__leccionRecordada = nextLeccion
+            ejercicios = nextLeccion.MAPgetColEjercicios()
+            for e in ejercicios.values():
+                if not e.esAprovado(self.__nickNameRec):
+                    ejerciciosNoAprobados.add(DTEjercicio(ejercicio=e))
+            return ejerciciosNoAprobados
+                
+
+
+        
     
-    def  recordarEjercicio(numero, ejercicio):
-        pass
+    def  recordarEjercicio(self, Id):
+        self.__ejercicioRecordado = Id
     
-    def  mostrarEjercicio():
-        pass
+    def  mostrarEjercicio(self):
+        ej = self.__leccionRecordada.obtenerEjercicio(self.__ejercicioRecordado)
+        if type(ej)== CompletarPalabra:
+            self.__ejercicioDeCompletarPalabra=ej
+            print("Completar: ")
+            print(f"frase: {ej.getFrase()}")
+            return True
+        else:
+            self.__ejercicioMultipleOpcion = ej
+            print("Elije la opción correcta: ")
+            opciones = ej.getOpciones()
+            print (f"Problema o ejercicio:\n {ej.getOracion()}")
+            for ok, ov in opciones.items():
+                print(f"Opción {ok}: {ov}")
+            return False
+        
+         
+
     
     def  mostrarEjercicioaux():
         pass
     
-    def  resolverCompletarPalabra(map, Conjunto_solucion, imprimir=False):
-        pass
+    def  resolverCompletarPalabra(self, conjunto_solucion):
+        if self.__ejercicioDeCompletarPalabra.ingresarSolucion(conjunto_solucion):
+            inscripcion = self.__estudianteRecordar.getInscripcion(self.__nombreCursoRec)
+            self.__ejercicioDeCompletarPalabra.addEstudianteAprobado(self.__nickNameRec, inscripcion)
+            ejercicios = self.__leccionRecordada.MAPgetColEjercicios()
+            cantEjer = self.__leccionRecordada.getCantEjercicios()
+            orden = self.__leccionRecordada.getOrden()
+            cantAprobados = 0
+            for e in ejercicios.values():
+                if e.esAprovado(self.__nickNameRec):
+                    cantAprobados +=1
+            if cantAprobados == cantEjer:
+                inscripcion.setNuevaLeccionAprobada(self.__leccionRecordada)
+            if self.__cursoRecordado.getCantLecciones() == orden:
+                inscripcion.setAprobada(True)
+            return True
+        else:
+            return False
+
+
+    def  resolverMultipleOpcion(self, solucion):
+        if self.__ejercicioMultipleOpcion.getOpcionCorrecta() == solucion:
+            inscripcion = self.__estudianteRecordar.getInscripcion(self.__nombreCursoRec)
+            self.__ejercicioMultipleOpcion.addEstudianteAprobado(self.__nickNameRec, inscripcion)
+            ejercicios = self.__leccionRecordada.MAPgetColEjercicios()
+            cantEjer = self.__leccionRecordada.getCantEjercicios()
+            orden = self.__leccionRecordada.getOrden()
+            cantAprobados = 0
+            for e in ejercicios:
+                if e.esAprovado(self.__nickNameRec):
+                    cantAprobados +=1
+            if cantAprobados == cantEjer:
+                inscripcion.setNuevaLeccionAprobada(self.__leccionRecordada)
+            if self.__cursoRecordado.getCantLecciones() == orden:
+                inscripcion.setAprobada(True)
+            return True
+        else: return False
+        
     
-    def  resolverTraducir(solucion, imprimir=False):
-        pass
-    
-    def cantidadPalabrasACompletar():
-        pass
+    def cantidadPalabrasACompletar(self):
+        return self.__ejercicioDeCompletarPalabra.getCantidadPalabras()
 
     #def __del__(): pass
