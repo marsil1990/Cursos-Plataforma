@@ -337,7 +337,7 @@ class CtrUsuario(IUsuario):
             cantEjer = self.__leccionRecordada.getCantEjercicios()
             orden = self.__leccionRecordada.getOrden()
             cantAprobados = 0
-            for e in ejercicios:
+            for e in ejercicios.values():
                 if e.esAprovado(self.__nickNameRec):
                     cantAprobados +=1
             if cantAprobados == cantEjer:

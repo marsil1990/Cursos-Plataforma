@@ -88,7 +88,7 @@ class CtrCurso(ICurso) :
         curso = mc.obtenerCurso(cursoNombre)
         n = curso.getCantLecciones() + 1
         self.__ultimaLeccion =  Leccion(n, tema, objetivo)
-        self.__MAPleccionesRec[n]= self.__ultimaLeccion
+        self.__MAPleccionesRec[n]= Leccion(n, tema, objetivo)
 
     def crearEjercicioCompletarPalabra(self, descripcion,frase, MAPrespuesta):
         self.__ultimaLeccion.añadirEjercicioCompletar(descripcion, frase, MAPrespuesta)
@@ -130,8 +130,7 @@ class CtrCurso(ICurso) :
         pass
     
     def DarDeAltaLeccion(self):
-        lec = self.__ultimaLeccion
-        self.__cursoRecAgregar.añadirLeccion( Leccion(lec.getOrden(), lec.getTema(), lec.getObjetivo()))
+        self.__cursoRecAgregar.añadirLeccion(self.__ultimaLeccion)
         self.__MAPleccionesRec.clear()
         self.__ultimaLeccion = None
 

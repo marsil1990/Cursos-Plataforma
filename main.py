@@ -380,11 +380,37 @@ def cargarDatos():
     fechaNacimiento = DTFecha(ano, mes, dia)
     ctrUsuario.IngresarDatoEstudiante("Uruguay",fechaNacimiento)
     ctrUsuario.ConfirmarAltaEstudiante()
-    #ALTA CURSO
+    #ALTA CURSO (matematica1)
     ctrCurso.seleccionarProfesor("prof")
     ctrCurso.ingresarDatosCurso("matematica1", "Ecuaciones", "p")
     ctrCurso.seleccionarAsignatura("Matematica")
     ctrCurso.necesitaPrevia(False)
+    ctrCurso.ConfirmarAltaCurso()
+    #AGREGAR LECCION Y EJERCICIOS A matematica1 (una 2 lecciones y 2 ejercicios en solo la lección 1)
+    #LECCION 1
+    #ejercicio 1 - completar
+    ctrCurso.seleccionarCurso("matematica1")
+    ctrCurso.crearLeccion("Ecuaciones","Resolver ecuaciones de primer grado", "matematica1")
+    soluciones = dict()
+    soluciones[1]="10"
+    ctrCurso.crearEjercicioCompletarPalabra("Ecuaciones de primer grado", "x + 10 = 20, entonces x = ---", soluciones)
+    #ejercicio 2 - multiple opción    
+    opcionCorrecta = "-30"
+    opciones = dict()
+    opciones[1] = "-30"
+    opciones[2] = "30"
+    ctrCurso.crearEjercicioMultipleOpcion("Elige la opción correcta", "x + 30 = 0, entonces x = ", opciones, opcionCorrecta)
+    ctrCurso.DarDeAltaLeccion()
+    #LECCION2
+    ctrCurso.seleccionarCurso("matematica1")
+    ctrCurso.crearLeccion("Inecuaciones","Resolver inecuaciones de primer grado", "matematica1")
+    ctrCurso.DarDeAltaLeccion()
+    #ALTA CURSO (matematica2)
+    ctrCurso.seleccionarProfesor("prof")
+    ctrCurso.ingresarDatosCurso("matematica2", "Ecuaciones", "i")
+    ctrCurso.seleccionarAsignatura("Matematica")
+    ctrCurso.necesitaPrevia(True)
+    ctrCurso.seleccionarPrevias("matematica1")
     ctrCurso.ConfirmarAltaCurso()
 
 
@@ -397,37 +423,39 @@ def realizarEjercicio():
         ctrUsuario.IngresarNickname(nickname)
         cursosInscriptosNoAprobados = ctrUsuario.obtenerCursosInscriptoNoAprobado(nickname)
         print("Cursos que aún no ha aprobado: ")
-        for i in cursosInscriptosNoAprobados:
-            print(f"- {i.getCursoInscripto()} ")
-        curso  =  input("Ingrese nombre del curso: ")
-        while (not ctrCurso.ExisteCurso(curso)):
-            curso = input("Nombre del Curso incorrecto, ingrese nuevamente: ")
-        ctrUsuario.IngresarCursoSeleccionado(curso)
-        ejerciciosNoAprobados = ctrUsuario.obtenerEjerciciosNoAprobados()
-        print("Ejercicios no aprobados:")
-        for e in ejerciciosNoAprobados:
-            print(f"Ejercicio id: {e.getId()}, Descripción: {e.getDescripcion()}")
-        
-        ejercicioSeleccionar = int(input("Ingrese el identificador del ejercicio que desea realizar: "))
-        ctrUsuario.recordarEjercicio(ejercicioSeleccionar)
-        ej = ctrUsuario.mostrarEjercicio()
-        if ej:
-            r = (input("Ingresa lo faltante separado por coma: ")).replace(" ", "").split(",")
-            cant = ctrUsuario.cantidadPalabrasACompletar()
-            resolucion = dict()
-            count = 1
-            while cant >= count:
-                resolucion[count] = r[count-1]
-                count+=1
-            if ctrUsuario.resolverCompletarPalabra(resolucion):
-                print("Felicitaciones, las palabras ingresadas son correctas")
-            else: print("Las palabras ingresadas NO son correctas")
-        else:
-            opcion = input("Ingrese una de las opciones (número): ")
-            if ctrUsuario.resolverMultipleOpcion(opcion):
-                print("Felicitaciones la opción igresada es la correcta")
-                
-            else: print("Ingresaste la opción incorrecta: ")
+        if len(cursosInscriptosNoAprobados) != 0:
+            for i in cursosInscriptosNoAprobados:
+                print(f"- {i.getCursoInscripto()} ")
+            curso  =  input("Ingrese nombre del curso: ")
+            while (not ctrCurso.ExisteCurso(curso)):
+                curso = input("Nombre del Curso incorrecto, ingrese nuevamente: ")
+            ctrUsuario.IngresarCursoSeleccionado(curso)
+            ejerciciosNoAprobados = ctrUsuario.obtenerEjerciciosNoAprobados()
+            print("Ejercicios no aprobados:")
+            for e in ejerciciosNoAprobados:
+                print(f"Ejercicio id: {e.getId()}, Descripción: {e.getDescripcion()}")
+            
+            ejercicioSeleccionar = int(input("Ingrese el identificador del ejercicio que desea realizar: "))
+            ctrUsuario.recordarEjercicio(ejercicioSeleccionar)
+            ej = ctrUsuario.mostrarEjercicio()
+            if ej:
+                r = (input("Ingresa lo faltante separado por coma: ")).replace(" ", "").split(",")
+                cant = ctrUsuario.cantidadPalabrasACompletar()
+                resolucion = dict()
+                count = 1
+                while cant >= count:
+                    resolucion[count] = r[count-1]
+                    count+=1
+                if ctrUsuario.resolverCompletarPalabra(resolucion):
+                    print("Felicitaciones, las palabras ingresadas son correctas")
+                else: print("Las palabras ingresadas NO son correctas")
+            else:
+                opcion = input("Ingrese una de las opciones (número): ")
+                if ctrUsuario.resolverMultipleOpcion(opcion):
+                    print("Felicitaciones la opción igresada es la correcta")
+                    
+                else: print("Ingresaste la opción incorrecta: ")
+        else: print("Todos los cursos han sido aprobados")
         
     else: print("Nickname incorrecto")
 
