@@ -196,7 +196,7 @@ class CtrUsuario(IUsuario):
         #itero en todos los cursos habilitados
         for c in cursosHabilitados:
             #si tengo cursos inscriptos
-            if len(cursosInscriptos) != 0 and not (cursosHabilitados.getNombre() in cursosInscriptos):
+            if len(cursosInscriptos) != 0 and not (c.getNombre() in cursosInscriptos):
                 MAPprevias = c.getPrevias()
                 tieneLasPrevias = True
                 if len(MAPprevias) != 0:

@@ -403,8 +403,16 @@ def cargarDatos():
     ctrCurso.DarDeAltaLeccion()
     #LECCION2
     ctrCurso.seleccionarCurso("matematica1")
-    ctrCurso.crearLeccion("Inecuaciones","Resolver inecuaciones de primer grado", "matematica1")
+    ctrCurso.crearLeccion("Funciones","Imagenes", "matematica1")
+    opcionCorrecta = "2"
+    opciones = dict()
+    opciones[1] = "10"
+    opciones[2] = "-10"
+    ctrCurso.crearEjercicioMultipleOpcion("Elige la opción correcta", "f(x) = -10, entonces f(5)= ", opciones, opcionCorrecta)
     ctrCurso.DarDeAltaLeccion()
+    ctrCurso.seleccionarCurso("matematica1")
+    ctrCurso.habilitarCurso()
+
     #ALTA CURSO (matematica2)
     ctrCurso.seleccionarProfesor("prof")
     ctrCurso.ingresarDatosCurso("matematica2", "Ecuaciones", "i")
@@ -412,6 +420,19 @@ def cargarDatos():
     ctrCurso.necesitaPrevia(True)
     ctrCurso.seleccionarPrevias("matematica1")
     ctrCurso.ConfirmarAltaCurso()
+    #LECCION 1 CURSO matematica2
+    ctrCurso.seleccionarCurso("matematica2")
+    ctrCurso.crearLeccion("Ecuaciones segundo grado","Resolver ecuaciones de segundo grado", "matematica2")
+    #ejercicio 1 de la leccion 1
+    soluciones = dict()
+    soluciones[1]="2"
+    soluciones[2]="-2"
+    ctrCurso.crearEjercicioCompletarPalabra("Ecuaciones de primer segundo grado", "x^2 - 4 = 0, entonces x = --- y ---", soluciones)
+    ctrCurso.DarDeAltaLeccion()
+    ctrCurso.seleccionarCurso("matematica2")
+    ctrCurso.habilitarCurso()
+
+
 
 
 def realizarEjercicio():
