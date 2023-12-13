@@ -55,7 +55,17 @@ class Curso:
                     cantidadEjerciciosAprobados += 1
         return (cantidadEjerciciosAprobados/self.getCantEjercicios())*100
 
-    def obtenerPromedioCurso(): pass
+    def obtenerPromedioCurso(self): 
+        cantAlumnosInscriptos = len(self.__MAPalumnosInscriptos)
+        sumaAvanceAlumno = 0
+        for a in self.__MAPalumnosInscriptos.values():
+            avanceAlumno = self.obtenerAvanceCurso(a.getNickname())
+            sumaAvanceAlumno += avanceAlumno
+        if cantAlumnosInscriptos == 0:
+            return 0
+        else:
+            return sumaAvanceAlumno/cantAlumnosInscriptos
+            
     def obtenerSiguienteLeccion(orden):pass
     def obtenerLeccion(self, orden):
         return self.__MAPLecciones[orden]

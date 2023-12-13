@@ -170,14 +170,21 @@ class CtrCurso(ICurso) :
     
     def MAPobtenerCursosInscripto(nickname): pass
     
-    def MAPobtenerAvanceCursos(self, nickname = None, curso = None):
-        if nickname != None:
+    def MAPobtenerAvanceCursos(self, nicknameEstudiante = None, nicknameProfesor = None, curso = None):
+        if nicknameEstudiante != None:
             mu = ManejadorUsuario()
-            usuario = mu.obtenerUsuario(nickname=nickname)
+            usuario = mu.obtenerUsuario(nickname=nicknameEstudiante)
             cursosInscriptos = usuario.MAPObtenerCursosInscriptos()
             for c in cursosInscriptos.values():
-                avanceCurso = c.obtenerAvanceCurso(nickname)
+                avanceCurso = c.obtenerAvanceCurso(nicknameEstudiante)
                 print(f"Curso: {c.getNombre()}, Avance: {avanceCurso}%")
+        elif nicknameProfesor != None:
+            mu = ManejadorUsuario()
+            usuario = mu.obtenerUsuario(nickname=nicknameProfesor)
+            cursosProfesor = usuario.MAPcursos()
+            for c in cursosProfesor.values():
+                print(f"Nombre del Curso: {c.getNombre()}, Promedio: {c.obtenerPromedioCurso()}")
+
 
 
 

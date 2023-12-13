@@ -496,12 +496,19 @@ def consultarEstadisticas():
             print(e)
         nickname = input("Ingresar nickname: ")
         if ctrUsuario.NicknameDisponible(nickname):
-           ctrCurso.MAPobtenerAvanceCursos(nickname=nickname)
+           ctrCurso.MAPobtenerAvanceCursos(nicknameEstudiante=nickname)
 
         else: print("Nickname ingresado es incorrecto")
         
     elif  e.lower().strip() == "p":
-        pass
+        nicknameProfesores = ctrCurso.obtenerNickname()
+        for p in nicknameProfesores:
+            print(p)
+        nickname = input("Ingrese el nickname del profesor: ")
+        if ctrUsuario.NicknameDisponible(nickname):
+           ctrCurso.MAPobtenerAvanceCursos(nicknameProfesor=nickname)
+
+        else: print("Nickname ingresado es incorrecto")
     elif  e.lower().strip() == "c":
         pass
     else: 

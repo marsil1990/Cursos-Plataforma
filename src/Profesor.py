@@ -39,6 +39,9 @@ class Profesor(Usuario):
                 #cursosData = DTCurso(c)
                 cursosNoHabilitados.add(c.getNombre())
         return cursosNoHabilitados
+    
+    def MAPcursos(self):
+        return self.__MAPCursos
 
     def eliminarCurso(nombreCurso):
         pass
