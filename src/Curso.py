@@ -46,7 +46,15 @@ class Curso:
     def añadirPrevia(self, previa):
         self.__Previas[previa.getNombre()]=previa
 
-    def obtenerAvanceCurso(nickEstudiante):pass
+    def obtenerAvanceCurso(self, nickEstudiante):
+        cantidadEjerciciosAprobados = 0
+        for l in self.__MAPLecciones.values():
+            ejercicios = l.MAPgetColEjercicios()
+            for e in ejercicios.values():
+                if e.esAprovado(nickEstudiante):
+                    cantidadEjerciciosAprobados += 1
+        return (cantidadEjerciciosAprobados/self.getCantEjercicios())*100
+
     def obtenerPromedioCurso(): pass
     def obtenerSiguienteLeccion(orden):pass
     def obtenerLeccion(self, orden):

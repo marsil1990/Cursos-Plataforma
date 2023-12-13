@@ -163,12 +163,24 @@ class CtrCurso(ICurso) :
         return mi.SETAsignaturasDisponibles()
     #Consultar Estadisticas
     
-    def ObtenerEstudiantes(): pass
+    def ObtenerEstudiantes(self):
+        mu = ManejadorUsuario()
+        estudiantes = mu.SETobtenerEstudiantes()
+        return estudiantes
     
     def MAPobtenerCursosInscripto(nickname): pass
     
-    def MAPobtenerAvanceCursos(): pass
-    
+    def MAPobtenerAvanceCursos(self, nickname = None, curso = None):
+        if nickname != None:
+            mu = ManejadorUsuario()
+            usuario = mu.obtenerUsuario(nickname=nickname)
+            cursosInscriptos = usuario.MAPObtenerCursosInscriptos()
+            for c in cursosInscriptos.values():
+                avanceCurso = c.obtenerAvanceCurso(nickname)
+                print(f"Curso: {c.getNombre()}, Avance: {avanceCurso}%")
+
+
+
     def ObtenerProfesores(): pass 
     
     def MAPobtenerPromedioCursos(): pass

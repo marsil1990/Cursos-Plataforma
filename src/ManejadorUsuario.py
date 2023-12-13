@@ -1,4 +1,5 @@
 from src.Profesor import Profesor
+from src.Estudiante import Estudiante
 class ManejadorUsuario(object):
     __instancia = None
     __MAPUsuarios = dict()
@@ -21,7 +22,13 @@ class ManejadorUsuario(object):
     def obtenerUsuario(self, nickname):
         return self.__MAPUsuarios[nickname]
     
-    def SETobtenerEstudiantes(self): pass
+    def SETobtenerEstudiantes(self):
+        nickNameestudiantes = set()
+        for e in self.__MAPUsuarios.values():
+            if type(e) == Estudiante:
+                nickNameestudiantes.add(e.getNickname())
+        return nickNameestudiantes
+
 
     #Retorna nicknames de los profesores
     def obtenerProfesores(self):

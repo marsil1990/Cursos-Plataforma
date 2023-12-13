@@ -395,7 +395,7 @@ def cargarDatos():
     soluciones[1]="10"
     ctrCurso.crearEjercicioCompletarPalabra("Ecuaciones de primer grado", "x + 10 = 20, entonces x = ---", soluciones)
     #ejercicio 2 - multiple opción    
-    opcionCorrecta = "-30"
+    opcionCorrecta = "1"
     opciones = dict()
     opciones[1] = "-30"
     opciones[2] = "30"
@@ -481,6 +481,33 @@ def realizarEjercicio():
     else: print("Nickname incorrecto")
 
 
+def consultarEstadisticas():
+    a = Fabrica()
+    ctrUsuario = a.getIUsuario()
+    ctrCurso = a.getICurso()
+    e = input("""Elige una de las siguientes opciones: \n
+              Estadística estudiante (e)\n
+              Estadística profesor   (p) \n
+              Estadística curso      (c)\n
+              Ingresa la opción: """)
+    if e.lower().strip() == "e":
+        estudiantes = ctrCurso.ObtenerEstudiantes()
+        for e in estudiantes:
+            print(e)
+        nickname = input("Ingresar nickname: ")
+        if ctrUsuario.NicknameDisponible(nickname):
+           ctrCurso.MAPobtenerAvanceCursos(nickname=nickname)
+
+        else: print("Nickname ingresado es incorrecto")
+        
+    elif  e.lower().strip() == "p":
+        pass
+    elif  e.lower().strip() == "c":
+        pass
+    else: 
+        print("Elección incorrecta")
+
+
 
 
 def main():
@@ -499,6 +526,7 @@ def main():
         print(" 10- CONSULTAR CURSO")
         print(" 11- CARGAR DATOS")
         print(" 12- REALIZAR EJERCICIO")
+        print(" 13- CONSULTAR ESTADISTICAS")
         print(" 0- SALIR")
         eleccion = input("elección: ").strip()
         
@@ -538,6 +566,9 @@ def main():
 
         elif eleccion == "12":
             realizarEjercicio()
+        
+        elif eleccion == "13":
+            consultarEstadisticas()
 
         elif eleccion == "0":
             seguir = False
