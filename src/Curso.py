@@ -27,7 +27,11 @@ class Curso:
         return self.__AsignaturaCurso.getNombre()
     def getHabilitado(self):
         return self.__Habilitado
-    
+    def esPrevia(self, nombreCurso):
+        if nombreCurso in self.__Previas:
+            return True
+        else: 
+            return False
     def setHabilitar(self):
         if self.__Habilitado == False:
             self.__Habilitado = True
@@ -39,7 +43,10 @@ class Curso:
     def setProfesor(self, profesor):
         self.__ProfesorCurso = profesor
     def setHabilitado(habilitado):pass
-    def removerPrevia(nombreCurso):pass
+    def removerPrevia(self, nombreCurso):
+        if nombreCurso in self.__Previas:
+            del self.__Previas[nombreCurso]
+
     def getDataCurso():pass
     def añadirLeccion(self, lec):
         self.__MAPLecciones[lec.getOrden()] =lec
@@ -86,7 +93,10 @@ class Curso:
         return cant
     def MAPgetColLecciones(self):
         return self.__MAPLecciones
-    def eliminarLecciones(): pass
+    def eliminarLecciones(self):
+        for l in self.__MAPLecciones.values():
+            l.eliminarEjercicios()
+        self.__MAPLecciones.clear()
     def eliminarPrevias(nomCurso): pass
     def getProfesor(self):
         return self.__ProfesorCurso
@@ -97,4 +107,6 @@ class Curso:
     def getNicknameProfesor(): pass
     def getCantInscriptos(self):
         return len(self.__MAPalumnosInscriptos)
+    def eliminarInscripciones(self):
+        pass
     def borrarPrevias(): pass

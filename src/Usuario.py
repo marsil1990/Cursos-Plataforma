@@ -4,8 +4,7 @@ class Usuario:
         self.__Contrasena = contrasena
         self.__Nombre = nombre
         self.__Descripcion = descripcion
-        __MAPsuscrito = dict()
-        __SETnotificaciones = set()
+        
 
     def getNickname(self):
         return self.__Nickname

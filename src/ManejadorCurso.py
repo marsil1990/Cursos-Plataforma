@@ -36,6 +36,8 @@ class ManejadorCurso(object):
             
 
     def eliminarPrevia(NomCursos): pass
+
+        
     def agregarCurso(self, curso):
         self.__MAPCursos[curso.getNombre()] = curso
         
@@ -45,5 +47,13 @@ class ManejadorCurso(object):
         for c in self.__MAPCursos.values():
             cursos.add(DTCurso(curso=c))
         return cursos
+    def getCursos(self):
+        return self.__MAPCursos
 
-    def eliminarCurso(nombreCurso): pass
+    def eliminarCurso(self,nombreCurso):
+        self.__MAPCursos[nombreCurso].eliminarLecciones()
+        self.__MAPCursos[nombreCurso].eliminarInscripciones()
+        for c in self.__MAPCursos.values():
+            if c.esPrevia(nombreCurso):
+                c.removerPrevia(nombreCurso)
+        del self.__MAPCursos[nombreCurso]

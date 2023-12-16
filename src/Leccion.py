@@ -35,4 +35,8 @@ class Leccion:
     def setOrden(orden): pass
     def MAPgetColEjercicios(self):
         return self.__MAPEjercicio
-    def eliminarEjercicios(): pass
+    def eliminarEjercicios(self):
+        for e in self.__MAPEjercicio.values():
+            e.eliminarEstudiantesAprobados()
+        self.__MAPEjercicio.clear()
+        del self.__MAPEjercicio

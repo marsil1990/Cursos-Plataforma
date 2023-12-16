@@ -146,32 +146,63 @@ class CtrUsuario(IUsuario):
     def  IngresarNickname(self, nickname):
         self.__nickNameRec = nickname
     
-    def  obtenerNotificaciones():
-        pass
+    def  obtenerNotificaciones(self, nickname):
+        mu = ManejadorUsuario()
+        ususario = mu.obtenerUsuario(nickname=nickname)
+        notificaciones =  ususario.SETDevolverNotificaciones()
+        return notificaciones
     
-    def  EliminarNotifiaciones():
-        pass
+    def  EliminarNotifiaciones(self, nickname):
+        mu = ManejadorUsuario()
+        usuario = mu.obtenerUsuario(nickname=nickname)
+        usuario.elimiarNotificaciones()
      #SUSCRIBIRSE A NOTIFIACIONES
     
-    def ObtenerAsignaturaNoSuscripto(nickname):
-        pass
+    def ObtenerAsignaturaNoSuscripto(self, nickname):
+        mu = ManejadorUsuario()
+        ma = ManejadorAsignatura()
+        usuario = mu.obtenerUsuario(nickname=nickname)
+        asignaturaSuscrito = usuario.SETObtenerNomAsignaturaSuscrito()
+        asignaturaDiponible = ma.SETAsignaturasDisponibles()
+        asignaturasSuscripciones = set()
+        for a in asignaturaDiponible:
+            if not a in asignaturaSuscrito:
+                asignaturasSuscripciones.add(a)
+        return asignaturasSuscripciones
+
+
+
     
-    def  AgreagarSuscripcion(nomAsignatura):
-        pass
+    def  AgreagarSuscripcion(self, nickname, nomAsignatura):
+        mu = ManejadorUsuario()
+        ma = ManejadorAsignatura()
+        usuario = mu.obtenerUsuario(nickname=nickname)
+        asignatura = ma.obtenerAsignatura(nombreAsignatura=nomAsignatura)
+        usuario.agreagarSuscripcion(asignatura)
+        asignatura.AgregarSuscriptor(usuario)
     
     def  existeAsignatura(self, asign):
         mi = ManejadorAsignatura()
         return mi.existeAsignatura(asign)
+    
      #ElIMIAR SUSCRIPCIÓN
     
-    def obtenerSuscripciones(nickname):
-        pass
+    def obtenerSuscripciones(self, nickname):
+        mu = ManejadorUsuario()
+        usuario = mu.obtenerUsuario(nickname=nickname)
+        suscripciones = usuario.SETObtenerNomAsignaturaSuscrito()
+        return suscripciones
     
-    def  seleccionarSuscripciones(setString):
-        pass
+    def  eliminarSuscripciones(self, nickname, eleccionAsignatura):
+        ma = ManejadorAsignatura()
+        mu = ManejadorUsuario()
+        asignatura = ma.obtenerAsignatura(eleccionAsignatura)
+        usuario = mu.obtenerUsuario(nickname=nickname)
+        usuario.eliminarSuscripcion(eleccionAsignatura)
+        asignatura.eliminar(nickname)
     
-    def  eliminarSuscripciones():
-        pass
+
+        
      #INSCRIBIRSE A CURSO
     
     def  ObtenerCursosHabilitadosParaInscripcion(self, nickname):

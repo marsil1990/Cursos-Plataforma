@@ -69,9 +69,6 @@ class IUsuario(ABC):
     def obtenerSuscripciones(nickname):
         pass
     @abstractmethod
-    def  seleccionarSuscripciones(setString):
-        pass
-    @abstractmethod
     def  eliminarSuscripciones():
         pass
      #INSCRIBIRSE A CURSO

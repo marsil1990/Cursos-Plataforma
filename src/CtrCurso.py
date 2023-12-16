@@ -184,6 +184,10 @@ class CtrCurso(ICurso) :
             cursosProfesor = usuario.MAPcursos()
             for c in cursosProfesor.values():
                 print(f"Nombre del Curso: {c.getNombre()}, Promedio: {c.obtenerPromedioCurso()}")
+        else:
+            mc = ManejadorCurso()
+            c = mc.obtenerCurso(curso)
+            print(f"Nombre del Curso: {c.getNombre()}, Promedio: {c.obtenerPromedioCurso()}")
 
 
 
@@ -233,4 +237,12 @@ class CtrCurso(ICurso) :
     def  MAPobtenerEjercicios(leccion): pass
     #Eliminar curso
     
-    def eliminarCurso(): pass
+    def eliminarCurso(self, cursoNombre):
+        mc = ManejadorCurso()
+        mc.eliminarCurso(cursoNombre)
+
+    def notificar(self, curso):
+        mc = ManejadorCurso()
+        c = mc.obtenerCurso(curso)
+        asignaturaCurso = c.getAsignatura()
+        asignaturaCurso.EnviarNotificacion(c.getNombre())

@@ -15,3 +15,6 @@ class Ejercicio:
             return False
     def addEstudianteAprobado(self,nicknameEstudiante, inscripcion):
         self.__MAPEstudiantesAprobaron[nicknameEstudiante] = inscripcion
+    def eliminarEstudiantesAprobados(self):
+        self.__MAPEstudiantesAprobaron.clear()
+        del self.__MAPEstudiantesAprobaron

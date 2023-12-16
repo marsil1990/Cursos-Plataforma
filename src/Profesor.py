@@ -7,6 +7,8 @@ class Profesor(Usuario):
         self.__Instituto = instituto
         self.__MAPEspecializacion = dict()
         self.__MAPCursos = dict()
+        self.__MAPsuscrito = dict()
+        self.__SETnotificaciones = set()
 
     def getInstituto(self):
         return self.__Instituto
@@ -42,6 +44,28 @@ class Profesor(Usuario):
     
     def MAPcursos(self):
         return self.__MAPCursos
+
+
+    def SETObtenerNomAsignaturaSuscrito(self):
+        nomAsignatura = set()
+        for a in self.__MAPsuscrito:
+            nomAsignatura.add(a.getNombre())
+        return nomAsignatura
+    
+    def agreagarSuscripcion(self, asignatura):
+        self.__MAPsuscrito[asignatura.getNombre()]= asignatura.getNombre()
+
+    def eliminarSuscripcion(self, nombreAsignatura):
+        del self.__MAPsuscrito[nombreAsignatura]  
+
+    def SETDevolverNotificaciones(self):
+        return self.__SETnotificaciones
+    
+    def elimiarNotificaciones(self):
+        self.__SETnotificaciones.clear()
+        
+    def notificar(self, DTnuevocurso):
+        self.__SETnotificaciones.add(DTnuevocurso)
 
     def eliminarCurso(nombreCurso):
         pass

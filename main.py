@@ -12,7 +12,7 @@ def altaAsignatura():
     conf = ctrCurso.ConfirmarAsignatura()
     if conf:
         print("El Asignatura se ingreso correctamente")
-    else: print("El Asignatura ya existe")
+    else: print("La Asignatura ya existe")
 
 def consultarAsignatura():
     a = Fabrica()
@@ -26,7 +26,7 @@ def altaUsusario():
     a = Fabrica()
     ctrUsuario = a.getIUsuario()
     nickname = input("Ingresar nickname: ")
-    while ctrUsuario.NicknameDisponible(nickname):
+    while ctrUsuario.NicknameDisponible(nickname) and nickname!= "":
         nickname = input("nickname igresado no está disponible, ingrese otro: ")
     contrasena = input("Ingresar contraseña (minimo 6 caraceres): ")
     while len(contrasena) < 6 :
@@ -182,6 +182,7 @@ def habilitarCurso():
     ctrCurso.seleccionarCurso(curso)
     correcto = ctrCurso.habilitarCurso()
     if correcto:
+        ctrCurso.notificar(curso)
         print("Se habilito correcamente")
     else:
         print("No se habilito")
@@ -291,8 +292,8 @@ def agregarEjercicio():
             ctrCurso.crearEjercicioMultipleOpcion(descripcion, pregunta, opciones, opcionCorrecta)
         else: 
             tipoEjercicio = input("opción incorrecta. Ingresa tipo de ejercicio(solo el número): 1 - Completar, 2 - MultileOpción: ")
-        s = input("Quiere seguir agregando ejercicios S/N: ")
-        if s.strip().lower() == "n":
+        s = input("Quiere seguir agregando ejercicios Si/No: ")
+        if s.strip().lower() == "no":
             seguirAgregando = False
 
 def inscripcionCurso():
@@ -411,7 +412,7 @@ def cargarDatos():
     ctrCurso.crearEjercicioMultipleOpcion("Elige la opción correcta", "f(x) = -10, entonces f(5)= ", opciones, opcionCorrecta)
     ctrCurso.DarDeAltaLeccion()
     ctrCurso.seleccionarCurso("matematica1")
-    ctrCurso.habilitarCurso()
+    #ctrCurso.habilitarCurso()
 
     #ALTA CURSO (matematica2)
     ctrCurso.seleccionarProfesor("prof")
@@ -510,66 +511,148 @@ def consultarEstadisticas():
 
         else: print("Nickname ingresado es incorrecto")
     elif  e.lower().strip() == "c":
-        pass
+        cursos = ctrCurso.SETobtenerCursos()
+        for c in cursos:
+            print(c.getNombre())
+        curso  =  input("Ingrese nombre del curso: ")
+        if ctrCurso.ExisteCurso(curso):
+            ctrCurso.MAPobtenerAvanceCursos(curso=curso)
     else: 
         print("Elección incorrecta")
 
 
+def eliminarCurso():
+    a = Fabrica()
+    ctrCurso = a.getICurso()
+    cursos = ctrCurso.SETobtenerCursos()
+    for c in cursos:
+        print(c.getNombre())
+    curso  =  input("Ingrese nombre del curso: ")
+    if ctrCurso.ExisteCurso(curso):
+        ctrCurso.eliminarCurso(curso)
+    else: 
+        print("No existe curso con ese nombre")
+
+def suscribirseNorificaciones():
+    a = Fabrica()
+    ctrUsuario = a.getIUsuario()
+    nickname = input("Ingresar nickname: ")
+    if ctrUsuario.NicknameDisponible(nickname=nickname):
+        asignaturas = ctrUsuario.ObtenerAsignaturaNoSuscripto(nickname)
+        for a in asignaturas:
+            print(a)
+        cantidadSuscripciones = 0
+        for a in asignaturas:
+            eleccionAsignatura = input("Ingresa asignatura a suscribirse: ")
+            if eleccionAsignatura in asignaturas:
+                ctrUsuario.AgreagarSuscripcion(nickname, eleccionAsignatura)
+                cantidadSuscripciones +=1
+                if cantidadSuscripciones < len(asignaturas):
+                    seguir = input("Quieres suscribirte a otro idioma Si/No: ")
+                    if seguir.lower().strip() == "no":
+                        break
+                else: print("Te suscribiste a todas las asignaturas") 
+            else:
+                print(" ERROR ")
+            
+    else:
+        print(" ERROR ")
+            
+def consultaNotificaciones():
+    a = Fabrica()
+    ctrUsuario = a.getIUsuario()
+    nickname = input("Ingresar nickname: ")
+    if ctrUsuario.NicknameDisponible(nickname=nickname):
+        notificaciones = ctrUsuario.obtenerNotificaciones(nickname)
+        for n in notificaciones:
+            print(n)
+        ctrUsuario.EliminarNotifiaciones(nickname)
+
+def eliminarSuscripciones():
+    a = Fabrica()
+    ctrUsuario = a.getIUsuario()
+    nickname = input("Ingresar nickname: ")
+    if ctrUsuario.NicknameDisponible(nickname=nickname):
+        asignaturasSuscriptas = ctrUsuario.obtenerSuscripciones(nickname)
+        for s in asignaturasSuscriptas:
+            print(s)
+        cantidadSuscripciones = 0
+        for s in asignaturasSuscriptas:
+            eleccionAsignatura = input("Ingresa asignatura a suscribirse: ")
+            if eleccionAsignatura in asignaturasSuscriptas:
+                ctrUsuario.eliminarSuscripciones(nickname, eleccionAsignatura)
+                cantidadSuscripciones +=1
+                if cantidadSuscripciones < len(asignaturasSuscriptas):
+                    seguir = input("Quieres suscribirte a otro idioma Si/No: ")
+                    if seguir.lower().strip() == "no":
+                        break
+                else: print("Te suscribiste a todas las asignaturas") 
+            else:
+                print(" ERROR ")
+
+    else: 
+        print("Nickname incorrecto")
+    
+    
 
 
 def main():
     seguir = True
     while seguir == True:
         print("Elija los siguientes casos de usos: ")
-        print(" 1- ALTA DE ASIGNATURA")
-        print(" 2- CONSULTAR ASIGNATURA")
-        print(" 3- ALTA USUARIO")
-        print(" 4- CONSULTAR USUARIOS")
-        print(" 5- ALTA DE CURSO")
-        print(" 6- HABILITAR CURSO")
-        print(" 7- AGREGAR LECCIÓN")
-        print(" 8- AGREGAR EJERCICIO")
-        print(" 9- INSCRIBIRSE A UN CURSO")
-        print(" 10- CONSULTAR CURSO")
-        print(" 11- CARGAR DATOS")
+        print(" 1- CARGAR DATOS")
+        print(" 2- ALTA DE ASIGNATURA")
+        print(" 3- CONSULTAR ASIGNATURA")
+        print(" 4- ALTA USUARIO")
+        print(" 5- CONSULTAR USUARIOS")
+        print(" 6- ALTA DE CURSO")
+        print(" 7- HABILITAR CURSO")
+        print(" 8- AGREGAR LECCIÓN")
+        print(" 9- AGREGAR EJERCICIO")
+        print(" 10- INSCRIBIRSE A UN CURSO")
+        print(" 11- CONSULTAR CURSO")
         print(" 12- REALIZAR EJERCICIO")
         print(" 13- CONSULTAR ESTADISTICAS")
-        print(" 0- SALIR")
+        print(" 14- ELIMINAR CURSO")
+        print(" 15- SUSCRIBIRSE A ASIGNATURA")
+        print(" 16- CONSULTAR NOTIFICACIONES")
+        print(" 17- ELIMINAR SUSCRIPCIÓN")
+        print(" 18- SALIR")
         eleccion = input("elección: ").strip()
         
-    #ALTA Asignatura
+    
         if eleccion == "1":
+            cargarDatos()
+    #ALTA Asignatura
+        if eleccion == "2":
             altaAsignatura()
     #CONSULTAR Asignatura
-        elif eleccion == "2":
+        elif eleccion == "3":
             consultarAsignatura()
     #ALTA DE USUARIO:
-        elif eleccion == "3":
+        elif eleccion == "4":
             altaUsusario()
     #CONSULTAR USUARIO:
-        elif eleccion == "4":
+        elif eleccion == "5":
             consultarUsuario()
     
-        elif eleccion == "5":
+        elif eleccion == "6":
             altaCurso()
             
-        elif eleccion == "6":
+        elif eleccion == "7":
             habilitarCurso()
         
-        elif eleccion == "7":
+        elif eleccion == "8":
             agregarLeccion()
             
-        elif eleccion == "8":
+        elif eleccion == "9":
             agregarEjercicio()
 
-        elif eleccion == "9":
+        elif eleccion == "10":
             inscripcionCurso()
 
-        elif eleccion == "10":
-            consultarCurso()
-
         elif eleccion == "11":
-            cargarDatos()
+            consultarCurso()
 
         elif eleccion == "12":
             realizarEjercicio()
@@ -577,9 +660,24 @@ def main():
         elif eleccion == "13":
             consultarEstadisticas()
 
-        elif eleccion == "0":
+        elif eleccion == "14":
+            eliminarCurso()
+
+        elif eleccion == "15":
+            suscribirseNorificaciones()
+
+        elif eleccion == "16":
+            consultaNotificaciones()
+
+        elif eleccion == "17":
+            eliminarSuscripciones()
+
+        elif eleccion == "18":
             seguir = False
-
-
+"""
+cout << "14) Suscribirse a notificaciones \n";
+    cout << "15) Consulta de notificaciones \n";
+    cout << "16) Eliminar suscripciones \n";
+"""
 if __name__ == "__main__":
     main()
