@@ -1,6 +1,6 @@
-# Cursos-Plataforma (Capa lógica, lenguaje python)
-- Modelado de dominio
-- diagrmas de secuencias y de comunicación
-- Diagramas de clases
-- Es el mismo proyecto que realice en c++, pero ahora lo estoy realizando en python
-Profesores de diferentes asignaturas podrán agregar cursos, lecciones y ejercicios para sus estudiantes.
+# Courses-Platform (Logical layer, Python language)
+- Domain Modeling
+- Sequence and Communication Diagrams
+- Class Diagrams
+- It is the same project that I did in C++, but now I am doing it in Python.
+Teachers from different subjects will be able to add courses, lessons, and exercises for their students.
