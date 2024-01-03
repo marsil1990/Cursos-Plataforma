@@ -3,28 +3,28 @@ from src.Student import Student
 from src.DTRegistration import DTRegistration
 from src.DTDate import DTDate
 class DTStudent(DTUser):
-    def __init__(self, Nickname=None, Password=None, Name=None, Description=None, Country=None, Date=None, Student = None):
+    def __init__(self, nickname=None, password=None, name=None, description=None, country=None, date=None, student = None):
         if Student is None:
-            super().__init__(Nickname, Password, Name, Description)
-            self.__Country = Country
-            self.__Date = Date
+            super().__init__(nickname, password, name, description)
+            self.__country = country
+            self.__date = date
         else:
             super().__init__(Student.getNickname(), Student.getPassword(), Student.getName(), Student.getDescription())
-            self.__Country = Student.getCountry()
-            self.__Date = Student.getDateNac()
-            self.__Registrations = dict()
-            ins = Student.MAPgetRegistrations()
-            for ik, iv in ins.items():
-                self.__Registrations[ik] = DTRegistration(Registration=iv)
+            self.__country = Student.getCountry()
+            self.__date = Student.getDateNac()
+            self.__registrations = dict()
+            reg = student.MAPgetRegistrations()
+            for ik, iv in reg.items():
+                self.__registrations[ik] = DTRegistration(registration=iv)
 
 
     def getCountry(self):
-        return self.__Country
+        return self.__country
 
     def getDate(self):
-        return self.__Date
+        return self.__date
     
-    def getRegistration(self, NameCourse):
-        return self.__Registrations[NameCourse]
+    def getRegistration(self, nameCourse):
+        return self.__registrations[nameCourse]
    
     

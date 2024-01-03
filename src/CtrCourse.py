@@ -10,26 +10,26 @@ from src.DTCourse import DTCourse
 class CtrCourse(ICourse) :
     def __init__(self):
        self.__profRec = None
-       self.__NameCourseRec = None
-       self.__DescriptionRec = None
-       self.__dificultadRec= None
+       self.__nameCourseRec = None
+       self.__descriptionRec = None
+       self.__difficultyRec= None
        self.__subjectRec= None
-       self.__RequiresPrerequisiteRec= False
+       self.__requirisPrerequisiteRec= False
        self.__SETPrerequisitesRec= None
        self.__MAPLessonsRec= dict()
        self.__canLessons = None
        self.__ultimaLesson= None
        self.__CourseRecAdd = None
-       self.__TopicRec= None
-       self.__GoalRec= None
+       self.__topicRec= None
+       self.__goalRec= None
        self.__TypeExerciseRec= None
-       self.__DescriptionEjRec= None
+       self.__descriptionEjRec= None
        self.__SentenceEjRec= None
        self.__MAPSolutionFCRec= None
        self.__SolutionTRec= None
        self.__MAPExercisesNuevos= None
        self.__LessonSeLessonada= None
-       self.__NameRecordado= None
+       self.__nameRecordado= None
        self.__MAPCoursesRecordados= None
      
     #Register Course
@@ -39,126 +39,125 @@ class CtrCourse(ICourse) :
         return nickNaMonthProfessors
 
     
-    def ExistsCourse(self, NameCourse):
+    def existsCourse(self, nameCourse):
         mc = CourseManager()
-        return mc.ExistsCourse(NameCourse)
-    def SelectProfessor(self, nickname): 
+        return mc.existsCourse(nameCourse)
+    def selectProfessor(self, nickname): 
         mu = UserManager()
         self.__profRec  = mu.GetUser(nickname)
         
     
-    def EnterDatasCourse (self, Name, Description, dificultad):
-        self.__NameCourseRec = Name
-        self.__DescriptionRec = Description
-        self.__dificultadRec = dificultad
+    def enterDatasCourse (self, name, description, dificultad):
+        self.__nameCourseRec = name
+        self.__descriptionRec = description
+        self.__difficultyRec = dificultad
     
-    def GetSubjectsSpecialization(self):
+    def getSubjectsSpecialization(self):
         subjectsEspecializado = self.__profRec.SETGetSpecializationes()
         return subjectsEspecializado
         
 
     
-    def SelectSubject(self, NaMonthubject):
+    def selectSubject(self, NameSubject):
         mi = SubjectManager()
-        self.__subjectRec = mi.GetSubject(NaMonthubject)
+        self.__subjectRec = mi.GetSubject(NameSubject)
     
-    def SelectLesson(self, Order, NameCourse):
+    def SelectLesson(self, order, nameCourse):
         mc = CourseManager()
-        self.__ultimaLesson = mc.GetLesson(NameCourse, Order)
+        self.__ultimaLesson = mc.getLesson(nameCourse, order)
 
-    def RequiresPrerequisite(self, confirmacion):
-        self.__RequiresPrerequisiteRec = confirmacion
+    def requirisPrerequisite(self, confirmacion):
+        self.__requirisPrerequisiteRec = confirmacion
     
-    def SETGetCoursesAvailable(self):
-        return self.__profRec.SETgetDataCoursesHab(self.__subjectRec.getName())
+    def SETgetCoursesAvailable(self):
+        return self.__profRec.getDataEnabledCourses(self.__subjectRec.getName())
     
-    def SelectPrerequisites(self, cadena):
+    def selectPrerequisites(self, cadena):
         c = cadena.replace(" ","")
         Prerequisites = c.split(',')
         mc = CourseManager()
-        CoursesPrevios = mc.SETGetCourses(Prerequisites)
+        CoursesPrevios = mc.SETgetCourses(Prerequisites)
         self.__SETPrerequisitesRec = CoursesPrevios
         
 
 
 
     
-    def CreateLesson(self, Topic, Goal, CourseName):
+    def createLesson(self, topic, goal, courseName):
         mc = CourseManager()
-        Course = mc.GetCourse(CourseName)
+        Course = mc.getCourse(courseName)
         n = Course.getcountLessons() + 1
-        self.__ultimaLesson =  Lesson(n, Topic, Goal)
-        self.__MAPLessonsRec[n]= Lesson(n, Topic, Goal)
+        self.__ultimaLesson =  Lesson(n, topic, goal)
+        self.__MAPLessonsRec[n]= Lesson(n, topic, goal)
 
-    def CreateExerciseCompleteWord(self, Description,Sentence, MAPrespuesta):
-        self.__ultimaLesson.añadirExerciseCompletar(Description, Sentence, MAPrespuesta)
+    def createExerciseCompleteWord(self, description,sentence, MAPrespuesta):
+        self.__ultimaLesson.addCompletionExercise(description, sentence, MAPrespuesta)
 
-    def CreateExerciseMultipleChoice(self, Description,Question, Options, CorrectOption):
-        self.__ultimaLesson.añadirExerciseMultiple(Description,Question, Options, CorrectOption)
+    def createExerciseMultipleChoice(self, description,question, options, correctOption):
+        self.__ultimaLesson.addExerciseMultiple(description,question, options, correctOption)
 
-    def ConfirmRegisterCourse(self):
-        nuevoCourse = Course(self.__NameCourseRec, self.__DescriptionRec, self.__dificultadRec,
+    def confirmRegisterCourse(self):
+        nuevoCourse = Course(self.__nameCourseRec, self.__descriptionRec, self.__difficultyRec,
                            self.__profRec, self.__subjectRec)
-        self.__profRec.asociarCourseProfessor(nuevoCourse)
-        if self.__RequiresPrerequisiteRec:
+        self.__profRec.associateCourseProfessor(nuevoCourse)
+        if self.__requirisPrerequisiteRec:
             for p in self.__SETPrerequisitesRec:
                 nuevoCourse.añadirPrerequisite(p)
         self.__subjectRec.asociarCourseSubject(nuevoCourse)
         mc = CourseManager()
-        mc.AddCourse(nuevoCourse)
+        mc.addCourse(nuevoCourse)
         nuevoCourse.setProfessor(self.__profRec)
 
     #Add Lesson
     #Course no Available de un Professor de nickname "nickname"
-    def SETGetCoursesNoAvailable(self, nickname):
+    def getCoursesNoAvailable(self, nickname):
         mu = UserManager()
         prof = mu.GetUser(nickname)
-        return prof.SETGetCoursesNoAvailable()
+        return prof.getCoursesNoAvailable()
     
-    def SelectCourse(self, NameCourse):
+    def selectCourse(self, nameCourse):
         mc = CourseManager()
-        self.__CourseRecAdd = mc.GetCourse(NameCourse)
+        self.__CourseRecAdd = mc.getCourse(nameCourse)
         
     
-    def CreateDatasLesson(self, Topic, Goal):
-        self.__TopicRec = Topic
-        self.__GoalRec = Goal
+    def createDatasLesson(self, topic, goal):
+        self.__topicRec = topic
+        self.__goalRec = goal
     
-    def EnterSentenceCompletar(Sentence, MAPSolution): pass
+    def enterSentenceCompletar(sentence, MAPSolution): pass
     
-    def DarDeRegisterExercise():
-        pass
+  
     
-    def DarDeRegisterLesson(self):
-        self.__CourseRecAdd.añadirLesson(self.__ultimaLesson)
+    def confirmLesson(self):
+        self.__CourseRecAdd.addLesson(self.__ultimaLesson)
         self.__MAPLessonsRec.clear()
         self.__ultimaLesson = None
 
     #Add Exercise
     
-    def MAPGetLessons(self):
+    def MAPgetLessons(self):
         Lessons = self.__CourseRecAdd.MAPgetLessons()
         return Lessons
     
-    def AddExercise(lec, Description ,Sentence, MAPSolution): pass
+    def addExercise(lec, Description ,Sentence, MAPSolution): pass
     
-    def AddExercise(lec, Description, Sentence, Solution): pass
+    def addExercise(lec, Description, Sentence, Solution): pass
 
     #Register subject
     
-    def EnterSubject(self,NaMonthubject):
-        self.__subjectRec = NaMonthubject
+    def enterSubject(self,nameSubject):
+        self.__subjectRec = nameSubject
     
-    def ConfirmSubject(self):
+    def confirmSubject(self):
         mi = SubjectManager()
-        if mi.ExistsSubject(self.__subjectRec):
+        if mi.existsSubject(self.__subjectRec):
             return False
         else:
             i = Subject(self.__subjectRec)
             mi.AddSubject(i)
             return True
     
-    def ConsultSubject(self):
+    def consultSubject(self):
         mi = SubjectManager()
         return mi.SETSubjectsAvailables()
     #Consult Statistics
@@ -168,42 +167,42 @@ class CtrCourse(ICourse) :
         Students = mu.SETGetStudents()
         return Students
     
-    def MAPGetCoursesInscripto(nickname): pass
+    def MAPgetCoursesInscripto(nickname): pass
     
     def MAPGetAdvancedCourses(self, nicknaMonthtudent= None, nicknameProfessor = None, Course = None):
         if nicknaMonthtudent!= None:
             mu = UserManager()
-            User = mu.GetUser(nickname=nicknaMonthtudent)
-            CoursesInscriptos = User.MAPGetCoursesInscriptos()
-            for c in CoursesInscriptos.values():
-                avanceCourse = c.GetAvanceCourse(nicknaMonthtudent)
+            user = mu.GetUser(nickname=nicknaMonthtudent)
+            coursesInscriptos = user.MAPgetCoursesInscriptos()
+            for c in coursesInscriptos.values():
+                avanceCourse = c.getCourseProgress(nicknaMonthtudent)
                 print(f"Course: {c.getName()}, Avance: {avanceCourse}%")
         elif nicknameProfessor != None:
             mu = UserManager()
-            User = mu.GetUser(nickname=nicknameProfessor)
-            CoursesProfessor = User.MAPCourses()
-            for c in CoursesProfessor.values():
-                print(f"Name del Course: {c.getName()}, Promedio: {c.GetPromedioCourse()}")
+            user = mu.GetUser(nickname=nicknameProfessor)
+            coursesProfessor = user.MAPCourses()
+            for c in coursesProfessor.values():
+                print(f"Name del Course: {c.getName()}, Promedio: {c.getCourseAverage()}")
         else:
             mc = CourseManager()
-            c = mc.GetCourse(Course)
-            print(f"Name del Course: {c.getName()}, Promedio: {c.GetPromedioCourse()}")
+            c = mc.getCourse(Course)
+            print(f"Name del Course: {c.getName()}, Promedio: {c.getCourseAverage()}")
 
 
 
 
     def GetProfessors(): pass 
     
-    def MAPGetPromedioCourses(): pass
+    def MAPgetCourseAverages(): pass
     
-    def SETGetCourses(self):
+    def SETgetCourses(self):
         mc = CourseManager()
-        Courses =  mc.GetAllCourses()
+        Courses =  mc.getAllCourses()
         return Courses
     
     def GetPromedio(): pass
     
-    def MakeCourseAvailable(self):
+    def makeCourseAvailable(self):
         correcto = False
         if self.__CourseRecAdd.getcountLessons()!= 0:
             Lessons = self.__CourseRecAdd.MAPgetColLessons()
@@ -215,7 +214,7 @@ class CtrCourse(ICourse) :
                     cantidadLessons +=1
             if cantidadLessons == self.__CourseRecAdd.getcountLessons():
                 correcto = True
-                self.__CourseRecAdd.setHabilitar()
+                self.__CourseRecAdd.setEnabled()
                 
         return correcto
 
@@ -225,24 +224,24 @@ class CtrCourse(ICourse) :
 
     #Consult Course
     
-    def GetCourse(self,NameCourse):
+    def getCourse(self,nameCourse):
         mc = CourseManager()
-        c = mc.GetCourse(NameCourse)
+        c = mc.getCourse(nameCourse)
         CourseDt = DTCourse(Course=c)
         return CourseDt
 
     
-    def  MAPGetLessonsDeCourse(): pass
+    def  MAPgetLessonsDeCourse(): pass
     
-    def  MAPGetExercises(Lesson): pass
+    def  MAPgetExercises(lesson): pass
     #Eliminar Course
     
-    def deleteCourse(self, CourseName):
+    def deleteCourse(self, courseName):
         mc = CourseManager()
-        mc.deleteCourse(CourseName)
+        mc.deleteCourse(courseName)
 
-    def Notify(self, Course):
+    def notify(self, course):
         mc = CourseManager()
-        c = mc.GetCourse(Course)
+        c = mc.getCourse(course)
         subjectCourse = c.getSubject()
         subjectCourse.EnviarNotificacion(c.getName())

@@ -10,12 +10,12 @@ from src.CtrCourse import CtrCourse
 #@singleton
 
 class Factory(object):
-    __instancia = None
+    __instance = None
     
     def __new__ (cls):
-        if Factory.__instancia is None:
-            Factory.__instancia = object.__new__(cls)
-        return Factory.__instancia
+        if Factory.__instance is None:
+            Factory.__instance = object.__new__(cls)
+        return Factory.__instance
     
 
     def getIUser(self):

@@ -3,61 +3,61 @@ from src.User import User
 class Student(User):
     def __init__(self, Nickname,  Password,  Name,  Description,  Country, DateNac):
         super().__init__(Nickname, Password, Name, Description)
-        self.__Country = Country
-        self.__DateNac = DateNac
+        self.__country = Country
+        self.__dateNac = DateNac
         self.__MAPCoursesInscriptos = dict()
         self.__MAPRegistrations = dict()
-        self.__MAPsuscrito = dict()
+        self.__MAPsubscription = dict()
         self.__SETNotifications = set()
 
     def getCountry(self):
-        return self.__Country
+        return self.__country
     
     def getDateNac(self):
-        return self.__DateNac
+        return self.__dateNac
     
-    def MAPGetCoursesInscriptos(self):
+    def MAPgetCoursesInscriptos(self):
         return self.__MAPCoursesInscriptos
     
-    def Notify(self, DTnuevoCourse):
+    def notify(self, DTnuevoCourse):
         self.__SETNotifications.add(DTnuevoCourse)
 
     def  MAPgetRegistrations(self):
         return self.__MAPRegistrations
     
-    def inscribirseCourse(self, NameCourse, Course, aprobarCourse = False, f= None):
+    def inscribirseCourse(self, nameCourse, Course, aprobarCourse = False, f= None):
         from src.Registration import Registration
         nuevaRegistration = Registration(f, Course, self)
         if aprobarCourse:
            nuevaRegistration.setAprobada(True)
         
-        self.__MAPCoursesInscriptos[NameCourse] = Course
-        self.__MAPRegistrations[NameCourse] =  nuevaRegistration
-        Course.inscribirStudent(self)
+        self.__MAPCoursesInscriptos[nameCourse] = Course
+        self.__MAPRegistrations[nameCourse] =  nuevaRegistration
+        Course.enrollStudent(self)
     
     def SETGetNomAsignaturaSuscrito(self):
         nomAsignatura = set()
-        for a in self.__MAPsuscrito:
+        for a in self.__MAPsubscription:
             nomAsignatura.add(a)
         return nomAsignatura
     
-    def SETDevolverNotifications(self):
+    def getNotifications(self):
         return self.__SETNotifications
     
-    def elimiarNotifications(self):
+    def removeNotifications(self):
         self.__SETNotifications.clear()
 
-    def MAPGetCourses():pass
+    def MAPgetCourses():pass
 
     def getRegistration(self,CourseName):
         return self.__MAPRegistrations[CourseName]
     
-    def agreagarSuscripcion(self, asignatura):
-        self.__MAPsuscrito[asignatura.getName()]= asignatura.getName()
+    def addSuscription(self, asignatura):
+        self.__MAPsubscription[asignatura.getName()]= asignatura.getName()
     
-    def eliminarSuscripcion(self, NameAsignatura):
-        del self.__MAPsuscrito[NameAsignatura]
+    def removeSubscription(self, NameAsignatura):
+        del self.__MAPsubscription[NameAsignatura]
 
-    def removerCourse( NameCourse):pass
+    def removerCourse( nameCourse):pass
     
     

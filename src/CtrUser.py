@@ -13,9 +13,9 @@ from src.DTExercise import DTExercise
 from src.CompleteWord import CompleteWord
 from src.MultipleChoice import MultipleChoice
 class CtrUser(IUser):
-    __instancia = None
+    __instance = None
     __nickNameRec = None
-    __NameCourseRec = None
+    __nameCourseRec = None
     __CourseRecordado =  None
     __nuevoUserNicknameRec = None
     __nuevoUserContrasenia = None
@@ -36,57 +36,57 @@ class CtrUser(IUser):
     
     
     def __new__(cls):
-        if CtrUser.__instancia is None:
-           CtrUser.__instancia = object.__new__(cls)
-        return CtrUser.__instancia
+        if CtrUser.__instance is None:
+           CtrUser.__instance = object.__new__(cls)
+        return CtrUser.__instance
     
     
     
     
     #public
     #Register User
-    def EnterDatasUser(self, nickname, Password, Description, Name): 
+    def enterDatasUser(self, nickname, password, description, Name): 
         self.__nuevoUserNicknameRec = nickname
-        self.__nuevoUserContrasenia = Password
-        self.__nuevoUserDescription = Description
+        self.__nuevoUserContrasenia = password
+        self.__nuevoUserDescription = description
         self.__nuevoUserNameRec = Name
     
-    def  EnterDataStudent(self, NameCountry,DateBirth):
-        self.__nuevoUserNameCountryRec = NameCountry
-        self.__nuevoUserDateBirthRec = DateBirth
+    def  enterDataStudent(self, nameCountry,dateBirth):
+        self.__nuevoUserNameCountryRec = nameCountry
+        self.__nuevoUserDateBirthRec = dateBirth
 
     #Devuelve true si el nickname ya esta
-    def  NicknameAvailable(self, nickname):
+    def  nicknameAvailable(self, nickname):
         mu = UserManager()
-        if mu.ExistsUser(nickname):
+        if mu.existsUser(nickname):
            return True
         else:
             return False
 
-    def  RegisterStudent(self):
+    def  registerStudent(self):
         mu = UserManager()
         nuevoStudent = Student(self.__nuevoUserNicknameRec, self.__nuevoUserContrasenia,
                                      self.__nuevoUserNameRec, self.__nuevoUserDescription,
                                      self.__nuevoUserNameCountryRec, self.__nuevoUserDateBirthRec)
         mu.AddUser(nuevoStudent)
     
-    def  ConfirmRegisterStudent(self):
-        if not self.NicknameAvailable(self.__nuevoUserNicknameRec):
-            self.RegisterStudent()
+    def  confirmRegisterStudent(self):
+        if not self.nicknameAvailable(self.__nuevoUserNicknameRec):
+            self.registerStudent()
 
     
-    def  EnterInstitute(self, NameInstitute):
-        self.__nuevoUserInstituteRec= NameInstitute
+    def  enterInstitute(self, nameInstitute):
+        self.__nuevoUserInstituteRec= nameInstitute
     
     def GetSubjectsAvailables(self):
         mi = SubjectManager()
         Subjects = mi.SETSubjectsAvailables()
         return Subjects
     
-    def  AddSpecialization(self, NaMonthubject):
-        self.__SETSubjectRecordados.add(NaMonthubject)
+    def  addSpecialization(self, nameSubject):
+        self.__SETSubjectRecordados.add(nameSubject)
     
-    def  ConfirmRegisterProfessor(self):
+    def  confirmregisterProfessor(self):
         mu = UserManager()
         prof = Professor(self.__nuevoUserNicknameRec, self.__nuevoUserContrasenia, self.__nuevoUserNameRec,
                         self.__nuevoUserDescription, self.__nuevoUserInstituteRec)
@@ -94,7 +94,7 @@ class CtrUser(IUser):
            prof.AddSpecialization(i)
         mu.AddUser(prof)
     
-    def  RegisterProfessor():
+    def  registerProfessor():
         pass
     
      #Consutl User
@@ -104,19 +104,19 @@ class CtrUser(IUser):
         SETnicknameUsers = mu.GetNickname()
         return SETnicknameUsers
     
-    def  SelectUser(self, nickname):
+    def  selectUser(self, nickname):
         mu = UserManager()
-        User = mu.GetUser(nickname)
-        if type(User)== Professor :
-            prof = self.SelectProfessor(nickname)
+        user = mu.GetUser(nickname)
+        if type(user)== Professor :
+            prof = self.selectProfessor(nickname)
             print(f"Name: {prof.getName()}")
             print(f"Descripción: {prof.getDescription()}")
             print(f"Institute: {prof.getInstitute()}")
-            Subject = User.SETGetSpecializationes()
+            Subject = user.SETGetSpecializationes()
             for i in Subject:
                 print(f"Subject: {i}")
-        elif type(User)== Student: 
-            es = self.SelectStudent(nickname)
+        elif type(user)== Student: 
+            es = self.selectStudent(nickname)
             print(f"Name: {es.getName()}")
             print(f"Descripción: {es.getDescription()}")
             print(f"Country: {es.getCountry()}")
@@ -125,7 +125,7 @@ class CtrUser(IUser):
 
 
     
-    def  SelectStudent(self, nickname):
+    def  selectStudent(self, nickname):
         mu = UserManager()
         Student = mu.GetUser(nickname)
         es = DTStudent(Student.getNickname(), Student.getPassword(),
@@ -134,131 +134,131 @@ class CtrUser(IUser):
         return es
 
     
-    def SelectProfessor(self, nickname):
+    def selectProfessor(self, nickname):
         mu = UserManager()
-        Professor = mu.GetUser(nickname)
-        prof = DTProfessor(Professor.getNickname(), Professor.getPassword(),
-                          Professor.getName(), Professor.getDescription(), 
-                          Professor.getInstitute())
+        professor = mu.GetUser(nickname)
+        prof = DTProfessor(professor.getNickname(), professor.getPassword(),
+                          professor.getName(), professor.getDescription(), 
+                          professor.getInstitute())
         return prof
      #Consutl Notifications
     
-    def  EnterNickname(self, nickname):
+    def  enterNickname(self, nickname):
         self.__nickNameRec = nickname
     
     def  GetNotifications(self, nickname):
         mu = UserManager()
         ususario = mu.GetUser(nickname=nickname)
-        Notifications =  ususario.SETDevolverNotifications()
-        return Notifications
+        notifications =  ususario.getNotifications()
+        return notifications
     
-    def  DeleteNotifiaciones(self, nickname):
+    def  deleteNotifiaciones(self, nickname):
         mu = UserManager()
-        User = mu.GetUser(nickname=nickname)
-        User.elimiarNotifications()
+        user = mu.GetUser(nickname=nickname)
+        user.removeNotifications()
      #SUSCRIBIRSE A NOTIFIACIONES
     
     def GetSubjectUnsubscribed (self, nickname):
         mu = UserManager()
         ma = SubjectManager()
         User = mu.GetUser(nickname=nickname)
-        Subjectuscrito = User.SETGetNomSubjectuscrito()
-        SubjectDiponible = ma.SETSubjectsAvailables()
-        SubjectSubscriptions = set()
-        for a in SubjectDiponible:
-            if not a in Subjectuscrito:
-                SubjectSubscriptions.add(a)
-        return SubjectSubscriptions
+        subjectuscrito = User.SETGetNomSubjectuscrito()
+        subjectDiponible = ma.SETSubjectsAvailables()
+        subjectSubscriptions = set()
+        for a in subjectDiponible:
+            if not a in subjectuscrito:
+                subjectSubscriptions.add(a)
+        return subjectSubscriptions
 
 
 
     
-    def  AgreagarSuscripcion(self, nickname, nomSubject):
+    def  addSuscription(self, nickname, nomSubject):
         mu = UserManager()
         ma = SubjectManager()
-        User = mu.GetUser(nickname=nickname)
-        Subject = ma.GetSubject(NaMonthubject=nomSubject)
-        User.agreagarSuscripcion(Subject)
-        Subject.AddSuscriptor(User)
+        user = mu.GetUser(nickname=nickname)
+        subject = ma.GetSubject(NameSubject=nomSubject)
+        user.addSuscription(subject)
+        subject.AddSuscriptor(user)
     
-    def  ExistsSubject(self, asign):
+    def existsSubject(self, subject):
         mi = SubjectManager()
-        return mi.ExistsSubject(asign)
+        return mi.ExistsSubject(subject)
     
      #ElIMIAR SUSCRIPCIÓN
     
     def GetSubscriptions(self, nickname):
         mu = UserManager()
-        User = mu.GetUser(nickname=nickname)
-        Subscriptions = User.SETGetNomSubjectuscrito()
-        return Subscriptions
+        user = mu.GetUser(nickname=nickname)
+        subscriptions = user.SETGetNomSubjectuscrito()
+        return subscriptions
     
-    def  DeleteSubscriptions(self, nickname, eleccionSubject):
+    def  deleteSubscriptions(self, nickname, choiceSubject):
         ma = SubjectManager()
         mu = UserManager()
-        Subject = ma.GetSubject(eleccionSubject)
-        User = mu.GetUser(nickname = nickname)
-        User.eliminarSuscripcion(eleccionSubject)
-        Subject.eliminar(nickname)
+        subject = ma.GetSubject(choiceSubject)
+        user = mu.GetUser(nickname = nickname)
+        user.removeSubscription(choiceSubject)
+        subject.eliminar(nickname)
     
 
         
      #INSCRIBIRSE A Course
     
-    def  GetCoursesAvailableforRegistration(self, nickname):
+    def  getCoursesAvailableforRegistration(self, nickname):
         mc = CourseManager()
         mu = UserManager()
-        Student = mu.GetUser(nickname)
-        CoursesInscriptos = Student.MAPGetCoursesInscriptos()
-        NameCourses = mc.GetCoursesAvailables()
-        listNameCourses = []
-        for curDis in NameCourses:
-            listNameCourses.append(curDis)
-        Courses = mc.SETGetCourses(listNameCourses)
-        CoursesAvailable = set()
-        CoursesAvailables = set()
-        for c in Courses:
-            if c.getHabilitado():
-                CoursesAvailable.add(c)
+        student = mu.GetUser(nickname)
+        coursesInscriptos = Student.MAPgetCoursesInscriptos()
+        nameCourses = mc.getCoursesAvailables()
+        listnameCourses = []
+        for curDis in nameCourses:
+            listnameCourses.append(curDis)
+        courses = mc.SETgetCourses(listnameCourses)
+        coursesAvailable = set()
+        coursesAvailables = set()
+        for c in courses:
+            if c.getEnabled():
+                coursesAvailable.add(c)
         #//Si no Exists Courses Habilitado con el null indicamos que no Exists Courses para inscribirse.
-        if len(CoursesAvailable)==0:
-            return CoursesAvailable
+        if len(coursesAvailable)==0:
+            return coursesAvailable
         
         #itero en todos los Courses Available
-        for c in CoursesAvailable:
+        for c in coursesAvailable:
             #si tengo Courses inscriptos
-            if len(CoursesInscriptos) != 0 and not (c.getName() in CoursesInscriptos):
+            if len(coursesInscriptos) != 0 and not (c.getName() in coursesInscriptos):
                 MAPPrerequisites = c.getPrerequisites()
                 tieneLasPrerequisites = True
                 if len(MAPPrerequisites) != 0:
                     for p in MAPPrerequisites:
-                        if not p in CoursesInscriptos:
+                        if not p in coursesInscriptos:
                             tieneLasPrerequisites = False
                         else:
-                            if not Student.getRegistration(p).getAprobada():
+                            if not student.getRegistration(p).getAprobada():
                                 tieneLasPrerequisites = False
                 if tieneLasPrerequisites:
-                    CourseAvailable = DTCourse(Course=c)
-                    CoursesAvailables.add(CourseAvailable)
+                    courseAvailable = DTCourse(Course=c)
+                    coursesAvailables.add(courseAvailable)
             else:
-                if len(CoursesInscriptos)==0: 
-                    Prerequisites = c.getPrerequisites()
-                    if len(Prerequisites) == 0:
-                        CourseAvailable = DTCourse(course=c)
-                        CoursesAvailables.add(CourseAvailable)
+                if len(coursesInscriptos)==0: 
+                    prerequisites = c.getPrerequisites()
+                    if len(prerequisites) == 0:
+                        courseAvailable = DTCourse(course=c)
+                        coursesAvailables.add(courseAvailable)
      
-        return CoursesAvailables
+        return coursesAvailables
     
-    def  EnterCourseSeleccionado(self, NameCourse):
-        self.__NameCourseRec = NameCourse
+    def  enterCourseSeleccionado(self, nameCourse):
+        self.__nameCourseRec = nameCourse
     
-    def  FinalizarRegistrationACourse(self, nickname, Date = None, aprobado = False):
+    def  finalizarRegistrationACourse(self, nickname, Date = None, aprobado = False):
         mu = UserManager()
         mc = CourseManager()
         try:
-           Student = mu.GetUser(nickname)
-           Course = mc.GetCourse(self.__NameCourseRec);
-           Student.inscribirseCourse(Course.getName(),Course, aprobado, Date)
+           student = mu.GetUser(nickname)
+           course = mc.getCourse(self.__nameCourseRec);
+           student.inscribirseCourse(course.getName(),course, aprobado, Date)
            return True
         except:
            return False
@@ -266,60 +266,60 @@ class CtrUser(IUser):
 
     #Execute Exercise
     
-    def  ExistsUser(nickname):
+    def  existsUser(nickname):
         pass
     
-    def  RememberUser(nickname):
+    def  rememberUser(nickname):
         pass
-    def  GetCoursesInscriptoNoAprobado(self, nickname):
+    def  getCoursesInscriptoNoAprobado(self, nickname):
         mu = UserManager()
-        Student = mu.GetUser(nickname)
+        student = mu.GetUser(nickname)
         self.__StudentRemember = Student
-        CoursesInscriptos= Student.MAPgetRegistrations()
-        CoursesInscriptosNoApproved = set()
-        for i in CoursesInscriptos.values():
+        coursesInscriptos= Student.MAPgetRegistrations()
+        coursesInscriptosNoApproved = set()
+        for i in coursesInscriptos.values():
             if i.getAprobada() == False :
-                CoursesInscriptosNoApproved.add(DTRegistration(Registration=i))
-        return CoursesInscriptosNoApproved
+                coursesInscriptosNoApproved.add(DTRegistration(Registration=i))
+        return coursesInscriptosNoApproved
 
 
     
-    def  GetExercisesNoApproved(self):
+    def  getExercisesNoApproved(self):
         mc = CourseManager()
         mu = UserManager()
         est = mu.GetUser(self.__nickNameRec)
-        Registration = est.getRegistration(self.__NameCourseRec)
-        ultimaLessonAprobada = Registration.getUltimaLessonAprobada()
-        cur = mc.GetCourse(self.__NameCourseRec)
+        registration = est.getRegistration(self.__nameCourseRec)
+        ultimaLessonAprobada = registration.getUltimaLessonAprobada()
+        cur = mc.getCourse(self.__nameCourseRec)
         self.__CourseRecordado = cur
-        ExercisesNoApproved = set()
+        exercisesNoApproved = set()
         if ultimaLessonAprobada is not None:
             Order = ultimaLessonAprobada.getOrder()
-            nextLesson = cur.GetLesson(Order + 1)
+            nextLesson = cur.getLesson(Order + 1)
             self.__LessonRecordada = nextLesson
-            Exercises = nextLesson.MAPgetColExercises()
-            for e in Exercises.values():
+            exercises = nextLesson.MAPgetColExercises()
+            for e in exercises.values():
                 if not e.esAprovado(self.__nickNameRec):
-                    ExercisesNoApproved.add(DTExercise(Exercise=e))
-            return ExercisesNoApproved
+                    exercisesNoApproved.add(DTExercise(Exercise=e))
+            return exercisesNoApproved
         else:
-            nextLesson = cur.GetLesson(1)
+            nextLesson = cur.getLesson(1)
             self.__LessonRecordada = nextLesson
-            Exercises = nextLesson.MAPgetColExercises()
-            for e in Exercises.values():
+            exercises = nextLesson.MAPgetColExercises()
+            for e in exercises.values():
                 if not e.esAprovado(self.__nickNameRec):
-                    ExercisesNoApproved.add(DTExercise(Exercise=e))
-            return ExercisesNoApproved
+                    exercisesNoApproved.add(DTExercise(Exercise=e))
+            return exercisesNoApproved
                 
 
 
         
     
-    def  RememberExercise(self, Id):
+    def  rememberExercise(self, Id):
         self.__ExerciseRecordado = Id
     
     def  mostrarExercise(self):
-        ej = self.__LessonRecordada.GetExercise(self.__ExerciseRecordado)
+        ej = self.__LessonRecordada.getExercise(self.__ExerciseRecordado)
         if type(ej)== CompleteWord:
             self.__ExerciseDeCompleteWord=ej
             print("Complete: ")
@@ -328,9 +328,9 @@ class CtrUser(IUser):
         else:
             self.__ExerciseMultipleChoice = ej
             print("Elije la opción correcta: ")
-            Options = ej.getOptions()
+            options = ej.getOptions()
             print (f"Problema o Exercise:\n {ej.getOracion()}")
-            for ok, ov in Options.items():
+            for ok, ov in options.items():
                 print(f"Opción {ok}: {ov}")
             return False
         
@@ -340,46 +340,46 @@ class CtrUser(IUser):
     def  mostrarExerciseaux():
         pass
     
-    def  ResolveCompleteWord(self, conjunto_Solution):
+    def  resolveCompleteWord(self, conjunto_Solution):
         if self.__ExerciseDeCompleteWord.EnterSolution(conjunto_Solution):
-            Registration = self.__StudentRemember.getRegistration(self.__NameCourseRec)
-            self.__ExerciseDeCompleteWord.addStudentAprobado(self.__nickNameRec, Registration)
-            Exercises = self.__LessonRecordada.MAPgetColExercises()
+            registration = self.__StudentRemember.getRegistration(self.__nameCourseRec)
+            self.__ExerciseDeCompleteWord.addApprovedStudent(self.__nickNameRec, registration)
+            exercises = self.__LessonRecordada.MAPgetColExercises()
             cantEjer = self.__LessonRecordada.getcountExercises()
-            Order = self.__LessonRecordada.getOrder()
+            order = self.__LessonRecordada.getOrder()
             cantApproved = 0
-            for e in Exercises.values():
+            for e in exercises.values():
                 if e.esAprovado(self.__nickNameRec):
                     cantApproved +=1
             if cantApproved == cantEjer:
-                Registration.setNuevaLessonAprobada(self.__LessonRecordada)
-            if self.__CourseRecordado.getcountLessons() == Order:
-                Registration.setAprobada(True)
+                registration.setNuevaLessonAprobada(self.__LessonRecordada)
+            if self.__CourseRecordado.getcountLessons() == order:
+                registration.setAprobada(True)
             return True
         else:
             return False
 
 
-    def  ResolveMultipleChoice(self, Solution):
-        if self.__ExerciseMultipleChoice.getCorrectOption() == Solution:
-            Registration = self.__StudentRemember.getRegistration(self.__NameCourseRec)
-            self.__ExerciseMultipleChoice.addStudentAprobado(self.__nickNameRec, Registration)
-            Exercises = self.__LessonRecordada.MAPgetColExercises()
+    def  resolveMultipleChoice(self, solution):
+        if self.__ExerciseMultipleChoice.getCorrectOption() == solution:
+            registration = self.__StudentRemember.getRegistration(self.__nameCourseRec)
+            self.__ExerciseMultipleChoice.addApprovedStudent(self.__nickNameRec, registration)
+            exercises = self.__LessonRecordada.MAPgetColExercises()
             cantEjer = self.__LessonRecordada.getcountExercises()
-            Order = self.__LessonRecordada.getOrder()
+            order = self.__LessonRecordada.getOrder()
             cantApproved = 0
-            for e in Exercises.values():
+            for e in exercises.values():
                 if e.esAprovado(self.__nickNameRec):
                     cantApproved +=1
             if cantApproved == cantEjer:
-                Registration.setNuevaLessonAprobada(self.__LessonRecordada)
-            if self.__CourseRecordado.getcountLessons() == Order:
-                Registration.setAprobada(True)
+                registration.setNuevaLessonAprobada(self.__LessonRecordada)
+            if self.__CourseRecordado.getcountLessons() == order:
+                registration.setAprobada(True)
             return True
         else: return False
         
     
     def cantidadWordsACompletar(self):
-        return self.__ExerciseDeCompleteWord.getCantidadWords()
+        return self.__ExerciseDeCompleteWord.getWordCount()
 
     #def __del__(): pass

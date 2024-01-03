@@ -1,15 +1,15 @@
 from src.Professor import Professor
 from src.Student import Student
 class UserManager(object):
-    __instancia = None
+    __instance = None
     __MAPUsers = dict()
     
     def __new__(cls):
-        if UserManager.__instancia is None:
-            UserManager.__instancia = object.__new__(cls)
-        return UserManager.__instancia
+        if UserManager.__instance is None:
+            UserManager.__instance = object.__new__(cls)
+        return UserManager.__instance
 
-    def ExistsUser(self, nickname):
+    def existsUser(self, nickname):
         if nickname in self.__MAPUsers:
             return True
         else:
@@ -49,6 +49,6 @@ class UserManager(object):
         return SETnickname
 
     def GetNaMonthProfessor():pass
-    def AddCourseColeccion(Course):pass
-    def aprobarExercise(Exercise, nickname, NameCourse):pass
+    def addCourseColeccion(Course):pass
+    def aprobarExercise(Exercise, nickname, nameCourse):pass
     

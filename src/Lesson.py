@@ -1,42 +1,44 @@
 from src.CompleteWord import CompleteWord
 from src.MultipleChoice import MultipleChoice
 class Lesson:
-    def __init__(self, Order, Topic, Goal, Exercises = None):
-        self.__Order = Order
-        self.__Topic = Topic
-        self.__Goal = Goal
-        if Exercises is None:
+    def __init__(self, order, topic, goal, exercises = None):
+        self.__order = order
+        self.__topic = topic
+        self.__goal = goal
+        if exercises is None:
            self.__MAPExercise = dict()
         else:
-           self.__MAPExercise =  Exercises
+           self.__MAPExercise =  exercises
     
     def getOrder(self): 
-        return self.__Order
+        return self.__order
     def getTopic(self):
-        return self.__Topic
+        return self.__topic
     def getGoal(self):
-        return self.__Goal
-    def añadirExerciseCompletar(self, Description, Sentence,  MAPrespuesta):
+        return self.__goal
+    def addCompletionExercise(self, description, sentence,  MAPrespuesta):
         n = len(self.__MAPExercise) + 1
-        ej = CompleteWord(n , Description, Sentence, MAPrespuesta)
+        ej = CompleteWord(n , description, sentence, MAPrespuesta)
         self.__MAPExercise[n] = ej
         
 
-    def añadirExerciseMultiple(self, Description, Question, Options, CorrectOption):
+    def addExerciseMultiple(self, description, question, options, correctOption):
         n = len(self.__MAPExercise) + 1
-        ej = MultipleChoice(n , Description,Question, Options, CorrectOption)
+        ej = MultipleChoice(n , description,question, options, correctOption)
         self.__MAPExercise[n] = ej
-    def contarExercises(tot, ap, nickStudent): pass
-    def SETGetNoApproved(): pass
-    def GetExercise(self, Id):
+
+        
+    def numberOfExercises(tot, ap, nickStudent): pass
+   
+    def getExercise(self, Id):
         return self.__MAPExercise[Id]
     def getcountExercises(self):
         return len(self.__MAPExercise)
     def setOrder(Order): pass
     def MAPgetColExercises(self):
         return self.__MAPExercise
-    def eliminarExercises(self):
+    def removeExercises(self):
         for e in self.__MAPExercise.values():
-            e.eliminarStudentsApproved()
+            e.removeStudentsApproved()
         self.__MAPExercise.clear()
         del self.__MAPExercise

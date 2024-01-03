@@ -1,34 +1,34 @@
 from abc import ABC, abstractmethod
 class IUser(ABC):
     @abstractmethod
-    def EnterDatasUser(nickname, Password, Description, Name): 
+    def enterDatasUser(nickname, password, description, name): 
         pass
     @abstractmethod
-    def  EnterDataStudent(NameCountry,DateBirth):
+    def  enterDataStudent(nameCountry,dateBirth):
         pass
     @abstractmethod
-    def  NicknameAvailable(nickname):
+    def  nicknameAvailable(nickname):
         pass
     @abstractmethod
-    def  RegisterStudent():
+    def  registerStudent():
         pass
     @abstractmethod
-    def  ConfirmRegisterStudent():
+    def  confirmRegisterStudent():
         pass
     @abstractmethod
-    def  EnterInstitute(NameCountry):
+    def  enterInstitute(nameCountry):
         pass
     @abstractmethod
     def  GetSubjectsAvailables():
         pass
     @abstractmethod
-    def  AddSpecialization(NaMonthubject):
+    def  addSpecialization(nameSubject):
         pass
     @abstractmethod
-    def  ConfirmRegisterProfessor():
+    def  confirmregisterProfessor():
         pass
     @abstractmethod
-    def  RegisterProfessor():
+    def  registerProfessor():
         pass
     @abstractmethod
      #Consult User
@@ -36,65 +36,65 @@ class IUser(ABC):
     def GetNicknameUsers():
         pass
     @abstractmethod
-    def  SelectUser(nickname):
+    def  selectUser(nickname):
         pass
     @abstractmethod
-    def  SelectStudent(nickname):
+    def  selectStudent(nickname):
         pass
     @abstractmethod
-    def SelectProfessor(nickname):
+    def selectProfessor(nickname):
         pass
      #Consult Notifications
     @abstractmethod
-    def  EnterNickname(nickname):
+    def  enterNickname(nickname):
         pass
     @abstractmethod
     def  GetNotifications():
         pass
     @abstractmethod
-    def  DeleteNotifiaciones():
+    def  deleteNotifiaciones():
         pass
      #SUSCRIBIRSE A NOTIFIACIONES
     @abstractmethod
     def GetSubjectUnsubscribed (nickname):
         pass
     @abstractmethod
-    def  AgreagarSuscripcion(nomSubject):
+    def  addSuscription(nomSubject):
         pass
     @abstractmethod
-    def  ExistsSubject(subject):
+    def  existsSubject(subject):
         pass
      #ElIMIAR SUSCRIPCIÓN
     @abstractmethod
     def GetSubscriptions(nickname):
         pass
     @abstractmethod
-    def  DeleteSubscriptions():
+    def  deleteSubscriptions(nickname, choiceSubject):
         pass
      #INSCRIBIRSE A Course
     @abstractmethod
-    def  GetCoursesAvailableforRegistration(nickName):
+    def  getCoursesAvailableforRegistration(nickName):
         pass
     @abstractmethod
-    def  EnterCourseSeleccionado(NameCourse):
+    def  enterCourseSeleccionado(nameCourse):
         pass
     @abstractmethod
-    def  FinalizarRegistrationACourse(nickname, Date = None, aprobado = False):
+    def  finalizarRegistrationACourse(nickname, Date = None, aprobado = False):
         pass
     #Execute Exercise
     @abstractmethod
-    def  ExistsUser(nickname):
+    def  existsUser(nickname):
         pass
     @abstractmethod
-    def  RememberUser(nickname):
+    def  rememberUser(nickname):
         pass
-    def  GetCoursesInscriptoNoAprobado():
-        pass
-    @abstractmethod
-    def  GetExercisesNoApproved():
+    def  getCoursesInscriptoNoAprobado():
         pass
     @abstractmethod
-    def  RememberExercise(numero, Exercise):
+    def  getExercisesNoApproved():
+        pass
+    @abstractmethod
+    def  rememberExercise(numero, Exercise):
         pass
     @abstractmethod
     def  mostrarExercise():
@@ -103,10 +103,10 @@ class IUser(ABC):
     def  mostrarExerciseaux():
         pass
     @abstractmethod
-    def  ResolveCompleteWord(map, Conjunto_Solution, imprimir=False):
+    def  resolveCompleteWord(map, conjunto_Solution, imprimir=False):
         pass
     @abstractmethod
-    def  ResolveMultipleChoice(Solution, imprimir=False):
+    def  resolveMultipleChoice(solution, imprimir=False):
         pass
     @abstractmethod
     def cantidadWordsACompletar():

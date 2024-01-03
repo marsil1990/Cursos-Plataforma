@@ -1,14 +1,14 @@
 from src.Exercise import Exercise
 class MultipleChoice(Exercise):
-    def __init__(self, Id, Description, Question, Options, CorrectOption):
-        super().__init__(Id, Description)
-        self.__oracion = Question
-        self.__MAPOptions = Options
-        self.__CorrectOption = CorrectOption
+    def __init__(self, Id, description, question, options, correctOption):
+        super().__init__(Id, description)
+        self.__question= question
+        self.__MAPOptions = options
+        self.__correctOption = correctOption
 
     def getOracion(self):
-        return self.__oracion
+        return self.__question
     def getOptions(self):
         return self.__MAPOptions
     def getCorrectOption(self):
-        return self.__CorrectOption
+        return self.__correctOption

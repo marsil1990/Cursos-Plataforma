@@ -1,15 +1,15 @@
 class DTUser:
-    def __init__(self, Nickname, Password, Name, Description):
-        self.__Nickname = Nickname
-        self.__Password = Password
-        self.__Name = Name
-        self.__Description = Description
+    def __init__(self, nickname, password, name, description):
+        self.__nickname = nickname
+        self.__password = password
+        self.__name = name
+        self.__description = description
     def getNickname(self):
-        return self.__Nickname
+        return self.__nickname
     def getPassword(self):
-        return self.__Password
+        return self.__password
     def getDescription(self):
-        return self.__Description
+        return self.__description
     def getName(self):
-        return self.__Name
+        return self.__name
    

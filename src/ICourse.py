@@ -4,85 +4,90 @@ class ICourse(ABC):
     @abstractmethod
     def GetNickname(): pass
     @abstractmethod
-    def ExistsCourse(NameCourse): pass
+    def existsCourse(nameCourse): pass
     @abstractmethod
-    def SelectProfessor(nickname): pass
+    def selectProfessor(nickname): pass
     @abstractmethod
-    def EnterDatasCourse (Name, Description, dificultad): pass
+    def enterDatasCourse (name, description, dificultad): pass
     @abstractmethod
-    def GetSubjectsSpecialization(): pass
+    def getSubjectsSpecialization(): pass
     @abstractmethod
-    def SelectSubject(NaMonthubject): pass
+    def selectSubject(nameSubject): pass
     @abstractmethod
-    def RequiresPrerequisite(confirmacion): pass
+    def requirisPrerequisite(confirmacion): pass
     @abstractmethod
-    def SETGetCoursesAvailable(): pass
+    def SETgetCoursesAvailable(): pass
     @abstractmethod
-    def SelectPrerequisites(SET): pass
+    def selectPrerequisites(setP): pass
     @abstractmethod
-    def CreateLesson(Topic, Goal): pass
+    def createLesson(topic, goal): pass
     @abstractmethod
-    def CreateExerciseCompleteWord(Description,Sentence, MAPrespuesta): pass
+    def createExerciseCompleteWord(description,sentence, MAPrespuesta): pass
     @abstractmethod
-    def CreateExerciseMultipleChoice(self, Description,Question, Options, CorrectOption): pass
+    def createExerciseMultipleChoice(self, description,question, options, correctOption): pass
     @abstractmethod
-    def ConfirmRegisterCourse(): pass
+    def confirmRegisterCourse(): pass
 
     #Add Lesson
     @abstractmethod
-    def SETGetCoursesNoAvailable(): pass
+    def getCoursesNoAvailable(): pass
     @abstractmethod
-    def SelectCourse(NameCourse): pass
+    def selectCourse(nameCourse): pass
     @abstractmethod
-    def CreateDatasLesson(Topic, Goal): pass
+    def createDatasLesson(topic, goal): pass
     @abstractmethod
-    def EnterSentenceCompletar(Sentence, MAPSolution): pass
+    def enterSentenceCompletar(sentence, MAPSolution): pass
+    
     @abstractmethod
-    def DarDeRegisterExercise(): pass
-    @abstractmethod
-    def DarDeRegisterLesson(): pass
+    def confirmLesson(): pass
 
     #Add Exercise
     @abstractmethod
-    def MAPGetLessons(): pass
+    def MAPgetLessons(): pass
     @abstractmethod
-    def AddExercise(les, Description ,Sentence, MAPSolution): pass
+    def addExercise(les, description ,sentence, MAPSolution): pass
     @abstractmethod
-    def AddExercise(les, Description, Sentence, Solution): pass
+    def addExercise(les, description, sentence, solution): pass
     @abstractmethod
-    def SelectLesson(self, Order):pass
+    def SelectLesson(self, order):pass
 
     #Register Subject
     @abstractmethod
-    def EnterSubject(NaMonthubject): pass
+    def enterSubject(nameSubject): pass
     @abstractmethod
-    def ConfirmSubject(): pass
+    def confirmSubject(): pass
     @abstractmethod
-    def ConsultSubject(): pass
+    def consultSubject(): pass
     #Consult Statistics
     @abstractmethod
     def GetStudents(): pass
     @abstractmethod
-    def MAPGetCoursesInscripto(nickname): pass
+    def MAPgetCoursesInscripto(nickname): pass
     @abstractmethod
     def MAPGetAdvancedCourses(): pass
     @abstractmethod
     def GetProfessors(): pass 
     @abstractmethod
-    def MAPGetPromedioCourses(): pass
+    def MAPgetCourseAverages(): pass
     @abstractmethod
-    def SETGetCourses(): pass
+    def SETgetCourses(): pass
     @abstractmethod
     def GetPromedio(): pass
     @abstractmethod
-    def MakeCourseAvailable(): pass
+    def makeCourseAvailable(): pass
     #Consult Course
     @abstractmethod
-    def GetCourse(NameCourse): pass
+    def getCourse(nameCourse): pass
     @abstractmethod
-    def  MAPGetLessonsDeCourse(): pass
+    def  MAPgetLessonsDeCourse(): pass
     @abstractmethod
-    def  MAPGetExercises(Lesson): pass
-    #Eliminar Course
+    def  MAPgetExercises(lesson): pass
+    #Delete Course
     @abstractmethod
     def deleteCourse(): pass
+
+    @abstractmethod
+    def deleteCourse(self, courseName):pass
+
+    @abstractmethod
+    def notify(self, course):pass

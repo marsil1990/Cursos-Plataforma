@@ -8,16 +8,16 @@ def registerSubject():
     enter_subject = input("Enter Subject: ")
     while enter_subject.strip() == "":
         enter_subject = input("It cannot be empty. Enter Subject: ")
-    ctrCourse.EnterSubject(enter_subject)
-    conf = ctrCourse.ConfirmSubject()
+    ctrCourse.enterSubject(enter_subject)
+    conf = ctrCourse.confirmSubject()
     if conf:
         print("The subject was entered correctly")
     else: print("The subject already exists")
 
-def ConsultSubject():
+def consultSubject():
     a = Factory()
     ctrCourse = a.getICourse()
-    setSubjects = ctrCourse.ConsultSubject()
+    setSubjects = ctrCourse.consultSubject()
     for i in setSubjects:
         print(i[0].upper()+i[1:])
 
@@ -26,7 +26,7 @@ def registerUser():
     a = Factory()
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
-    while ctrUser.NicknameAvailable(nickname) and nickname!= "":
+    while ctrUser.nicknameAvailable(nickname) and nickname!= "":
         nickname = input("The entered nickname is not available. Please enter Yearther one: ")
     Password = input("Enter password (minimum 6 characters): ")
     while len(Password) < 6 :
@@ -42,8 +42,8 @@ def registerUser():
         Month = int(input("Month: "))
         Year = int(input("Year: "))
         DateBirth = DTDate(Day, Month, Year)
-        ctrUser.EnterDataStudent(NameCountry,DateBirth)
-        ctrUser.ConfirmRegisterStudent()
+        ctrUser.enterDataStudent(nameCountry,dateBirth)
+        ctrUser.confirmRegisterStudent()
     elif (TypeUser.lower().strip() == "p"):
         Institute = input("Enter the institute where you work: ")
         ctrUser.EnterInstitute(Institute)
@@ -62,7 +62,7 @@ def registerUser():
             if cont.strip().lower() ==  "no":
                 Continue = False
                     
-        ctrUser.ConfirmRegisterProfessor()
+        ctrUser.confirmregisterProfessor()
     else:
         print("The entered user type is not correct.")
 
@@ -76,7 +76,7 @@ def ConsultUser():
             print(u)
         nickname_User = input("Enter the user's nickname: ")
         if(ctrUser.NicknameAvailable(nickname_User)):
-            ctrUser.SelectUser(nickname_User)
+            ctrUser.selectUser(nickname_User)
         else: 
             print("The entered nickname is not correct")
     else: 
@@ -92,46 +92,46 @@ def registerCourse():
     nickname = input("Enter the professor's nickname: ")
     while(not (nickname in nicknameProfessors)):
         nickname = input("Incorrect nickname, please enter the professor's nickname: ")
-    ctrCourse.SelectProfessor(nickname)
-    NameCourse = input("Name Course: ")
-    while (ctrCourse.ExistsCourse(NameCourse)):
-        NameCourse = input("The course name already exists. Please enter another one: ")
+    ctrCourse.selectProfessor(nickname)
+    nameCourse = input("Name Course: ")
+    while (ctrCourse.existsCourse(nameCourse)):
+        nameCourse = input("The course name already exists. Please enter another one: ")
     DescriptionCourse = input("Course description: ")
     LevelCourse = input("Course level (Beginner (B)/Intermediate (I)/Advanced (A)): ")
     while (LevelCourse.strip().lower() != "b" and LevelCourse.strip().lower() != "i" and 
             LevelCourse.strip().lower() != "a"):
         LevelCourse = input("Enter only b, i o a: ")
-    ctrCourse.EnterDatasCourse(NameCourse, DescriptionCourse, LevelCourse)
-    setSubjects =  ctrCourse.GetSubjectsSpecialization()
+    ctrCourse.enterDatasCourse(nameCourse, DescriptionCourse, LevelCourse)
+    setSubjects =  ctrCourse.getSubjectsSpecialization()
     for i in setSubjects:
         print(i)
     Subject = input("Enter subject: ")
     while (not(Subject in setSubjects)):
         Subject = input("Incorrect, please enter the subject again: ")
-    ctrCourse.SelectSubject(Subject)
+    ctrCourse.selectSubject(Subject)
     Prerequisite = input("Requires previous approved courses? Yes/No: ")
     conf = False
     if Prerequisite.strip().lower() == "yes":
         conf = True
-        ctrCourse.RequiresPrerequisite(conf) 
-        colCoursesAvailable = ctrCourse.SETGetCoursesAvailable()
+        ctrCourse.requirisPrerequisite(conf) 
+        colCoursesAvailable = ctrCourse.SETgetCoursesAvailable()
         print("Courses created by the same professor.")
         if len(colCoursesAvailable) != 0:
             for c in colCoursesAvailable:
                  print(c)
             Prerequisites = input("Enter, separated by commas, the courses that will be prerequisites: ")
-            ctrCourse.SelectPrerequisites(Prerequisites)
+            ctrCourse.selectPrerequisites(Prerequisites)
         else: print("There are no available courses")
-    ctrCourse.ConfirmregisterCourse()
+    ctrCourse.confirmRegisterCourse()
     AddLessons = input("Do you want to add lessons? Yes/No: ")
     while AddLessons.strip().lower() =="yes":
-        ctrCourse.SelectCourse(NameCourse)
+        ctrCourse.selectCourse(nameCourse)
         Topic = input("Enter the topic of the lesson: ")
         Goal = input("Enter the goal of the lesson: ")
-        #ctrCourse.CreateDatasLesson(Topic, Goal)
-        ctrCourse.CreateLesson(Topic, Goal, NameCourse)
-        AddExercises = input("Do you want to add exercises? Yes/No: ")
-        while AddExercises.strip().lower() == "yes":
+        #ctrCourse.createDatasLesson(Topic, Goal)
+        ctrCourse.createLesson(Topic, Goal, nameCourse)
+        addExercises = input("Do you want to add exercises? Yes/No: ")
+        while addExercises.strip().lower() == "yes":
             TypeExercise = input("Enter the exercise type (only the number): 1 - Fill in the Blank, 2 - Multiple Choice: ")
             if TypeExercise.strip() == "1":
                 Description = input("Add description: ")
@@ -143,7 +143,7 @@ def registerCourse():
                     Word = input(f"Enter the word for the placeholder number {Place}: ")
                     Solutions[Place] = Word
                     Place -= 1
-                ctrCourse.CreateExerciseCompleteWord(Description, Sentence, Solutions)
+                ctrCourse.createExerciseCompleteWord(Description, Sentence, Solutions)
             elif TypeExercise.strip() == "2":
                 Description = input("Add description: ")
                 Question = input("Enter the question or problem: ")
@@ -159,30 +159,30 @@ def registerCourse():
                     if Continue_Adding.strip().lower() == "no":
                         ContinueAdding = False
                         op = 1
-                ctrCourse.CreateExerciseMultipleChoice(Description, Question, Options, CorrectOption)
+                ctrCourse.createExerciseMultipleChoice(Description, Question, Options, CorrectOption)
             else: print("Incorrect option entry")
-            AddExercises = input("Do you want to add another exercise? Yes/No: ")
-        ctrCourse.DarDeregisterLesson()
+            addExercises = input("Do you want to add another exercise? Yes/No: ")
+        ctrCourse.confirmLesson()
         AddLessons = input("Do you want to add another lesson? Yes/No: ")
         
 
-def MakeCourseAvailable():
+def makeCourseAvailable():
     a = Factory()
     ctrCourse = a.getICourse()
     nicknameProfessors = ctrCourse.GetNickname()
     nicknameProfessor = input("Enter the professor's nickname: ")
     while(not (nicknameProfessor in nicknameProfessors)):
         nicknameProfessor = input("Incorrect nickname, Enter the professor's nickname: ")
-    colCoursesNoAvailable =  ctrCourse.SETGetCoursesNoAvailable(nicknameProfessor)
+    colCoursesNoAvailable =  ctrCourse.getCoursesNoAvailable(nicknameProfessor)
     for c in colCoursesNoAvailable:
         print (c)
     Course = input("Enter Course: ")
-    while (not ctrCourse.ExistsCourse(Course)):
+    while (not ctrCourse.existsCourse(Course)):
         Course = input("Incorrect course name, please enter it again: ")
-    ctrCourse.SelectCourse(Course)
-    correcto = ctrCourse.MakeCourseAvailable()
+    ctrCourse.selectCourse(Course)
+    correcto = ctrCourse.makeCourseAvailable()
     if correcto:
-        ctrCourse.Notify(Course)
+        ctrCourse.notify(Course)
         print("It was successfully enabled")
     else:
         print("It was not enabled")
@@ -194,19 +194,19 @@ def AddLesson():
     nicknameProfessors = ctrCourse.GetNickname()
     while(not (nicknameProfessor in nicknameProfessors)):
         nicknameProfessor = input("Incorrect nickname, Enter the professor's nickname: ")
-    colCoursesNoAvailable =  ctrCourse.SETGetCoursesNoAvailable(nicknameProfessor)
+    colCoursesNoAvailable =  ctrCourse.getCoursesNoAvailable(nicknameProfessor)
     for c in colCoursesNoAvailable:
         print (c)
     Course = input("Enter Course: ")
-    while (not ctrCourse.ExistsCourse(Course)):
+    while (not ctrCourse.existsCourse(Course)):
         Course = input("Incorrect course name, please enter it again: ")
-    ctrCourse.SelectCourse(Course)
+    ctrCourse.selectCourse(Course)
     Topic = input("Enter the topic of the lesson: ")
     Goal = input("Enter Goal of the lesson: ")
-    #ctrCourse.CreateDatasLesson(Topic, Goal)
-    ctrCourse.CreateLesson(Topic, Goal, Course)
-    AddExercises = input("Do you want to add exercises? Yes/No: ")
-    while AddExercises.strip().lower() == "yes":
+    #ctrCourse.createDatasLesson(Topic, Goal)
+    ctrCourse.createLesson(Topic, Goal, Course)
+    addExercises = input("Do you want to add exercises? Yes/No: ")
+    while addExercises.strip().lower() == "yes":
         TypeExercise = input("Enter the exercise type (only the number): 1 - Fill in the Blank, 2 - Multiple Choice: ")
         if TypeExercise.strip() == "1":
             Description = input("Add description: ")
@@ -218,7 +218,7 @@ def AddLesson():
                 Word = input(f"Enter the word for placeholder number {Place}: ")
                 Solutions[Place] = Word
                 Place -= 1
-            ctrCourse.CreateExerciseCompleteWord(Description, Sentence, Solutions)
+            ctrCourse.createExerciseCompleteWord(Description, Sentence, Solutions)
         elif TypeExercise.strip() == "2":
             Description = input("Add description: ")
             Question = input("Enter the question or problem: ")
@@ -234,26 +234,26 @@ def AddLesson():
                 if Continue_Adding.strip().lower() == "no":
                     ContinueAdding = False
                     op = 1
-            ctrCourse.CreateExerciseMultipleChoice(Description, Question, Options, CorrectOption)
+            ctrCourse.createExerciseMultipleChoice(Description, Question, Options, CorrectOption)
         else: print("Incorrect option entry")
-        AddExercises = input("Do you want to add another exercise? Yes/No: ")
-    ctrCourse.DarDeregisterLesson()
+        addExercises = input("Do you want to add another exercise? Yes/No: ")
+    ctrCourse.confirmLesson()
 
-def AddExercise():
+def addExercise():
     a = Factory()
     ctrCourse = a.getICourse()
     nicknameProfessor = input("Enter the professor's nickname: ")
     nicknameProfessors = ctrCourse.GetNickname()
     while(not (nicknameProfessor in nicknameProfessors)):
         nicknameProfessor = input("Incorrect nickname, Enter the professor's nickname: ")
-    colCoursesNoAvailable =  ctrCourse.SETGetCoursesNoAvailable(nicknameProfessor)
+    colCoursesNoAvailable =  ctrCourse.getCoursesNoAvailable(nicknameProfessor)
     for c in colCoursesNoAvailable:
         print (c)
     Course = input("Enter Course: ")
-    while (not ctrCourse.ExistsCourse(Course)):
+    while (not ctrCourse.existsCourse(Course)):
         Course = input("Incorrect course name, please enter it again: ")
-    ctrCourse.SelectCourse(Course)
-    Lessons = ctrCourse.MAPGetLessons()
+    ctrCourse.selectCourse(Course)
+    Lessons = ctrCourse.MAPgetLessons()
     for lk, lv in Lessons.items():
         print(f"{lk}:{lv}")
     Order = int(input("Enter lesson (number): "))
@@ -273,7 +273,7 @@ def AddExercise():
                 Word = input(f"Enter the word for placeholder number {Place}")
                 Solutions[Place] = Word
                 Place -= 1
-            ctrCourse.CreateExerciseCompleteWord(Description, Sentence, Solutions)
+            ctrCourse.createExerciseCompleteWord(Description, Sentence, Solutions)
         elif TypeExercise.strip() == "2":
             Description = input("Add description: ")
             Question = input("Enter the word for placeholder number: ")
@@ -289,7 +289,7 @@ def AddExercise():
                 if Continue_Adding.strip().lower() == "no":
                     ContinueAdding = False
                     op = 1
-            ctrCourse.CreateExerciseMultipleChoice(Description, Question, Options, CorrectOption)
+            ctrCourse.createExerciseMultipleChoice(Description, Question, Options, CorrectOption)
         else: 
             TypeExercise = input("Enter the exercise type (only the number): 1 - Fill in the Blank, 2 - Multiple Choice: ")
         s = input("Do you want to continue adding exercises? Yes/No: ")
@@ -300,9 +300,9 @@ def RegistrationCourse():
     a = Factory()
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
-    if ctrUser.NicknameAvailable(nickname):
-        ctrUser.EnterNickname(nickname)
-        CoursesAvailable = ctrUser.GetCoursesAvailableforRegistration(nickname)
+    if ctrUser.nicknameAvailable(nickname):
+        ctrUser.enterNickname(nickname)
+        CoursesAvailable = ctrUser.getCoursesAvailableforRegistration(nickname)
         if not CoursesAvailable:
             print("The student does not have available courses.")
         else:
@@ -316,10 +316,10 @@ def RegistrationCourse():
 
             nameCourse = input("Write the name of the course: ")
             
-            ctrUser.EnterCourseSeleccionado(nameCourse)
+            ctrUser.enterCourseSeleccionado(nameCourse)
             Date_actual = datetime.now()
             f = DTDate(Date_actual.year, Date_actual.month, Date_actual.day)
-            RegistrationCorrecta = ctrUser.FinalizarRegistrationACourse(nickname, f)
+            RegistrationCorrecta = ctrUser.finalizarRegistrationACourse(nickname, f)
             if RegistrationCorrecta:
                 print( "The registration was completed successfully.")
             
@@ -331,17 +331,17 @@ def RegistrationCourse():
 def ConsultCourse():
     a = Factory()
     ctrCourse = a.getICourse()
-    Courses = ctrCourse.SETGetCourses()
+    Courses = ctrCourse.SETgetCourses()
     for c in Courses:
         print(c.getName())
     Course  =  input("Write the name of the course: ")
-    while (not ctrCourse.ExistsCourse(Course)):
+    while (not ctrCourse.existsCourse(Course)):
         Course = input("Incorrect course name, please enter it again: ")
-    CourseDt = ctrCourse.GetCourse(Course)
+    CourseDt = ctrCourse.getCourse(Course)
     print(f"Name of the Course: {CourseDt.getName()}")
-    print(f"Difficulty of the course: {CourseDt.getDificultad()}")
-    print(f"Subject: {CourseDt.getNaMonthubject()}")
-    print(f"Enabled: {CourseDt.getHabilitado()}")
+    print(f"Difficulty of the course: {CourseDt.getDifficulty()}")
+    print(f"Subject: {CourseDt.getNameSubject()}")
+    print(f"Enabled: {CourseDt.getEnabled()}")
     if CourseDt.getcountLessons()!= 0:
         Lessons = CourseDt.getLessons()
         for lv in Lessons.values():
@@ -366,72 +366,72 @@ def cargarDatas():
     ctrCourse = f.getICourse()
     ctrUser = f.getIUser()
     #Subject DAR register
-    ctrCourse.EnterSubject("Math")
-    ctrCourse.ConfirmSubject()
+    ctrCourse.enterSubject("Math")
+    ctrCourse.confirmSubject()
     #User DAR register (Professor)
-    ctrUser.EnterDatasUser("prof","123456","Math Teacher","Prof")
-    ctrUser.EnterInstitute("IFD")
-    ctrUser.AddSpecialization("Math")
-    ctrUser.ConfirmRegisterProfessor()
+    ctrUser.enterDatasUser("prof","123456","Math Teacher","Prof")
+    ctrUser.enterInstitute("IFD")
+    ctrUser.addSpecialization("Math")
+    ctrUser.confirmregisterProfessor()
     #User DAR register Student
-    ctrUser.EnterDatasUser("Marcos","123456","I am Student","Marcos")
+    ctrUser.enterDatasUser("Marcos","123456","I am Student","Marcos")
     Day = 15
     Month = 12
     Year = 1990
     DateBirth = DTDate(Year, Month, Day)
-    ctrUser.EnterDataStudent("Uruguay",DateBirth)
-    ctrUser.ConfirmRegisterStudent()
+    ctrUser.enterDataStudent("Uruguay",DateBirth)
+    ctrUser.confirmRegisterStudent()
     #register Course (maTopictica1)
-    ctrCourse.SelectProfessor("prof")
-    ctrCourse.EnterDatasCourse("math1", "Ecuaciones", "b")
-    ctrCourse.SelectSubject("Math")
-    ctrCourse.RequiresPrerequisite(False)
-    ctrCourse.ConfirmRegisterCourse()
+    ctrCourse.selectProfessor("prof")
+    ctrCourse.enterDatasCourse("math1", "Ecuaciones", "b")
+    ctrCourse.selectSubject("Math")
+    ctrCourse.requirisPrerequisite(False)
+    ctrCourse.confirmRegisterCourse()
     #Add Lesson Y ExerciseS A maTopictica1 (una 2 Lessons y 2 Exercises en solo la lección 1)
     #Lesson 1
     #Exercise 1 - completar
-    ctrCourse.SelectCourse("math1")
-    ctrCourse.CreateLesson("Equations","Solve first-degree equations", "math1")
+    ctrCourse.selectCourse("math1")
+    ctrCourse.createLesson("Equations","Solve first-degree equations", "math1")
     Solutions = dict()
     Solutions[1]="10"
-    ctrCourse.CreateExerciseCompleteWord("Equations first-degree", "x + 10 = 20, then x = ---", Solutions)
+    ctrCourse.createExerciseCompleteWord("Equations first-degree", "x + 10 = 20, then x = ---", Solutions)
     #Exercise 2 - Multiple Choice    
     CorrectOption = "1"
     Options = dict()
     Options[1] = "-30"
     Options[2] = "30"
-    ctrCourse.CreateExerciseMultipleChoice("Choice the correct option", "x + 30 = 0, then x = ", Options, CorrectOption)
-    ctrCourse.DarDeRegisterLesson()
+    ctrCourse.createExerciseMultipleChoice("Choice the correct option", "x + 30 = 0, then x = ", Options, CorrectOption)
+    ctrCourse.confirmLesson()
     #Lesson2
-    ctrCourse.SelectCourse("math1")
-    ctrCourse.CreateLesson("Function","Imagen", "math1")
+    ctrCourse.selectCourse("math1")
+    ctrCourse.createLesson("Function","Imagen", "math1")
     CorrectOption = "2"
     Options = dict()
     Options[1] = "10"
     Options[2] = "-10"
-    ctrCourse.CreateExerciseMultipleChoice("Choice the correct option", "f(x) = -10, then f(5)= ", Options, CorrectOption)
-    ctrCourse.DarDeRegisterLesson()
-    ctrCourse.SelectCourse("math1")
-    #ctrCourse.MakeCourseAvailable()
+    ctrCourse.createExerciseMultipleChoice("Choice the correct option", "f(x) = -10, then f(5)= ", Options, CorrectOption)
+    ctrCourse.confirmLesson()
+    ctrCourse.selectCourse("math1")
+    #ctrCourse.makeCourseAvailable()
 
     #register Course (maTopictica2)
-    ctrCourse.SelectProfessor("prof")
-    ctrCourse.EnterDatasCourse("math2", "Equations", "i")
-    ctrCourse.SelectSubject("Math")
-    ctrCourse.RequiresPrerequisite(True)
-    ctrCourse.SelectPrerequisites("math1")
-    ctrCourse.ConfirmRegisterCourse()
+    ctrCourse.selectProfessor("prof")
+    ctrCourse.enterDatasCourse("math2", "Equations", "i")
+    ctrCourse.selectSubject("Math")
+    ctrCourse.requirisPrerequisite(True)
+    ctrCourse.selectPrerequisites("math1")
+    ctrCourse.confirmRegisterCourse()
     #Lesson 1 Course math2
-    ctrCourse.SelectCourse("math2")
-    ctrCourse.CreateLesson("Equations second-degree","Solve second-degree Equations", "math2")
+    ctrCourse.selectCourse("math2")
+    ctrCourse.createLesson("Equations second-degree","Solve second-degree Equations", "math2")
     #Exercise 1 de la Lesson 1
     Solutions = dict()
     Solutions[1]="2"
     Solutions[2]="-2"
-    ctrCourse.CreateExerciseCompleteWord("Equations second-degree", "x^2 - 4 = 0, then x = --- y ---", Solutions)
-    ctrCourse.DarDeRegisterLesson()
-    ctrCourse.SelectCourse("math2")
-    ctrCourse.MakeCourseAvailable()
+    ctrCourse.createExerciseCompleteWord("Equations second-degree", "x^2 - 4 = 0, then x = --- y ---", Solutions)
+    ctrCourse.confirmLesson()
+    ctrCourse.selectCourse("math2")
+    ctrCourse.makeCourseAvailable()
 
 
 
@@ -441,24 +441,24 @@ def ExecuteExercise():
     ctrUser = a.getIUser()
     ctrCourse = a.getICourse()
     nickname = input("Enter nickname: ")
-    if ctrUser.NicknameAvailable(nickname):
-        ctrUser.EnterNickname(nickname)
-        CoursesInscriptosNoApproved = ctrUser.GetCoursesInscriptoNoAprobado(nickname)
+    if ctrUser.nicknameAvailable(nickname):
+        ctrUser.enterNickname(nickname)
+        CoursesInscriptosNoApproved = ctrUser.getCoursesInscriptoNoAprobado(nickname)
         print("Courses not yet approved: ")
         if len(CoursesInscriptosNoApproved) != 0:
             for i in CoursesInscriptosNoApproved:
                 print(f"- {i.getCourseInscripto()} ")
             Course  =  input("Enter name of the Course: ")
-            while (not ctrCourse.ExistsCourse(Course)):
+            while (not ctrCourse.existsCourse(Course)):
                 Course = input("Incorrect course name, please enter it again: ")
-            ctrUser.EnterCourseSeleccionado(Course)
-            ExercisesNoApproved = ctrUser.GetExercisesNoApproved()
+            ctrUser.enterCourseSeleccionado(Course)
+            ExercisesNoApproved = ctrUser.getExercisesNoApproved()
             print("Exercises no Approved:")
             for e in ExercisesNoApproved:
                 print(f"Exercise id: {e.getId()}, Description: {e.getDescription()}")
             
             ExerciseSelect = int(input("Enter the identifier of the exercise you want to execute: "))
-            ctrUser.RememberExercise(ExerciseSelect)
+            ctrUser.rememberExercise(ExerciseSelect)
             ej = ctrUser.mostrarExercise()
             if ej:
                 r = (input("Enter the words separated by commas: ")).replace(" ", "").split(",")
@@ -496,7 +496,7 @@ def ConsultStatistics():
         for e in Students:
             print(e)
         nickname = input("Enter nickname: ")
-        if ctrUser.NicknameAvailable(nickname):
+        if ctrUser.nicknameAvailable(nickname):
            ctrCourse.MAPGetAdvancedCourses(nicknaMonthtudent=nickname)
 
         else: print("Incorrect nickname ")
@@ -506,16 +506,16 @@ def ConsultStatistics():
         for p in nicknameProfessors:
             print(p)
         nickname = input("Enter the professor's nickname: ")
-        if ctrUser.NicknameAvailable(nickname):
+        if ctrUser.nicknameAvailable(nickname):
            ctrCourse.MAPGetAdvancedCourses(nicknameProfessor=nickname)
 
         else: print("Incorrect nickname ")
     elif  e.lower().strip() == "c":
-        Courses = ctrCourse.SETGetCourses()
+        Courses = ctrCourse.SETgetCourses()
         for c in Courses:
             print(c.getName())
         Course  =  input("Enter the course's name: ")
-        if ctrCourse.ExistsCourse(Course):
+        if ctrCourse.existsCourse(Course):
             ctrCourse.MAPGetAdvancedCourses(Course=Course)
     else: 
         print("Incorrect choice")
@@ -524,11 +524,11 @@ def ConsultStatistics():
 def deleteCourse():
     a = Factory()
     ctrCourse = a.getICourse()
-    Courses = ctrCourse.SETGetCourses()
+    Courses = ctrCourse.SETgetCourses()
     for c in Courses:
         print(c.getName())
     Course  =  input("Enter the course's name: ")
-    if ctrCourse.ExistsCourse(Course):
+    if ctrCourse.existsCourse(Course):
         ctrCourse.deleteCourse(Course)
     else: 
         print("Name incorrect")
@@ -545,7 +545,7 @@ def suscribirseNorificaciones():
         for a in subjects:
             selectSubject = input("Enter the subject you wish to subscribe to: ")
             if selectSubject in subjects:
-                ctrUser.AgreagarSuscripcion(nickname, selectSubject)
+                ctrUser.addSuscription(nickname, selectSubject)
                 number_of_subscriptions +=1
                 if number_of_subscriptions < len(subjects):
                     Continue = input("Do you want tu subscribe to another subject? Yes/No: ")
@@ -558,7 +558,7 @@ def suscribirseNorificaciones():
     else:
         print(" ERROR ")
             
-def consultNotify():
+def consultnotify():
     a = Factory()
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
@@ -566,9 +566,9 @@ def consultNotify():
         Notifications = ctrUser.GetNotifications(nickname)
         for n in Notifications:
             print(n)
-        ctrUser.DeleteNotifiaciones(nickname)
+        ctrUser.deleteNotifiaciones(nickname)
 
-def DeleteSubscriptions():
+def deleteSubscriptions():
     a = Factory()
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
@@ -580,7 +580,7 @@ def DeleteSubscriptions():
         for s in subjectSubscribers:
             selectSubject = input("Enter the subject you wish to unsubscribe : ")
             if selectSubject in subjectSubscribers:
-                ctrUser.DeleteSubscriptions(nickname, selectSubject)
+                ctrUser.deleteSubscriptions(nickname, selectSubject)
                 number_of_subscriptions +=1
                 if number_of_subscriptions < len(subjectSubscribers):
                     Continue = input("Do you want tu unsubscribe to another subject? Yes/No: ")
@@ -628,7 +628,7 @@ def main():
             registerSubject()
     #Consult Subject
         elif choice == "3":
-            ConsultSubject()
+            consultSubject()
     #register DE User:
         elif choice == "4":
             registerUser()
@@ -640,13 +640,13 @@ def main():
             registerCourse()
             
         elif choice == "7":
-            MakeCourseAvailable()
+            makeCourseAvailable()
         
         elif choice == "8":
             AddLesson()
             
         elif choice == "9":
-            AddExercise()
+            addExercise()
 
         elif choice == "10":
             RegistrationCourse()
@@ -667,10 +667,10 @@ def main():
             suscribirseNorificaciones()
 
         elif choice == "16":
-            consultNotify()
+            consultnotify()
 
         elif choice == "17":
-            DeleteSubscriptions()
+            deleteSubscriptions()
 
         elif choice == "18":
             Continue = False

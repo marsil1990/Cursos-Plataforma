@@ -1,14 +1,14 @@
 class DTDate:
-    def __init__(self, Year, Month, Day):
-        self.__Year = Year
-        self.__Month = Month
-        self.__Day = Day
+    def __init__(self, year, month, day):
+        self.__year = year
+        self.__month = month
+        self.__day = day
 
     def getYear(self):
-        return self.__Year
+        return self.__year
      
     def getMonth(self):
-        return self.__Month
+        return self.__month
     
     def getDay(self):
-        return self.__Day
+        return self.__day

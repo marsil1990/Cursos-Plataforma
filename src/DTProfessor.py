@@ -1,9 +1,9 @@
 from src.DTUser import DTUser
 class DTProfessor(DTUser):
-    def __init__ (self, Nickname, Contraseña, Name, Description, Institute):
-        super().__init__(Nickname, Contraseña, Name, Description)
-        self.__Institute = Institute
+    def __init__ (self, nickname, contraseña, name, description, institute):
+        super().__init__(nickname, contraseña, name, description)
+        self.__institute = institute
 
     def getInstitute(self):
-        return self.__Institute
+        return self.__institute
     

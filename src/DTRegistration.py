@@ -1,18 +1,18 @@
 from src.Registration import Registration
 class DTRegistration:
-    def __init__(self, Date = None, CourseIns = None, Student = None, Registration = None):
+    def __init__(self, date = None, courseIns = None, student = None, registration = None):
         if Registration is None:
-            self.__DateDeRegistration = Date
-            self.__CourseInscripto = CourseIns
-            self.__StudentInscripto = Student
+            self.__dateDeRegistration = date
+            self.__courseInscripto = courseIns
+            self.__studentInscripto = student
         else:
-            self.__DateDeRegistration = Registration.getDateDeRegistration()
-            self.__CourseInscripto = Registration.getCourseInscripto().getName()
-            self.__StudentInscripto = Registration.getStudentInscripto()
+            self.__dateDeRegistration = registration.getDateDeRegistration()
+            self.__courseInscripto = registration.getCourseInscripto().getName()
+            self.__studentInscripto = registration.getStudentInscripto()
 
     def getDateDeRegistration(self):
-        return self.__DateDeRegistration
+        return self.__dateDeRegistration
     def getCourseInscripto(self):
-        return self.__CourseInscripto
+        return self.__courseInscripto
     def getStudentInscripto(self):
-        return self.__StudentInscripto
+        return self.__studentInscripto

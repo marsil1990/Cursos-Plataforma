@@ -1,59 +1,59 @@
 from src.DTCourse import DTCourse
 class CourseManager(object):
-    __instancia = None
+    __instance = None
     __MAPCourses = None
     def __new__(cls):
-        if CourseManager.__instancia is None:
-            CourseManager.__instancia = object.__new__(cls)
+        if CourseManager.__instance is None:
+            CourseManager.__instance = object.__new__(cls)
             CourseManager.__MAPCourses = dict()
-        return CourseManager.__instancia
+        return CourseManager.__instance
     
     
-    def GetCourse(self, NameCourse):
-        return self.__MAPCourses[NameCourse]
-    def  GetCoursesAvailables(self):
+    def getCourse(self, nameCourse):
+        return self.__MAPCourses[nameCourse]
+    def  getCoursesAvailables(self):
         CoursesAvailables = set()
         for c in self.__MAPCourses.values():
             CoursesAvailables.add(c.getName())
         return CoursesAvailables
 
-    def ExistsCourse(self, NameCourse):
-        return NameCourse in self.__MAPCourses
+    def existsCourse(self, nameCourse):
+        return nameCourse in self.__MAPCourses
     
-    def GetLesson(self, NameCourse, Order):
-        return self.__MAPCourses[NameCourse].GetLesson(Order)
+    def getLesson(self, nameCourse, Order):
+        return self.__MAPCourses[nameCourse].getLesson(Order)
 
-    def SETGetCoursesNoHab(): pass
-    def SETCoursesInscriptoNoAprobado(): pass
+    def getDisabledCourses(): pass
+    def setEnrolledUnapprovedCourses(): pass
     def SETExercisesNoApproved(): pass
 
-    #Devuelve los Courses que se encuentran en la lista de string "NameCourses"
-    def SETGetCourses(self, NameCourses):
-        CoursesPrevios = set()
-        for prev in NameCourses:
-            CoursesPrevios.add(self.__MAPCourses[prev])
-        return CoursesPrevios
+    #Devuelve los Courses que se encuentran en la lista de string "nameCourses"
+    def SETgetCourses(self, nameCourses):
+        coursesPrevios = set()
+        for prev in nameCourses:
+            coursesPrevios.add(self.__MAPCourses[prev])
+        return coursesPrevios
             
 
-    def eliminarPrerequisite(NomCourses): pass
+    def removePrerequisite(NomCourses): pass
 
         
-    def AddCourse(self, Course):
+    def addCourse(self, Course):
         self.__MAPCourses[Course.getName()] = Course
         
         
-    def GetAllCourses(self):
-        Courses = set()
+    def getAllCourses(self):
+        courses = set()
         for c in self.__MAPCourses.values():
-            Courses.add(DTCourse(Course=c))
-        return Courses
+            courses.add(DTCourse(course=c))
+        return courses
     def getCourses(self):
         return self.__MAPCourses
 
-    def deleteCourse(self,NameCourse):
-        self.__MAPCourses[NameCourse].eliminarLessons()
-        self.__MAPCourses[NameCourse].eliminarRegistrations()
+    def deleteCourse(self,nameCourse):
+        self.__MAPCourses[nameCourse].removeLessons()
+        self.__MAPCourses[nameCourse].eliminarRegistrations()
         for c in self.__MAPCourses.values():
-            if c.esPrerequisite(NameCourse):
-                c.removerPrerequisite(NameCourse)
-        del self.__MAPCourses[NameCourse]
+            if c.isPrerequisite(nameCourse):
+                c.removerPrerequisite(nameCourse)
+        del self.__MAPCourses[nameCourse]

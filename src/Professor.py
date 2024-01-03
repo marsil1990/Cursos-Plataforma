@@ -2,12 +2,12 @@ from src.User import User
 from src.DTCourse import DTCourse
 class Professor(User):
 
-    def __init__(self, nickname, contraseña, Name, Description, Institute):
-        super().__init__(nickname, contraseña, Name, Description)
-        self.__Institute = Institute
+    def __init__(self, nickname, contraseña, name, description, institute):
+        super().__init__(nickname, contraseña, name, description)
+        self.__Institute = institute
         self.__MAPSpecialization = dict()
         self.__MAPCourses = dict()
-        self.__MAPsuscrito = dict()
+        self.__MAPsubscription = dict()
         self.__SETNotifications = set()
 
     def getInstitute(self):
@@ -17,56 +17,56 @@ class Professor(User):
         self.__MAPSpecialization[Subject] = Subject
 
     def SETGetSpecializationes(self):
-        Specializationes = set()
+        specializationes = set()
         for e in self.__MAPSpecialization:
-            Specializationes.add(e)
-        return Specializationes
+            specializationes.add(e)
+        return specializationes
 
-    def asociarCourseProfessor(self, Course): 
+    def associateCourseProfessor(self, Course): 
         self.__MAPCourses[Course.getName()] = Course
 
-    def SETgetDataCoursesHab(self, Subject):
+    def getDataEnabledCourses(self, Subject):
         CoursesAvailable = set()
         for c in self.__MAPCourses.values():
-            if c.getHabilitado() and c.getSubject().getName() == Subject:
+            if c.getEnabled() and c.getSubject().getName() == Subject:
                 #CoursesData = DTCourse(c)
                 CoursesAvailable.add(c.getName())
         return CoursesAvailable
 
 
-    def SETGetCoursesNoAvailable(self):
-        CoursesNoAvailable = set()
+    def getCoursesNoAvailable(self):
+        coursesNoAvailable = set()
         for c in self.__MAPCourses.values():
-            if not c.getHabilitado():
+            if not c.getEnabled():
                 #CoursesData = DTCourse(c)
-                CoursesNoAvailable.add(c.getName())
-        return CoursesNoAvailable
+                coursesNoAvailable.add(c.getName())
+        return coursesNoAvailable
     
     def MAPCourses(self):
         return self.__MAPCourses
 
 
-    def SETGetNomSubjectSuscrito(self):
+    def getSubscribedSubjectName(self):
         nomSubject = set()
-        for a in self.__MAPsuscrito:
+        for a in self.__MAPsubscription:
             nomSubject.add(a.getName())
         return nomSubject
     
-    def agreagarSuscripcion(self, Subject):
-        self.__MAPsuscrito[Subject.getName()]= Subject.getName()
+    def addSuscription(self, Subject):
+        self.__MAPsubscription[Subject.getName()]= Subject.getName()
 
-    def eliminarSuscripcion(self, NaMonthubject):
-        del self.__MAPsuscrito[NaMonthubject]  
+    def removeSubscription(self, NameSubject):
+        del self.__MAPsubscription[NameSubject]  
 
-    def SETDevolverNotifications(self):
+    def getNotifications(self):
         return self.__SETNotifications
     
-    def elimiarNotifications(self):
+    def removeNotifications(self):
         self.__SETNotifications.clear()
         
-    def Notify(self, DTnuevoCourse):
+    def notify(self, DTnuevoCourse):
         self.__SETNotifications.add(DTnuevoCourse)
 
-    def deleteCourse(NameCourse):
+    def deleteCourse(nameCourse):
         pass
    

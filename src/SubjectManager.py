@@ -1,13 +1,13 @@
 from src.Subject import Subject
 class SubjectManager(object):
-    __instancia = None
+    __instance = None
     __MAPSubjects = None
     
     def __new__(cls):
-        if SubjectManager.__instancia is None:
-            SubjectManager.__instancia = object.__new__(cls)
+        if SubjectManager.__instance is None:
+            SubjectManager.__instance = object.__new__(cls)
             SubjectManager.__MAPSubjects = dict()
-        return SubjectManager.__instancia
+        return SubjectManager.__instance
     
 
 
@@ -23,12 +23,12 @@ class SubjectManager(object):
         return SETSubjects
 
         
-    def GetSubject(self, NaMonthubject):
-        return self.__MAPSubjects[NaMonthubject]
+    def GetSubject(self, NameSubject):
+        return self.__MAPSubjects[NameSubject]
         
 
-    def ExistsSubject(self, NaMonthubject):
-        Name_minuscula = NaMonthubject#.lower().strip()
+    def existsSubject(self, NameSubject):
+        Name_minuscula = NameSubject#.lower().strip()
         setSubject = self.SETSubjectsAvailables()
         return Name_minuscula in setSubject
             
