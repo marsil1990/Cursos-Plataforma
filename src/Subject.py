@@ -1,7 +1,7 @@
 from src.Course import Course
 class Subject:
-    def __init__ (self, Name):
-        self.__name = Name
+    def __init__ (self, name):
+        self.__name = name
         self.__SETobservers = set()
         self.__MAPCourses = dict()
     def getName(self):
@@ -11,15 +11,15 @@ class Subject:
     def removerUser(Name): pass
     def getDataEnabledCourses(): pass
     def Add(observer): pass
-    def eliminar(self, observer):
+    def  remove(self, observer):
         self.__SETobservers.remove(observer)
-    def EnviarNotificacion(self, Course):
+    def sendNotificacion(self, Course):
         for o in self.__SETobservers:
             CourseName = str(Course)
             notificacion = "Nuevo Course: "+ CourseName + " /  Subject: " + self.__name
             o.notify(notificacion)
 
-    def asociarCourseSubject(self, Course):
-        self.__MAPCourses[Course.getName()] = Course
+    def associateCourseSubject(self, course):
+        self.__MAPCourses[course.getName()] = Course
     def removerCourse(Name): pass
    

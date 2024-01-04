@@ -19,7 +19,7 @@ class IUser(ABC):
     def  enterInstitute(nameCountry):
         pass
     @abstractmethod
-    def  GetSubjectsAvailables():
+    def  getSubjectsAvailables():
         pass
     @abstractmethod
     def  addSpecialization(nameSubject):
@@ -33,7 +33,7 @@ class IUser(ABC):
     @abstractmethod
      #Consult User
     @abstractmethod
-    def GetNicknameUsers():
+    def getNicknameUsers():
         pass
     @abstractmethod
     def  selectUser(nickname):
@@ -56,7 +56,7 @@ class IUser(ABC):
         pass
      #SUSCRIBIRSE A NOTIFIACIONES
     @abstractmethod
-    def GetSubjectUnsubscribed (nickname):
+    def getSubjectUnsubscribed (nickname):
         pass
     @abstractmethod
     def  addSuscription(nomSubject):

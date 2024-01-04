@@ -33,9 +33,9 @@ class CtrCourse(ICourse) :
        self.__MAPCoursesRecordados= None
      
     #Register Course
-    def GetNickname(self):
+    def getNickname(self):
         mu = UserManager()
-        nickNaMonthProfessors = mu.GetProfessors()
+        nickNaMonthProfessors = mu.getProfessors()
         return nickNaMonthProfessors
 
     
@@ -44,7 +44,7 @@ class CtrCourse(ICourse) :
         return mc.existsCourse(nameCourse)
     def selectProfessor(self, nickname): 
         mu = UserManager()
-        self.__profRec  = mu.GetUser(nickname)
+        self.__profRec  = mu.getUser(nickname)
         
     
     def enterDatasCourse (self, name, description, dificultad):
@@ -53,14 +53,14 @@ class CtrCourse(ICourse) :
         self.__difficultyRec = dificultad
     
     def getSubjectsSpecialization(self):
-        subjectsEspecializado = self.__profRec.SETGetSpecializationes()
+        subjectsEspecializado = self.__profRec.getSpecializationes()
         return subjectsEspecializado
         
 
     
     def selectSubject(self, NameSubject):
         mi = SubjectManager()
-        self.__subjectRec = mi.GetSubject(NameSubject)
+        self.__subjectRec = mi.getSubject(NameSubject)
     
     def SelectLesson(self, order, nameCourse):
         mc = CourseManager()
@@ -103,7 +103,7 @@ class CtrCourse(ICourse) :
         if self.__requirisPrerequisiteRec:
             for p in self.__SETPrerequisitesRec:
                 nuevoCourse.añadirPrerequisite(p)
-        self.__subjectRec.asociarCourseSubject(nuevoCourse)
+        self.__subjectRec.associateCourseSubject(nuevoCourse)
         mc = CourseManager()
         mc.addCourse(nuevoCourse)
         nuevoCourse.setProfessor(self.__profRec)
@@ -112,7 +112,7 @@ class CtrCourse(ICourse) :
     #Course no Available de un Professor de nickname "nickname"
     def getCoursesNoAvailable(self, nickname):
         mu = UserManager()
-        prof = mu.GetUser(nickname)
+        prof = mu.getUser(nickname)
         return prof.getCoursesNoAvailable()
     
     def selectCourse(self, nameCourse):
@@ -154,7 +154,7 @@ class CtrCourse(ICourse) :
             return False
         else:
             i = Subject(self.__subjectRec)
-            mi.AddSubject(i)
+            mi.addSubject(i)
             return True
     
     def consultSubject(self):
@@ -172,14 +172,14 @@ class CtrCourse(ICourse) :
     def MAPGetAdvancedCourses(self, nicknaMonthtudent= None, nicknameProfessor = None, Course = None):
         if nicknaMonthtudent!= None:
             mu = UserManager()
-            user = mu.GetUser(nickname=nicknaMonthtudent)
-            coursesInscriptos = user.MAPgetCoursesInscriptos()
+            user = mu.getUser(nickname=nicknaMonthtudent)
+            coursesInscriptos = user.MAPgetEnrolledCourses()
             for c in coursesInscriptos.values():
                 avanceCourse = c.getCourseProgress(nicknaMonthtudent)
                 print(f"Course: {c.getName()}, Avance: {avanceCourse}%")
         elif nicknameProfessor != None:
             mu = UserManager()
-            user = mu.GetUser(nickname=nicknameProfessor)
+            user = mu.getUser(nickname=nicknameProfessor)
             coursesProfessor = user.MAPCourses()
             for c in coursesProfessor.values():
                 print(f"Name del Course: {c.getName()}, Promedio: {c.getCourseAverage()}")
@@ -191,7 +191,7 @@ class CtrCourse(ICourse) :
 
 
 
-    def GetProfessors(): pass 
+    def getProfessors(): pass 
     
     def MAPgetCourseAverages(): pass
     
@@ -244,4 +244,4 @@ class CtrCourse(ICourse) :
         mc = CourseManager()
         c = mc.getCourse(course)
         subjectCourse = c.getSubject()
-        subjectCourse.EnviarNotificacion(c.getName())
+        subjectCourse.sendNotificacion(c.getName())

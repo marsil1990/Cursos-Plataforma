@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 class ICourse(ABC):
     #Register Course
     @abstractmethod
-    def GetNickname(): pass
+    def getNickname(): pass
     @abstractmethod
     def existsCourse(nameCourse): pass
     @abstractmethod
@@ -66,7 +66,7 @@ class ICourse(ABC):
     @abstractmethod
     def MAPGetAdvancedCourses(): pass
     @abstractmethod
-    def GetProfessors(): pass 
+    def getProfessors(): pass 
     @abstractmethod
     def MAPgetCourseAverages(): pass
     @abstractmethod

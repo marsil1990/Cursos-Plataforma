@@ -41,13 +41,13 @@ def registerUser():
         Day = int(input("Day: "))
         Month = int(input("Month: "))
         Year = int(input("Year: "))
-        DateBirth = DTDate(Day, Month, Year)
+        dateBirth = DTDate(Day, Month, Year)
         ctrUser.enterDataStudent(nameCountry,dateBirth)
         ctrUser.confirmRegisterStudent()
     elif (TypeUser.lower().strip() == "p"):
         Institute = input("Enter the institute where you work: ")
         ctrUser.EnterInstitute(Institute)
-        setSubjectsAvailables = ctrUser.GetSubjectsAvailables()
+        setSubjectsAvailables = ctrUser.getSubjectsAvailables()
         #mostrar los Subjects
         for i in setSubjectsAvailables:
             print(i)
@@ -70,7 +70,7 @@ def registerUser():
 def ConsultUser():
     a = Factory()
     ctrUser = a.getIUser()
-    SETnicknameUsers = ctrUser.GetNicknameUsers()
+    SETnicknameUsers = ctrUser.getNicknameUsers()
     if len(SETnicknameUsers) != 0:
         for u in SETnicknameUsers:
             print(u)
@@ -86,7 +86,7 @@ def ConsultUser():
 def registerCourse():
     a = Factory()
     ctrCourse = a.getICourse()
-    nicknameProfessors = ctrCourse.GetNickname()
+    nicknameProfessors = ctrCourse.getNickname()
     for p in nicknameProfessors:
         print(p)
     nickname = input("Enter the professor's nickname: ")
@@ -169,7 +169,7 @@ def registerCourse():
 def makeCourseAvailable():
     a = Factory()
     ctrCourse = a.getICourse()
-    nicknameProfessors = ctrCourse.GetNickname()
+    nicknameProfessors = ctrCourse.getNickname()
     nicknameProfessor = input("Enter the professor's nickname: ")
     while(not (nicknameProfessor in nicknameProfessors)):
         nicknameProfessor = input("Incorrect nickname, Enter the professor's nickname: ")
@@ -191,7 +191,7 @@ def AddLesson():
     a = Factory()
     ctrCourse = a.getICourse()
     nicknameProfessor = input("Enter the professor's nickname: ")
-    nicknameProfessors = ctrCourse.GetNickname()
+    nicknameProfessors = ctrCourse.getNickname()
     while(not (nicknameProfessor in nicknameProfessors)):
         nicknameProfessor = input("Incorrect nickname, Enter the professor's nickname: ")
     colCoursesNoAvailable =  ctrCourse.getCoursesNoAvailable(nicknameProfessor)
@@ -243,7 +243,7 @@ def addExercise():
     a = Factory()
     ctrCourse = a.getICourse()
     nicknameProfessor = input("Enter the professor's nickname: ")
-    nicknameProfessors = ctrCourse.GetNickname()
+    nicknameProfessors = ctrCourse.getNickname()
     while(not (nicknameProfessor in nicknameProfessors)):
         nicknameProfessor = input("Incorrect nickname, Enter the professor's nickname: ")
     colCoursesNoAvailable =  ctrCourse.getCoursesNoAvailable(nicknameProfessor)
@@ -378,8 +378,8 @@ def cargarDatas():
     Day = 15
     Month = 12
     Year = 1990
-    DateBirth = DTDate(Year, Month, Day)
-    ctrUser.enterDataStudent("Uruguay",DateBirth)
+    dateBirth = DTDate(Year, Month, Day)
+    ctrUser.enterDataStudent("Uruguay",dateBirth)
     ctrUser.confirmRegisterStudent()
     #register Course (maTopictica1)
     ctrCourse.selectProfessor("prof")
@@ -447,7 +447,7 @@ def ExecuteExercise():
         print("Courses not yet approved: ")
         if len(CoursesInscriptosNoApproved) != 0:
             for i in CoursesInscriptosNoApproved:
-                print(f"- {i.getCourseInscripto()} ")
+                print(f"- {i.getEnrolledCourse()} ")
             Course  =  input("Enter name of the Course: ")
             while (not ctrCourse.existsCourse(Course)):
                 Course = input("Incorrect course name, please enter it again: ")
@@ -502,7 +502,7 @@ def ConsultStatistics():
         else: print("Incorrect nickname ")
         
     elif  e.lower().strip() == "p":
-        nicknameProfessors = ctrCourse.GetNickname()
+        nicknameProfessors = ctrCourse.getNickname()
         for p in nicknameProfessors:
             print(p)
         nickname = input("Enter the professor's nickname: ")
@@ -538,7 +538,7 @@ def suscribirseNorificaciones():
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
     if ctrUser.NicknameAvailable(nickname=nickname):
-        subjects = ctrUser.GetSubjectUnsubscribed (nickname)
+        subjects = ctrUser.getSubjectUnsubscribed (nickname)
         for a in subjects:
             print(a)
         number_of_subscriptions = 0

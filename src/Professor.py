@@ -4,19 +4,19 @@ class Professor(User):
 
     def __init__(self, nickname, contraseña, name, description, institute):
         super().__init__(nickname, contraseña, name, description)
-        self.__Institute = institute
+        self.__institute = institute
         self.__MAPSpecialization = dict()
         self.__MAPCourses = dict()
         self.__MAPsubscription = dict()
         self.__SETNotifications = set()
 
     def getInstitute(self):
-        return self.__Institute
+        return self.__institute
     
     def AddSpecialization(self, Subject):
         self.__MAPSpecialization[Subject] = Subject
 
-    def SETGetSpecializationes(self):
+    def getSpecializationes(self):
         specializationes = set()
         for e in self.__MAPSpecialization:
             specializationes.add(e)
@@ -26,12 +26,12 @@ class Professor(User):
         self.__MAPCourses[Course.getName()] = Course
 
     def getDataEnabledCourses(self, Subject):
-        CoursesAvailable = set()
+        coursesAvailable = set()
         for c in self.__MAPCourses.values():
             if c.getEnabled() and c.getSubject().getName() == Subject:
                 #CoursesData = DTCourse(c)
-                CoursesAvailable.add(c.getName())
-        return CoursesAvailable
+                coursesAvailable.add(c.getName())
+        return coursesAvailable
 
 
     def getCoursesNoAvailable(self):

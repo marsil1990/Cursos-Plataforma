@@ -11,7 +11,7 @@ class DTStudent(DTUser):
         else:
             super().__init__(Student.getNickname(), Student.getPassword(), Student.getName(), Student.getDescription())
             self.__country = Student.getCountry()
-            self.__date = Student.getDateNac()
+            self.__date = Student.getBirthDate()
             self.__registrations = dict()
             reg = student.MAPgetRegistrations()
             for ik, iv in reg.items():

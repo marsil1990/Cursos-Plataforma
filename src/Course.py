@@ -107,6 +107,6 @@ class Course:
     def getNicknameProfessor(): pass
     def getnumberOfEnrollees(self):
         return len(self.__MAPenrolledStudents)
-    def eliminarRegistrations(self):
+    def  removeRegistrations(self):
         pass
     def borrarPrerequisites(): pass

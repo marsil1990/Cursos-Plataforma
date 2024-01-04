@@ -12,25 +12,25 @@ class SubjectManager(object):
 
 
     def getInstancia(): pass
-    def AddSubject(self, subject):
+    def addSubject(self, subject):
         self.__MAPSubjects[subject.getName()] = subject
 
     def SETSubjectsAvailables(self):
-        SETSubjects  = set()
+        subjects  = set()
         for i in self.__MAPSubjects.values():
-            nomIdioma = i.getName()#.strip().lower()
-            SETSubjects.add(nomIdioma)
-        return SETSubjects
+            nameSubject = i.getName()#.strip().lower()
+            subjects.add(nameSubject)
+        return subjects
 
         
-    def GetSubject(self, NameSubject):
+    def getSubject(self, NameSubject):
         return self.__MAPSubjects[NameSubject]
         
 
-    def existsSubject(self, NameSubject):
-        Name_minuscula = NameSubject#.lower().strip()
+    def existsSubject(self, nameSubject):
+        name = nameSubject#.lower().strip()
         setSubject = self.SETSubjectsAvailables()
-        return Name_minuscula in setSubject
+        return name in setSubject
             
     #def __del__(): pass
 

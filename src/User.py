@@ -1,9 +1,9 @@
 class User:
-    def __init__(self, nickname,  Password,  Name,  Description):
+    def __init__(self, nickname,  password,  name,  description):
         self.__Nickname = nickname
-        self.__Password = Password
-        self.__name = Name
-        self.__description = Description
+        self.__Password = password
+        self.__name = name
+        self.__description = description
         
 
     def getNickname(self):
@@ -15,8 +15,8 @@ class User:
     def getName(self):
         return self.__name
     def removerSubject( nomSubject):pass
-    def GetNomSubjectSuscrito():pass
-    def AddSubjectSuscrito(i):pass
+    def getSubscriberNameSubject():pass
+    def addSubscribedSubject(i):pass
     def getNotifications():pass
     def notify(dtnuevocurso):pass
   

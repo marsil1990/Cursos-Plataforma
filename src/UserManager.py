@@ -15,40 +15,40 @@ class UserManager(object):
         else:
             return False
         
-    def AddUser(self, nuevoUser):
+    def addUser(self, nuevoUser):
         self.__MAPUsers[nuevoUser.getNickname()] = nuevoUser
 
 
-    def GetUser(self, nickname):
+    def getUser(self, nickname):
         return self.__MAPUsers[nickname]
     
     def SETGetStudents(self):
-        nickNaMonthtudents = set()
+        nickNameStudents = set()
         for e in self.__MAPUsers.values():
             if type(e) == Student:
-                nickNaMonthtudents.add(e.getNickname())
-        return nickNaMonthtudents
+                nickNameStudents.add(e.getNickname())
+        return nickNameStudents
 
 
     #Retorna nicknaMonth de los Professors
-    def GetProfessors(self):
+    def getProfessors(self):
         nicknameProfessors = set()
         for p in self.__MAPUsers.values():
             if type(p) == Professor:
                 nicknameProfessors.add(p.getNickname())
         return nicknameProfessors
     
-    def GetNaMonth():pass
+  
 
     #Get todos los nickname
-    def GetNickname(self):
+    def getNickname(self):
         SETnickname = set()
         if self.__MAPUsers != None:
             for u in self.__MAPUsers:
                SETnickname.add(u)
         return SETnickname
 
-    def GetNaMonthProfessor():pass
-    def addCourseColeccion(Course):pass
-    def aprobarExercise(Exercise, nickname, nameCourse):pass
+
+    def addCourseCol(Course):pass
+    def approveExercise(Exercise, nickname, nameCourse):pass
     
