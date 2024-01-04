@@ -227,7 +227,7 @@ class CtrCourse(ICourse) :
     def getCourse(self,nameCourse):
         mc = CourseManager()
         c = mc.getCourse(nameCourse)
-        CourseDt = DTCourse(Course=c)
+        CourseDt = DTCourse(course=c)
         return CourseDt
 
     

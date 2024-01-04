@@ -183,7 +183,7 @@ class CtrUser(IUser):
     
     def existsSubject(self, subject):
         mi = SubjectManager()
-        return mi.ExistsSubject(subject)
+        return mi.existsSubject(subject)
     
      #ElIMIAR SUSCRIPCIÓN
     

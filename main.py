@@ -34,7 +34,7 @@ def registerUser():
     Name = input("Enter name: ")
     Description = input("Enter description: ")
     TypeUser = input("Are you a professor or a student?(p/s): ")
-    ctrUser.EnterDatasUser(nickname,Password,Description, Name)
+    ctrUser.enterDatasUser(nickname,Password,Description, Name)
     if (TypeUser.lower().strip()== "s" ):
         nameCountry = input("Enter the country where you live: ")
         print("Enter date of birth: ")
@@ -46,7 +46,7 @@ def registerUser():
         ctrUser.confirmRegisterStudent()
     elif (TypeUser.lower().strip() == "p"):
         Institute = input("Enter the institute where you work: ")
-        ctrUser.EnterInstitute(Institute)
+        ctrUser.enterInstitute(Institute)
         setSubjectsAvailables = ctrUser.getSubjectsAvailables()
         #mostrar los Subjects
         for i in setSubjectsAvailables:
@@ -54,11 +54,11 @@ def registerUser():
         Continue = True
         while Continue:
             Specialization = input("Choose an available subject: ")
-            if ctrUser.ExistsSubject(Specialization):
-                ctrUser.AddSpecialization(Specialization)
+            if ctrUser.existsSubject(Specialization):
+                ctrUser.addSpecialization(Specialization)
             else:
                 print("The entered subject is not correct, please try again: ")
-            cont = input("Do you want to add Yearther subject? Yes/No: ")
+            cont = input("Do you want to add another subject? Yes/No: ")
             if cont.strip().lower() ==  "no":
                 Continue = False
                     
@@ -75,7 +75,7 @@ def ConsultUser():
         for u in SETnicknameUsers:
             print(u)
         nickname_User = input("Enter the user's nickname: ")
-        if(ctrUser.NicknameAvailable(nickname_User)):
+        if(ctrUser.nicknameAvailable(nickname_User)):
             ctrUser.selectUser(nickname_User)
         else: 
             print("The entered nickname is not correct")
@@ -487,11 +487,11 @@ def ConsultStatistics():
     ctrUser = a.getIUser()
     ctrCourse = a.getICourse()
     e = input("""Choose one of the following options: \n
-              Statistics Student (e)\n
+              Statistics Student (s)\n
               Statistics Professor (p) \n
               Statistics Course (c)\n
               Enter the option: """)
-    if e.lower().strip() == "e":
+    if e.lower().strip() == "s":
         Students = ctrCourse.GetStudents()
         for e in Students:
             print(e)
@@ -601,7 +601,7 @@ def main():
     while Continue == True:
         print('''Choose the following use cases:
               1- Load data
-              2- Register from Subject
+              2- Register Subject
               3- Consult Subject
               4- Register user
               5- Consult Users
