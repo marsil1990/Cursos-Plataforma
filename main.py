@@ -36,7 +36,7 @@ def registerUser():
     TypeUser = input("Are you a professor or a student?(p/s): ")
     ctrUser.EnterDatasUser(nickname,Password,Description, Name)
     if (TypeUser.lower().strip()== "s" ):
-        NameCountry = input("Enter the country where you live: ")
+        nameCountry = input("Enter the country where you live: ")
         print("Enter date of birth: ")
         Day = int(input("Day: "))
         Month = int(input("Month: "))
