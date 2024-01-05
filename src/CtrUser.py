@@ -161,12 +161,12 @@ class CtrUser(IUser):
     def getSubjectUnsubscribed (self, nickname):
         mu = UserManager()
         ma = SubjectManager()
-        User = mu.getUser(nickname=nickname)
-        subjectuscrito = User.SETGetNomSubjectuscrito()
-        subjectDiponible = ma.SETSubjectsAvailables()
+        user = mu.getUser(nickname=nickname)
+        ss = user.getSubscribedSubjectName()
+        s_a = ma.SETSubjectsAvailables()
         subjectSubscriptions = set()
-        for a in subjectDiponible:
-            if not a in subjectuscrito:
+        for a in s_a:
+            if not a in ss:
                 subjectSubscriptions.add(a)
         return subjectSubscriptions
 
@@ -190,7 +190,7 @@ class CtrUser(IUser):
     def GetSubscriptions(self, nickname):
         mu = UserManager()
         user = mu.getUser(nickname=nickname)
-        subscriptions = user.SETGetNomSubjectuscrito()
+        subscriptions = user.getSubscribedSubjectName()
         return subscriptions
     
     def  deleteSubscriptions(self, nickname, choiceSubject):
@@ -199,7 +199,7 @@ class CtrUser(IUser):
         subject = ma.getSubject(choiceSubject)
         user = mu.getUser(nickname = nickname)
         user.removeSubscription(choiceSubject)
-        subject.eliminar(nickname)
+        subject.remove(nickname)
     
 
         
@@ -209,7 +209,7 @@ class CtrUser(IUser):
         mc = CourseManager()
         mu = UserManager()
         student = mu.getUser(nickname)
-        coursesInscriptos = Student.MAPgetEnrolledCourses()
+        enrolledCourses = student.MAPgetEnrolledCourses()
         nameCourses = mc.getCoursesAvailables()
         listnameCourses = []
         for curDis in nameCourses:
@@ -227,21 +227,21 @@ class CtrUser(IUser):
         #itero en todos los Courses Available
         for c in coursesAvailable:
             #si tengo Courses inscriptos
-            if len(coursesInscriptos) != 0 and not (c.getName() in coursesInscriptos):
+            if len(enrolledCourses) != 0 and not (c.getName() in enrolledCourses):
                 MAPPrerequisites = c.getPrerequisites()
                 tieneLasPrerequisites = True
                 if len(MAPPrerequisites) != 0:
                     for p in MAPPrerequisites:
-                        if not p in coursesInscriptos:
+                        if not p in enrolledCourses:
                             tieneLasPrerequisites = False
                         else:
                             if not student.getRegistration(p).getApproved():
                                 tieneLasPrerequisites = False
                 if tieneLasPrerequisites:
-                    courseAvailable = DTCourse(Course=c)
+                    courseAvailable = DTCourse(course=c)
                     coursesAvailables.add(courseAvailable)
             else:
-                if len(coursesInscriptos)==0: 
+                if len(enrolledCourses)==0: 
                     prerequisites = c.getPrerequisites()
                     if len(prerequisites) == 0:
                         courseAvailable = DTCourse(course=c)
@@ -274,13 +274,13 @@ class CtrUser(IUser):
     def  getCoursesInscriptoNoAprobado(self, nickname):
         mu = UserManager()
         student = mu.getUser(nickname)
-        self.__StudentRemember = Student
-        coursesInscriptos= Student.MAPgetRegistrations()
-        coursesInscriptosNoApproved = set()
-        for i in coursesInscriptos.values():
+        self._studentRemember = student
+        enrolledCourses= student.MAPgetRegistrations()
+        enrolledCoursesNoApproved = set()
+        for i in enrolledCourses.values():
             if i.getApproved() == False :
-                coursesInscriptosNoApproved.add(DTRegistration(Registration=i))
-        return coursesInscriptosNoApproved
+                enrolledCoursesNoApproved.add(DTRegistration(registration=i))
+        return enrolledCoursesNoApproved
 
 
     
@@ -300,7 +300,7 @@ class CtrUser(IUser):
             exercises = nextLesson.MAPgetColExercises()
             for e in exercises.values():
                 if not e.esAprovado(self.__nickNameRec):
-                    exercisesNoApproved.add(DTExercise(Exercise=e))
+                    exercisesNoApproved.add(DTExercise(exercise=e))
             return exercisesNoApproved
         else:
             nextLesson = cur.getLesson(1)
@@ -308,7 +308,7 @@ class CtrUser(IUser):
             exercises = nextLesson.MAPgetColExercises()
             for e in exercises.values():
                 if not e.esAprovado(self.__nickNameRec):
-                    exercisesNoApproved.add(DTExercise(Exercise=e))
+                    exercisesNoApproved.add(DTExercise(exercise=e))
             return exercisesNoApproved
                 
 
@@ -316,10 +316,10 @@ class CtrUser(IUser):
         
     
     def  rememberExercise(self, Id):
-        self.__ExerciseRecordado = Id
+        self.__exerciseRembered = Id
     
     def  mostrarExercise(self):
-        ej = self.__LessonRecordada.getExercise(self.__ExerciseRecordado)
+        ej = self.__LessonRecordada.getExercise(self.__exerciseRembered)
         if type(ej)== CompleteWord:
             self.__ExerciseDeCompleteWord=ej
             print("Complete: ")
@@ -342,7 +342,7 @@ class CtrUser(IUser):
     
     def  resolveCompleteWord(self, conjunto_Solution):
         if self.__ExerciseDeCompleteWord.EnterSolution(conjunto_Solution):
-            registration = self.__StudentRemember.getRegistration(self.__nameCourseRec)
+            registration = self._studentRemember.getRegistration(self.__nameCourseRec)
             self.__ExerciseDeCompleteWord.addApprovedStudent(self.__nickNameRec, registration)
             exercises = self.__LessonRecordada.MAPgetColExercises()
             cantEjer = self.__LessonRecordada.getcountExercises()
@@ -362,7 +362,7 @@ class CtrUser(IUser):
 
     def  resolveMultipleChoice(self, solution):
         if self.__ExerciseMultipleChoice.getCorrectOption() == solution:
-            registration = self.__StudentRemember.getRegistration(self.__nameCourseRec)
+            registration = self._studentRemember.getRegistration(self.__nameCourseRec)
             self.__ExerciseMultipleChoice.addApprovedStudent(self.__nickNameRec, registration)
             exercises = self.__LessonRecordada.MAPgetColExercises()
             cantEjer = self.__LessonRecordada.getcountExercises()

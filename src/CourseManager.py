@@ -52,8 +52,8 @@ class CourseManager(object):
 
     def deleteCourse(self,nameCourse):
         self.__MAPCourses[nameCourse].removeLessons()
-        self.__MAPCourses[nameCourse].eliminarRegistrations()
+        self.__MAPCourses[nameCourse].removeRegistrations()
         for c in self.__MAPCourses.values():
             if c.isPrerequisite(nameCourse):
-                c.removerPrerequisite(nameCourse)
+                c.removePrerequisite(nameCourse)
         del self.__MAPCourses[nameCourse]

@@ -42,16 +42,16 @@ class Course:
         return len(self.__MAPLessons)
     def setProfessor(self, Professor):
         self.__professorCourse = Professor
-    def setEnabled(habilitado):pass
-    def removerPrerequisite(self, nameCourse):
+
+    def removePrerequisite(self, nameCourse):
         if nameCourse in self.__prerequisites:
             del self.__prerequisites[nameCourse]
 
     def getDataCourse():pass
     def addLesson(self, lec):
         self.__MAPLessons[lec.getOrder()] =lec
-    def añadirPrerequisite(self, Prerequisite):
-        self.__prerequisites[Prerequisite.getName()]=Prerequisite
+    def addPrerequisite(self, prerequisite):
+        self.__prerequisites[prerequisite.getName()]=prerequisite
 
     def getCourseProgress(self, nickStudent):
         getApprovedExercisesCount = 0
@@ -73,7 +73,7 @@ class Course:
         else:
             return sumStudentProgress/getEnrolledStudentsCount
             
-    def GetSiguienteLesson(Order):pass
+    def getSiguienteLesson(Order):pass
     def getLesson(self, Order):
         return self.__MAPLessons[Order]
     

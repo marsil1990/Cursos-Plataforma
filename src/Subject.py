@@ -1,4 +1,5 @@
 from src.Course import Course
+from src.UserManager import UserManager
 class Subject:
     def __init__ (self, name):
         self.__name = name
@@ -13,11 +14,13 @@ class Subject:
     def Add(observer): pass
     def  remove(self, observer):
         self.__SETobservers.remove(observer)
-    def sendNotificacion(self, Course):
+    def sendNotificacion(self, course):
         for o in self.__SETobservers:
-            CourseName = str(Course)
-            notificacion = "Nuevo Course: "+ CourseName + " /  Subject: " + self.__name
-            o.notify(notificacion)
+            courseName = str(course)
+            notification = "Nuevo Course: "+ courseName + " /  Subject: " + self.__name
+            mu = UserManager()
+            u = mu.getUser(o)
+            u.notify(notification)
 
     def associateCourseSubject(self, course):
         self.__MAPCourses[course.getName()] = Course

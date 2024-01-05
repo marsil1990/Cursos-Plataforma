@@ -15,11 +15,11 @@ class CtrCourse(ICourse) :
        self.__difficultyRec= None
        self.__subjectRec= None
        self.__requirisPrerequisiteRec= False
-       self.__SETPrerequisitesRec= None
+       self.__SETPrerequisitesRec = dict()
        self.__MAPLessonsRec= dict()
        self.__canLessons = None
        self.__ultimaLesson= None
-       self.__CourseRecAdd = None
+       self.__courseRecAdd = None
        self.__topicRec= None
        self.__goalRec= None
        self.__TypeExerciseRec= None
@@ -102,7 +102,7 @@ class CtrCourse(ICourse) :
         self.__profRec.associateCourseProfessor(nuevoCourse)
         if self.__requirisPrerequisiteRec:
             for p in self.__SETPrerequisitesRec:
-                nuevoCourse.añadirPrerequisite(p)
+                nuevoCourse.addPrerequisite(p)
         self.__subjectRec.associateCourseSubject(nuevoCourse)
         mc = CourseManager()
         mc.addCourse(nuevoCourse)
@@ -117,7 +117,7 @@ class CtrCourse(ICourse) :
     
     def selectCourse(self, nameCourse):
         mc = CourseManager()
-        self.__CourseRecAdd = mc.getCourse(nameCourse)
+        self.__courseRecAdd = mc.getCourse(nameCourse)
         
     
     def createDatasLesson(self, topic, goal):
@@ -129,14 +129,14 @@ class CtrCourse(ICourse) :
   
     
     def confirmLesson(self):
-        self.__CourseRecAdd.addLesson(self.__ultimaLesson)
+        self.__courseRecAdd.addLesson(self.__ultimaLesson)
         self.__MAPLessonsRec.clear()
         self.__ultimaLesson = None
 
     #Add Exercise
     
     def MAPgetLessons(self):
-        Lessons = self.__CourseRecAdd.MAPgetLessons()
+        Lessons = self.__courseRecAdd.MAPgetLessons()
         return Lessons
     
     def addExercise(lec, Description ,Sentence, MAPSolution): pass
@@ -204,17 +204,17 @@ class CtrCourse(ICourse) :
     
     def makeCourseAvailable(self):
         correcto = False
-        if self.__CourseRecAdd.getcountLessons()!= 0:
-            Lessons = self.__CourseRecAdd.MAPgetColLessons()
+        if self.__courseRecAdd.getcountLessons()!= 0:
+            lessons = self.__courseRecAdd.MAPgetColLessons()
             cantidadLessons = 0
-            for l in Lessons.values():
+            for l in lessons.values():
                 if l.getcountExercises()==0:
                     break
                 else:
                     cantidadLessons +=1
-            if cantidadLessons == self.__CourseRecAdd.getcountLessons():
+            if cantidadLessons == self.__courseRecAdd.getcountLessons():
                 correcto = True
-                self.__CourseRecAdd.setEnabled()
+                self.__courseRecAdd.setEnabled()
                 
         return correcto
 

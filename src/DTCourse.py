@@ -32,7 +32,7 @@ class DTCourse :
             self.__lessons = dict()
             students = course.MAPgetStudents()
             for ek, ev in students.items():
-                self.__MAPenrollment[ek] = DTStudent(Student=ev)
+                self.__MAPenrollment[ek] = DTStudent(student=ev)
             lessons = course.MAPgetColLessons()
             for lk, lv in lessons.items():
                 self.__lessons[lk] = DTLesson(lesson=lv)

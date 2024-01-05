@@ -9,9 +9,9 @@ class DTStudent(DTUser):
             self.__country = country
             self.__date = date
         else:
-            super().__init__(Student.getNickname(), Student.getPassword(), Student.getName(), Student.getDescription())
-            self.__country = Student.getCountry()
-            self.__date = Student.getBirthDate()
+            super().__init__(student.getNickname(), student.getPassword(), student.getName(), student.getDescription())
+            self.__country = student.getCountry()
+            self.__date = student.getBirthDate()
             self.__registrations = dict()
             reg = student.MAPgetRegistrations()
             for ik, iv in reg.items():

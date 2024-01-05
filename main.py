@@ -90,80 +90,80 @@ def registerCourse():
     for p in nicknameProfessors:
         print(p)
     nickname = input("Enter the professor's nickname: ")
-    while(not (nickname in nicknameProfessors)):
-        nickname = input("Incorrect nickname, please enter the professor's nickname: ")
-    ctrCourse.selectProfessor(nickname)
-    nameCourse = input("Name Course: ")
-    while (ctrCourse.existsCourse(nameCourse)):
-        nameCourse = input("The course name already exists. Please enter another one: ")
-    DescriptionCourse = input("Course description: ")
-    LevelCourse = input("Course level (Beginner (B)/Intermediate (I)/Advanced (A)): ")
-    while (LevelCourse.strip().lower() != "b" and LevelCourse.strip().lower() != "i" and 
-            LevelCourse.strip().lower() != "a"):
-        LevelCourse = input("Enter only b, i o a: ")
-    ctrCourse.enterDatasCourse(nameCourse, DescriptionCourse, LevelCourse)
-    setSubjects =  ctrCourse.getSubjectsSpecialization()
-    for i in setSubjects:
-        print(i)
-    Subject = input("Enter subject: ")
-    while (not(Subject in setSubjects)):
-        Subject = input("Incorrect, please enter the subject again: ")
-    ctrCourse.selectSubject(Subject)
-    Prerequisite = input("Requires previous approved courses? Yes/No: ")
-    conf = False
-    if Prerequisite.strip().lower() == "yes":
-        conf = True
-        ctrCourse.requirisPrerequisite(conf) 
-        colCoursesAvailable = ctrCourse.SETgetCoursesAvailable()
-        print("Courses created by the same professor.")
-        if len(colCoursesAvailable) != 0:
-            for c in colCoursesAvailable:
-                 print(c)
-            Prerequisites = input("Enter, separated by commas, the courses that will be prerequisites: ")
-            ctrCourse.selectPrerequisites(Prerequisites)
-        else: print("There are no available courses")
-    ctrCourse.confirmRegisterCourse()
-    AddLessons = input("Do you want to add lessons? Yes/No: ")
-    while AddLessons.strip().lower() =="yes":
-        ctrCourse.selectCourse(nameCourse)
-        Topic = input("Enter the topic of the lesson: ")
-        Goal = input("Enter the goal of the lesson: ")
-        #ctrCourse.createDatasLesson(Topic, Goal)
-        ctrCourse.createLesson(Topic, Goal, nameCourse)
-        addExercises = input("Do you want to add exercises? Yes/No: ")
-        while addExercises.strip().lower() == "yes":
-            TypeExercise = input("Enter the exercise type (only the number): 1 - Fill in the Blank, 2 - Multiple Choice: ")
-            if TypeExercise.strip() == "1":
-                Description = input("Add description: ")
-                Sentence = input("Enter the sentence; in the places where the words would go, write ---: ")
-                CharacterCount = Sentence.count("---")
-                Solutions = dict()
-                Place = CharacterCount
-                while Place > 0:
-                    Word = input(f"Enter the word for the placeholder number {Place}: ")
-                    Solutions[Place] = Word
-                    Place -= 1
-                ctrCourse.createExerciseCompleteWord(Description, Sentence, Solutions)
-            elif TypeExercise.strip() == "2":
-                Description = input("Add description: ")
-                Question = input("Enter the question or problem: ")
-                CorrectOption = input("Enter the correct option (number of the answer): ")
-                Options = dict()
-                ContinueAdding = True
-                op = 1
-                while ContinueAdding:
-                    opc = input("Enter an option: ")
-                    Options[op] = opc
-                    op +=1
-                    Continue_Adding = input("Do you want to continue adding options? Yes/No: ")
-                    if Continue_Adding.strip().lower() == "no":
-                        ContinueAdding = False
-                        op = 1
-                ctrCourse.createExerciseMultipleChoice(Description, Question, Options, CorrectOption)
-            else: print("Incorrect option entry")
-            addExercises = input("Do you want to add another exercise? Yes/No: ")
-        ctrCourse.confirmLesson()
-        AddLessons = input("Do you want to add another lesson? Yes/No: ")
+    if nickname in nicknameProfessors:
+        ctrCourse.selectProfessor(nickname)
+        nameCourse = input("Name Course: ")
+        while (ctrCourse.existsCourse(nameCourse)):
+            nameCourse = input("The course name already exists. Please enter another one: ")
+        DescriptionCourse = input("Course description: ")
+        LevelCourse = input("Course level (Beginner (B)/Intermediate (I)/Advanced (A)): ")
+        while (LevelCourse.strip().lower() != "b" and LevelCourse.strip().lower() != "i" and 
+                LevelCourse.strip().lower() != "a"):
+            LevelCourse = input("Enter only b, i o a: ")
+        ctrCourse.enterDatasCourse(nameCourse, DescriptionCourse, LevelCourse)
+        setSubjects =  ctrCourse.getSubjectsSpecialization()
+        for i in setSubjects:
+            print(i)
+        Subject = input("Enter subject: ")
+        while (not(Subject in setSubjects)):
+            Subject = input("Incorrect, please enter the subject again: ")
+        ctrCourse.selectSubject(Subject)
+        Prerequisite = input("Requires previous approved courses? Yes/No: ")
+        conf = False
+        if Prerequisite.strip().lower() == "yes":
+            conf = True
+            ctrCourse.requirisPrerequisite(conf) 
+            colCoursesAvailable = ctrCourse.SETgetCoursesAvailable()
+            print("Courses created by the same professor.")
+            if len(colCoursesAvailable) != 0:
+                for c in colCoursesAvailable:
+                    print(c)
+                Prerequisites = input("Enter, separated by commas, the courses that will be prerequisites: ")
+                ctrCourse.selectPrerequisites(Prerequisites)
+            else: print("There are no available courses")
+        ctrCourse.confirmRegisterCourse()
+        AddLessons = input("Do you want to add lessons? Yes/No: ")
+        while AddLessons.strip().lower() =="yes":
+            ctrCourse.selectCourse(nameCourse)
+            Topic = input("Enter the topic of the lesson: ")
+            Goal = input("Enter the goal of the lesson: ")
+            #ctrCourse.createDatasLesson(Topic, Goal)
+            ctrCourse.createLesson(Topic, Goal, nameCourse)
+            addExercises = input("Do you want to add exercises? Yes/No: ")
+            while addExercises.strip().lower() == "yes":
+                TypeExercise = input("Enter the exercise type (only the number): 1 - Fill in the Blank, 2 - Multiple Choice: ")
+                if TypeExercise.strip() == "1":
+                    Description = input("Add description: ")
+                    Sentence = input("Enter the sentence; in the places where the words would go, write ---: ")
+                    CharacterCount = Sentence.count("---")
+                    Solutions = dict()
+                    Place = CharacterCount
+                    while Place > 0:
+                        Word = input(f"Enter the word for the placeholder number {Place}: ")
+                        Solutions[Place] = Word
+                        Place -= 1
+                    ctrCourse.createExerciseCompleteWord(Description, Sentence, Solutions)
+                elif TypeExercise.strip() == "2":
+                    Description = input("Add description: ")
+                    Question = input("Enter the question or problem: ")
+                    CorrectOption = input("Enter the correct option (number of the answer): ")
+                    Options = dict()
+                    ContinueAdding = True
+                    op = 1
+                    while ContinueAdding:
+                        opc = input("Enter an option: ")
+                        Options[op] = opc
+                        op +=1
+                        Continue_Adding = input("Do you want to continue adding options? Yes/No: ")
+                        if Continue_Adding.strip().lower() == "no":
+                            ContinueAdding = False
+                            op = 1
+                    ctrCourse.createExerciseMultipleChoice(Description, Question, Options, CorrectOption)
+                else: print("Incorrect option entry")
+                addExercises = input("Do you want to add another exercise? Yes/No: ")
+            ctrCourse.confirmLesson()
+            AddLessons = input("Do you want to add another lesson? Yes/No: ")
+    else: print("Inconrrect nickName")
         
 
 def makeCourseAvailable():
@@ -171,21 +171,20 @@ def makeCourseAvailable():
     ctrCourse = a.getICourse()
     nicknameProfessors = ctrCourse.getNickname()
     nicknameProfessor = input("Enter the professor's nickname: ")
-    while(not (nicknameProfessor in nicknameProfessors)):
-        nicknameProfessor = input("Incorrect nickname, Enter the professor's nickname: ")
-    colCoursesNoAvailable =  ctrCourse.getCoursesNoAvailable(nicknameProfessor)
-    for c in colCoursesNoAvailable:
-        print (c)
-    Course = input("Enter Course: ")
-    while (not ctrCourse.existsCourse(Course)):
-        Course = input("Incorrect course name, please enter it again: ")
-    ctrCourse.selectCourse(Course)
-    correcto = ctrCourse.makeCourseAvailable()
-    if correcto:
-        ctrCourse.notify(Course)
-        print("It was successfully enabled")
-    else:
-        print("It was not enabled")
+    if nicknameProfessor in nicknameProfessors:
+        colCoursesNoAvailable =  ctrCourse.getCoursesNoAvailable(nicknameProfessor)
+        for c in colCoursesNoAvailable:
+            print (c)
+        course = input("Enter Course: ")
+        while (not ctrCourse.existsCourse(course)):
+            course = input("Incorrect course name, please enter it again: ")
+        ctrCourse.selectCourse(course)
+        correcto = ctrCourse.makeCourseAvailable()
+        if correcto:
+            ctrCourse.notify(course)
+            print("It was successfully enabled")
+        else:
+            print("It was not enabled")
 
 def AddLesson():
     a = Factory()
@@ -452,13 +451,15 @@ def ExecuteExercise():
             while (not ctrCourse.existsCourse(Course)):
                 Course = input("Incorrect course name, please enter it again: ")
             ctrUser.enterCourseSeleccionado(Course)
-            ExercisesNoApproved = ctrUser.getExercisesNoApproved()
+            exercisesNoApproved = ctrUser.getExercisesNoApproved()
             print("Exercises no Approved:")
-            for e in ExercisesNoApproved:
+            for e in exercisesNoApproved:
                 print(f"Exercise id: {e.getId()}, Description: {e.getDescription()}")
-            
-            ExerciseSelect = int(input("Enter the identifier of the exercise you want to execute: "))
-            ctrUser.rememberExercise(ExerciseSelect)
+            try:
+                exerciseSelect = int(input("Enter the identifier of the exercise you want to execute: "))
+            except:
+                print("Debe ingresar un número")
+            ctrUser.rememberExercise(exerciseSelect)
             ej = ctrUser.mostrarExercise()
             if ej:
                 r = (input("Enter the words separated by commas: ")).replace(" ", "").split(",")
@@ -468,13 +469,13 @@ def ExecuteExercise():
                 while c >= count:
                     reSolution[count] = r[count-1]
                     count+=1
-                if ctrUser.ResolveCompleteWord(reSolution):
+                if ctrUser.resolveCompleteWord(reSolution):
                     print("Congratulations, the entered words are correct.")
                 else: print("the entered words are incorrect")
             else:
                 opcion = input("Enter one of the options (number): ")
-                if ctrUser.ResolveMultipleChoice(opcion):
-                    print("Felicitaciones, la opción ingresada es la correcta.")
+                if ctrUser.resolveMultipleChoice(opcion):
+                    print("Congratulations, the entered option is correct.")
                     
                 else: print("You entered the incorrect option: ")
         else: print("All the courses have been approved.")
@@ -537,7 +538,7 @@ def suscribirseNorificaciones():
     a = Factory()
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
-    if ctrUser.NicknameAvailable(nickname=nickname):
+    if ctrUser.nicknameAvailable(nickname=nickname):
         subjects = ctrUser.getSubjectUnsubscribed (nickname)
         for a in subjects:
             print(a)
@@ -562,7 +563,7 @@ def consultnotify():
     a = Factory()
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
-    if ctrUser.NicknameAvailable(nickname=nickname):
+    if ctrUser.nicknameAvailable(nickname=nickname):
         Notifications = ctrUser.GetNotifications(nickname)
         for n in Notifications:
             print(n)
@@ -572,7 +573,7 @@ def deleteSubscriptions():
     a = Factory()
     ctrUser = a.getIUser()
     nickname = input("Enter nickname: ")
-    if ctrUser.NicknameAvailable(nickname=nickname):
+    if ctrUser.nicknameAvailable(nickname=nickname):
         subjectSubscribers = ctrUser.GetSubscriptions(nickname)
         for s in subjectSubscribers:
             print(s)
